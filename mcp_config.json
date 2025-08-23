@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "codebase-knowledge-graph": {
+      "command": "python",
+      "args": ["mcp_server.py"],
+      "env": {
+        "OPENAI_API_KEY": "${OPENAI_API_KEY}",
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "codebase-knowledge-graph": {
+      "command": "python",
+      "args": ["I:\\CYBERPUNK\\Neuoro-weave-KG\\knowledge-graph-llms\\mcp_server.py"],
+      "env": {
+        "OPENAI_API_KEY": "your_openai_api_key_here",
+        "GITHUB_TOKEN": "your_github_token_here"
+      }
+    }
+  }
+}
