@@ -1,18 +1,32 @@
-# 🧠 NeuroWeave AI
-### *Neural Knowledge Architecture System*
+# 🧠 NeuroWeave Knowledge Graph
+### *Advanced MCP Server for Codebase Analysis & Interactive Visualization*
 
-A next-generation cognitive mapping platform that extracts neural pathways (entities and relationships) from textual data using advanced AI models, creating interactive synaptic visualizations.
-![CleanShot 2025-05-28 at 13 11 46](https://github.com/user-attachments/assets/4fef9158-8dd8-432d-bb8a-b53953a82c6c)
+A comprehensive Model Context Protocol (MCP) server that analyzes codebases and generates interactive knowledge graph visualizations, featuring multi-language support, neural-themed styling, and seamless GitHub integration.
 
-👉 This repo is part of my project tutorial on Youtube:
-[![](https://img.youtube.com/vi/O-T_6KOXML4/0.jpg)](https://www.youtube.com/watch?v=O-T_6KOXML4)
+## 🚀 Key Features
 
-## 🚀 Core Neural Features
+### 🔍 **Multi-Language Codebase Analysis**
+- **Python**: Full AST parsing for classes, functions, imports
+- **JavaScript/TypeScript**: Function and class detection, import analysis  
+- **Java**: Class and method extraction, import mapping
+- **C++, C#, Go, Rust**: Basic structural analysis
 
-- **Dual Input Streams**: Neural data ingestion via text upload (.txt files) or direct cognitive input
-- **Synaptic Visualization Engine**: Interactive neural network mapping with quantum-inspired layouts
-- **Adaptive Neural Physics**: Self-organizing graph structures with bio-inspired dynamics
-- **AI-Powered Cognition**: Entity-relationship extraction using GPT-4o neural architecture
+### 🎨 **Interactive Knowledge Graphs**
+- **Neural-themed visualizations** with cyberpunk aesthetics
+- **Force-directed layouts** with physics simulation
+- **Real-time interaction** with zoom, pan, and hover details
+- **Hierarchical relationships** between files, classes, functions
+
+### 🌐 **GitHub Integration**
+- **Repository cloning** and analysis
+- **GitHub API integration** for metadata
+- **Automatic updates** for existing repositories
+
+### 📊 **MCP Server Tools**
+- `analyze_codebase` - Local codebase analysis
+- `analyze_github_repo` - GitHub repository analysis
+- `generate_codebase_graph` - Interactive visualizations
+- `get_repo_info` - Repository metadata extraction
 
 ## Installation
 
@@ -38,50 +52,83 @@ Initialize all neural dependencies using the cognitive requirements manifest:
 pip install -r requirements.txt
 ```
 
-### 🔬 Neural Initialization
+### 🔧 Installation Steps
 
-1. Clone the NeuroWeave repository:
+1. Clone the repository:
    ```bash
-   git clone [repository-url]
-   cd neuroweave-ai
+   git clone https://github.com/mhmalvi/neuro-weave-knowledge-graph.git
+   cd neuro-weave-knowledge-graph
    ```
 
-   Note: Replace `[repository-url]` with the actual NeuroWeave repository URL.
-
-2. Configure neural access credentials in `.env`:
-   ```
-   OPENAI_API_KEY=your_cognitive_access_token_here
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
    ```
 
-## ⚡ Neural System Activation
+3. Configure environment variables in `.env`:
+   ```
+   OPENAI_API_KEY=your_openai_api_key_here
+   GITHUB_TOKEN=your_github_token_here  # Optional
+   ```
 
-To activate the NeuroWeave interface:
+## 🚀 Usage
 
+### Streamlit Web Interface
 ```bash
 streamlit run app.py
 ```
+Opens the web interface at http://localhost:8501
 
-This initializes the neural interface and opens the cognitive portal in your browser (typically at http://localhost:8501).
+### MCP Server Integration
 
-## 🎯 Neural Interface Protocol
+#### Claude Desktop Configuration
+Add to `claude_desktop_config.json`:
+```json
+{
+  "mcpServers": {
+    "codebase-knowledge-graph": {
+      "command": "python",
+      "args": ["path/to/mcp_server.py"],
+      "env": {
+        "OPENAI_API_KEY": "your_api_key",
+        "GITHUB_TOKEN": "your_github_token"
+      }
+    }
+  }
+}
+```
 
-1. **Input Stream Selection**: Choose cognitive input method (Neural Upload or Direct Input)
-2. **Data Ingestion**: Upload .txt neural data or input cognitive text directly
-3. **Neural Processing**: Activate "Generate Neural Map" to begin synaptic analysis
-4. **Cognitive Synthesis**: Allow neural processing time (varies with data complexity)
-5. **Synaptic Exploration**: Navigate the interactive neural network:
-   - **Node Manipulation**: Drag neural nodes to restructure pathways
-   - **Data Inspection**: Hover over synapses for detailed neural information
-   - **Zoom Navigation**: Scale view using quantum scroll mechanics
-   - **Neural Filtering**: Apply cognitive filters for targeted analysis
+#### Claude Code Integration
+```bash
+claude mcp add codebase-knowledge-graph python mcp_server.py
+```
 
-## 🧠 Neural Architecture
+## 🎯 How It Works
 
-NeuroWeave employs advanced cognitive algorithms through LangChain's experimental neural transformers integrated with GPT-4o to:
-1. **Entity Extraction**: Identify cognitive components from neural input streams
-2. **Synaptic Mapping**: Discover relationship pathways between neural entities
-3. **Neural Structure Generation**: Construct cognitive graph architectures
-4. **Synaptic Visualization**: Render neural networks using PyVis quantum visualization protocols
+### Web Interface Usage
+1. **Input Selection**: Choose between file upload or direct text input
+2. **Data Processing**: Upload code files or paste text directly
+3. **Generate Visualization**: Click "Generate Knowledge Graph"
+4. **Explore Results**: Navigate the interactive visualization:
+   - **Drag nodes** to rearrange the layout
+   - **Hover** for detailed information
+   - **Zoom and pan** to explore different areas
+   - **Filter** nodes by type or relationship
+
+### MCP Tools Usage
+Ask Claude to:
+- "Analyze this codebase"
+- "Create a knowledge graph for my project"  
+- "Show me the structure of [GitHub repo URL]"
+- "Generate a visualization of the dependencies"
+
+## 🛠️ Architecture
+
+The system uses:
+1. **AST Parsing**: Extract structural information from source code
+2. **Relationship Mapping**: Identify imports, inheritance, and dependencies
+3. **Graph Generation**: Build interactive network visualizations
+4. **MCP Integration**: Provide tools for AI assistant integration
 
 ## License
 

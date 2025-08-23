@@ -300,12 +300,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙋‍♀️ Support
 
-- 📧 **Email**: support@neuroweave-ai.com
-- 🐛 **Issues**: [GitHub Issues](https://github.com/your-repo/issues)
-- 💬 **Discussions**: [GitHub Discussions](https://github.com/your-repo/discussions)
+- 🐛 **Issues**: [GitHub Issues](https://github.com/mhmalvi/neuro-weave-knowledge-graph/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/mhmalvi/neuro-weave-knowledge-graph/discussions)
 
 ---
 
-**Built with ❤️ by the NeuroWeave AI Team**
+**Built with ❤️ for the developer community**
 
 *Transform your codebase understanding with the power of interactive knowledge graphs!*
