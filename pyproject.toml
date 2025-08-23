@@ -7,7 +7,7 @@ name = "codebase-knowledge-graph-mcp"
 version = "0.1.0"
 description = "MCP Server for Codebase Knowledge Graph Visualization"
 authors = [
-    { name = "NeuroWeave AI", email = "info@neuroweave-ai.com" }
+    { name = "mhmalvi", email = "info@aethonautomation.com" }
 ]
 readme = "README.md"
 license = { file = "LICENSE" }
