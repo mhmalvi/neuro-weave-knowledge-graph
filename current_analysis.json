@@ -1,0 +1,1523 @@
+{
+  "files": [
+    {
+      "file": ".\\app.py",
+      "type": "python",
+      "classes": [],
+      "functions": [],
+      "imports": [
+        {
+          "module": "streamlit",
+          "alias": "st",
+          "file": ".\\app.py",
+          "line": 2
+        },
+        {
+          "module": "streamlit.components.v1",
+          "alias": "components",
+          "file": ".\\app.py",
+          "line": 3
+        },
+        {
+          "module": "generate_knowledge_graph.generate_knowledge_graph",
+          "alias": null,
+          "from": "generate_knowledge_graph",
+          "file": ".\\app.py",
+          "line": 4
+        }
+      ]
+    },
+    {
+      "file": ".\\codebase_visualizer.py",
+      "type": "python",
+      "classes": [
+        {
+          "name": "CodebaseVisualizer",
+          "line": 16,
+          "file": ".\\codebase_visualizer.py",
+          "bases": [],
+          "methods": [
+            "__init__",
+            "create_codebase_graph",
+            "_add_node",
+            "_configure_network",
+            "_save_enhanced_graph"
+          ]
+        }
+      ],
+      "functions": [
+        {
+          "name": "__init__",
+          "line": 19,
+          "file": ".\\codebase_visualizer.py",
+          "args": [
+            "self"
+          ]
+        },
+        {
+          "name": "create_codebase_graph",
+          "line": 52,
+          "file": ".\\codebase_visualizer.py",
+          "args": [
+            "self",
+            "analysis_data",
+            "output_file"
+          ]
+        },
+        {
+          "name": "_add_node",
+          "line": 253,
+          "file": ".\\codebase_visualizer.py",
+          "args": [
+            "self",
+            "net",
+            "node_id",
+            "node_info"
+          ]
+        },
+        {
+          "name": "_configure_network",
+          "line": 319,
+          "file": ".\\codebase_visualizer.py",
+          "args": [
+            "self",
+            "net"
+          ]
+        },
+        {
+          "name": "_save_enhanced_graph",
+          "line": 369,
+          "file": ".\\codebase_visualizer.py",
+          "args": [
+            "self",
+            "net",
+            "output_file",
+            "analysis_data"
+          ]
+        }
+      ],
+      "imports": [
+        {
+          "module": "os",
+          "alias": null,
+          "file": ".\\codebase_visualizer.py",
+          "line": 9
+        },
+        {
+          "module": "json",
+          "alias": null,
+          "file": ".\\codebase_visualizer.py",
+          "line": 10
+        },
+        {
+          "module": "typing.Dict",
+          "alias": null,
+          "from": "typing",
+          "file": ".\\codebase_visualizer.py",
+          "line": 11
+        },
+        {
+          "module": "typing.List",
+          "alias": null,
+          "from": "typing",
+          "file": ".\\codebase_visualizer.py",
+          "line": 11
+        },
+        {
+          "module": "typing.Any",
+          "alias": null,
+          "from": "typing",
+          "file": ".\\codebase_visualizer.py",
+          "line": 11
+        },
+        {
+          "module": "typing.Set",
+          "alias": null,
+          "from": "typing",
+          "file": ".\\codebase_visualizer.py",
+          "line": 11
+        },
+        {
+          "module": "typing.Tuple",
+          "alias": null,
+          "from": "typing",
+          "file": ".\\codebase_visualizer.py",
+          "line": 11
+        },
+        {
+          "module": "pyvis.network.Network",
+          "alias": null,
+          "from": "pyvis.network",
+          "file": ".\\codebase_visualizer.py",
+          "line": 12
+        },
+        {
+          "module": "colorsys",
+          "alias": null,
+          "file": ".\\codebase_visualizer.py",
+          "line": 13
+        },
+        {
+          "module": "hashlib",
+          "alias": null,
+          "file": ".\\codebase_visualizer.py",
+          "line": 14
+        }
+      ]
+    },
+    {
+      "file": ".\\demo_mcp.py",
+      "type": "python",
+      "classes": [],
+      "functions": [
+        {
+          "name": "demo_codebase_analysis",
+          "line": 11,
+          "file": ".\\demo_mcp.py",
+          "args": []
+        }
+      ],
+      "imports": [
+        {
+          "module": "os",
+          "alias": null,
+          "file": ".\\demo_mcp.py",
+          "line": 6
+        },
+        {
+          "module": "json",
+          "alias": null,
+          "file": ".\\demo_mcp.py",
+          "line": 7
+        },
+        {
+          "module": "pathlib.Path",
+          "alias": null,
+          "from": "pathlib",
+          "file": ".\\demo_mcp.py",
+          "line": 8
+        },
+        {
+          "module": "codebase_visualizer.CodebaseVisualizer",
+          "alias": null,
+          "from": "codebase_visualizer",
+          "file": ".\\demo_mcp.py",
+          "line": 9
+        }
+      ]
+    },
+    {
+      "file": ".\\generate_knowledge_graph.py",
+      "type": "python",
+      "classes": [],
+      "functions": [
+        {
+          "name": "visualize_graph",
+          "line": 37,
+          "file": ".\\generate_knowledge_graph.py",
+          "args": [
+            "graph_documents"
+          ]
+        },
+        {
+          "name": "generate_knowledge_graph",
+          "line": 331,
+          "file": ".\\generate_knowledge_graph.py",
+          "args": [
+            "text"
+          ]
+        }
+      ],
+      "imports": [
+        {
+          "module": "langchain_experimental.graph_transformers.LLMGraphTransformer",
+          "alias": null,
+          "from": "langchain_experimental.graph_transformers",
+          "file": ".\\generate_knowledge_graph.py",
+          "line": 1
+        },
+        {
+          "module": "langchain_core.documents.Document",
+          "alias": null,
+          "from": "langchain_core.documents",
+          "file": ".\\generate_knowledge_graph.py",
+          "line": 2
+        },
+        {
+          "module": "langchain_openai.ChatOpenAI",
+          "alias": null,
+          "from": "langchain_openai",
+          "file": ".\\generate_knowledge_graph.py",
+          "line": 3
+        },
+        {
+          "module": "pyvis.network.Network",
+          "alias": null,
+          "from": "pyvis.network",
+          "file": ".\\generate_knowledge_graph.py",
+          "line": 4
+        },
+        {
+          "module": "dotenv.load_dotenv",
+          "alias": null,
+          "from": "dotenv",
+          "file": ".\\generate_knowledge_graph.py",
+          "line": 6
+        },
+        {
+          "module": "os",
+          "alias": null,
+          "file": ".\\generate_knowledge_graph.py",
+          "line": 7
+        },
+        {
+          "module": "asyncio",
+          "alias": null,
+          "file": ".\\generate_knowledge_graph.py",
+          "line": 8
+        }
+      ]
+    },
+    {
+      "file": ".\\mcp_server.py",
+      "type": "python",
+      "classes": [
+        {
+          "name": "CodebaseAnalyzer",
+          "line": 43,
+          "file": ".\\mcp_server.py",
+          "bases": [],
+          "methods": [
+            "__init__",
+            "analyze_codebase",
+            "_analyze_file",
+            "_analyze_python",
+            "_analyze_javascript",
+            "_analyze_typescript",
+            "_analyze_java",
+            "_analyze_cpp",
+            "_analyze_csharp",
+            "_analyze_go",
+            "_analyze_rust"
+          ]
+        },
+        {
+          "name": "GitHubAnalyzer",
+          "line": 276,
+          "file": ".\\mcp_server.py",
+          "bases": [],
+          "methods": [
+            "__init__",
+            "clone_or_update_repo",
+            "get_repo_info"
+          ]
+        }
+      ],
+      "functions": [
+        {
+          "name": "format_analysis_for_llm",
+          "line": 522,
+          "file": ".\\mcp_server.py",
+          "args": [
+            "analysis_data"
+          ]
+        },
+        {
+          "name": "__init__",
+          "line": 46,
+          "file": ".\\mcp_server.py",
+          "args": [
+            "self"
+          ]
+        },
+        {
+          "name": "analyze_codebase",
+          "line": 62,
+          "file": ".\\mcp_server.py",
+          "args": [
+            "self",
+            "path"
+          ]
+        },
+        {
+          "name": "_analyze_file",
+          "line": 107,
+          "file": ".\\mcp_server.py",
+          "args": [
+            "self",
+            "file_path"
+          ]
+        },
+        {
+          "name": "_analyze_python",
+          "line": 116,
+          "file": ".\\mcp_server.py",
+          "args": [
+            "self",
+            "file_path"
+          ]
+        },
+        {
+          "name": "_analyze_javascript",
+          "line": 171,
+          "file": ".\\mcp_server.py",
+          "args": [
+            "self",
+            "file_path"
+          ]
+        },
+        {
+          "name": "_analyze_typescript",
+          "line": 214,
+          "file": ".\\mcp_server.py",
+          "args": [
+            "self",
+            "file_path"
+          ]
+        },
+        {
+          "name": "_analyze_java",
+          "line": 218,
+          "file": ".\\mcp_server.py",
+          "args": [
+            "self",
+            "file_path"
+          ]
+        },
+        {
+          "name": "_analyze_cpp",
+          "line": 260,
+          "file": ".\\mcp_server.py",
+          "args": [
+            "self",
+            "file_path"
+          ]
+        },
+        {
+          "name": "_analyze_csharp",
+          "line": 264,
+          "file": ".\\mcp_server.py",
+          "args": [
+            "self",
+            "file_path"
+          ]
+        },
+        {
+          "name": "_analyze_go",
+          "line": 268,
+          "file": ".\\mcp_server.py",
+          "args": [
+            "self",
+            "file_path"
+          ]
+        },
+        {
+          "name": "_analyze_rust",
+          "line": 272,
+          "file": ".\\mcp_server.py",
+          "args": [
+            "self",
+            "file_path"
+          ]
+        },
+        {
+          "name": "__init__",
+          "line": 279,
+          "file": ".\\mcp_server.py",
+          "args": [
+            "self"
+          ]
+        },
+        {
+          "name": "clone_or_update_repo",
+          "line": 282,
+          "file": ".\\mcp_server.py",
+          "args": [
+            "self",
+            "repo_url",
+            "target_dir"
+          ]
+        },
+        {
+          "name": "get_repo_info",
+          "line": 297,
+          "file": ".\\mcp_server.py",
+          "args": [
+            "self",
+            "repo_url"
+          ]
+        }
+      ],
+      "imports": [
+        {
+          "module": "asyncio",
+          "alias": null,
+          "file": ".\\mcp_server.py",
+          "line": 10
+        },
+        {
+          "module": "json",
+          "alias": null,
+          "file": ".\\mcp_server.py",
+          "line": 11
+        },
+        {
+          "module": "os",
+          "alias": null,
+          "file": ".\\mcp_server.py",
+          "line": 12
+        },
+        {
+          "module": "ast",
+          "alias": null,
+          "file": ".\\mcp_server.py",
+          "line": 13
+        },
+        {
+          "module": "subprocess",
+          "alias": null,
+          "file": ".\\mcp_server.py",
+          "line": 14
+        },
+        {
+          "module": "pathlib.Path",
+          "alias": null,
+          "from": "pathlib",
+          "file": ".\\mcp_server.py",
+          "line": 15
+        },
+        {
+          "module": "typing.Dict",
+          "alias": null,
+          "from": "typing",
+          "file": ".\\mcp_server.py",
+          "line": 16
+        },
+        {
+          "module": "typing.List",
+          "alias": null,
+          "from": "typing",
+          "file": ".\\mcp_server.py",
+          "line": 16
+        },
+        {
+          "module": "typing.Optional",
+          "alias": null,
+          "from": "typing",
+          "file": ".\\mcp_server.py",
+          "line": 16
+        },
+        {
+          "module": "typing.Any",
+          "alias": null,
+          "from": "typing",
+          "file": ".\\mcp_server.py",
+          "line": 16
+        },
+        {
+          "module": "typing.Tuple",
+          "alias": null,
+          "from": "typing",
+          "file": ".\\mcp_server.py",
+          "line": 16
+        },
+        {
+          "module": "logging",
+          "alias": null,
+          "file": ".\\mcp_server.py",
+          "line": 17
+        },
+        {
+          "module": "urllib.parse.urlparse",
+          "alias": null,
+          "from": "urllib.parse",
+          "file": ".\\mcp_server.py",
+          "line": 18
+        },
+        {
+          "module": "mcp.server.models.InitializationOptions",
+          "alias": null,
+          "from": "mcp.server.models",
+          "file": ".\\mcp_server.py",
+          "line": 20
+        },
+        {
+          "module": "mcp.server.NotificationOptions",
+          "alias": null,
+          "from": "mcp.server",
+          "file": ".\\mcp_server.py",
+          "line": 21
+        },
+        {
+          "module": "mcp.server.Server",
+          "alias": null,
+          "from": "mcp.server",
+          "file": ".\\mcp_server.py",
+          "line": 21
+        },
+        {
+          "module": "mcp.types.Resource",
+          "alias": null,
+          "from": "mcp.types",
+          "file": ".\\mcp_server.py",
+          "line": 22
+        },
+        {
+          "module": "mcp.types.Tool",
+          "alias": null,
+          "from": "mcp.types",
+          "file": ".\\mcp_server.py",
+          "line": 22
+        },
+        {
+          "module": "mcp.types.TextContent",
+          "alias": null,
+          "from": "mcp.types",
+          "file": ".\\mcp_server.py",
+          "line": 22
+        },
+        {
+          "module": "mcp.types.ImageContent",
+          "alias": null,
+          "from": "mcp.types",
+          "file": ".\\mcp_server.py",
+          "line": 22
+        },
+        {
+          "module": "mcp.types.EmbeddedResource",
+          "alias": null,
+          "from": "mcp.types",
+          "file": ".\\mcp_server.py",
+          "line": 22
+        },
+        {
+          "module": "mcp.types",
+          "alias": "types",
+          "file": ".\\mcp_server.py",
+          "line": 29
+        },
+        {
+          "module": "generate_knowledge_graph.generate_knowledge_graph",
+          "alias": null,
+          "from": "generate_knowledge_graph",
+          "file": ".\\mcp_server.py",
+          "line": 32
+        },
+        {
+          "module": "generate_knowledge_graph.visualize_graph",
+          "alias": null,
+          "from": "generate_knowledge_graph",
+          "file": ".\\mcp_server.py",
+          "line": 32
+        },
+        {
+          "module": "generate_knowledge_graph.extract_graph_data",
+          "alias": null,
+          "from": "generate_knowledge_graph",
+          "file": ".\\mcp_server.py",
+          "line": 32
+        },
+        {
+          "module": "codebase_visualizer.CodebaseVisualizer",
+          "alias": null,
+          "from": "codebase_visualizer",
+          "file": ".\\mcp_server.py",
+          "line": 33
+        },
+        {
+          "module": "pyvis.network.Network",
+          "alias": null,
+          "from": "pyvis.network",
+          "file": ".\\mcp_server.py",
+          "line": 34
+        },
+        {
+          "module": "requests",
+          "alias": null,
+          "file": ".\\mcp_server.py",
+          "line": 35
+        },
+        {
+          "module": "mcp.server.stdio.stdio_server",
+          "alias": null,
+          "from": "mcp.server.stdio",
+          "file": ".\\mcp_server.py",
+          "line": 579
+        },
+        {
+          "module": "re",
+          "alias": null,
+          "file": ".\\mcp_server.py",
+          "line": 177
+        },
+        {
+          "module": "re",
+          "alias": null,
+          "file": ".\\mcp_server.py",
+          "line": 223
+        }
+      ]
+    },
+    {
+      "file": ".\\test_mcp.py",
+      "type": "python",
+      "classes": [],
+      "functions": [
+        {
+          "name": "test_sample_analysis",
+          "line": 41,
+          "file": ".\\test_mcp.py",
+          "args": []
+        }
+      ],
+      "imports": [
+        {
+          "module": "json",
+          "alias": null,
+          "file": ".\\test_mcp.py",
+          "line": 6
+        },
+        {
+          "module": "asyncio",
+          "alias": null,
+          "file": ".\\test_mcp.py",
+          "line": 7
+        },
+        {
+          "module": "mcp_server.codebase_analyzer",
+          "alias": null,
+          "from": "mcp_server",
+          "file": ".\\test_mcp.py",
+          "line": 8
+        },
+        {
+          "module": "mcp_server.codebase_visualizer",
+          "alias": null,
+          "from": "mcp_server",
+          "file": ".\\test_mcp.py",
+          "line": 8
+        }
+      ]
+    },
+    {
+      "file": ".\\test_standalone.py",
+      "type": "python",
+      "classes": [
+        {
+          "name": "SimpleCodebaseAnalyzer",
+          "line": 16,
+          "file": ".\\test_standalone.py",
+          "bases": [],
+          "methods": [
+            "__init__",
+            "analyze_codebase"
+          ]
+        }
+      ],
+      "functions": [
+        {
+          "name": "test_visualization",
+          "line": 64,
+          "file": ".\\test_standalone.py",
+          "args": []
+        },
+        {
+          "name": "test_simple_analysis",
+          "line": 200,
+          "file": ".\\test_standalone.py",
+          "args": []
+        },
+        {
+          "name": "main",
+          "line": 219,
+          "file": ".\\test_standalone.py",
+          "args": []
+        },
+        {
+          "name": "__init__",
+          "line": 19,
+          "file": ".\\test_standalone.py",
+          "args": [
+            "self"
+          ]
+        },
+        {
+          "name": "analyze_codebase",
+          "line": 22,
+          "file": ".\\test_standalone.py",
+          "args": [
+            "self",
+            "path"
+          ]
+        }
+      ],
+      "imports": [
+        {
+          "module": "json",
+          "alias": null,
+          "file": ".\\test_standalone.py",
+          "line": 6
+        },
+        {
+          "module": "os",
+          "alias": null,
+          "file": ".\\test_standalone.py",
+          "line": 7
+        },
+        {
+          "module": "sys",
+          "alias": null,
+          "file": ".\\test_standalone.py",
+          "line": 8
+        },
+        {
+          "module": "codebase_visualizer.CodebaseVisualizer",
+          "alias": null,
+          "from": "codebase_visualizer",
+          "file": ".\\test_standalone.py",
+          "line": 13
+        },
+        {
+          "module": "traceback",
+          "alias": null,
+          "file": ".\\test_standalone.py",
+          "line": 197
+        }
+      ]
+    }
+  ],
+  "classes": [
+    {
+      "name": "CodebaseVisualizer",
+      "line": 16,
+      "file": ".\\codebase_visualizer.py",
+      "bases": [],
+      "methods": [
+        "__init__",
+        "create_codebase_graph",
+        "_add_node",
+        "_configure_network",
+        "_save_enhanced_graph"
+      ]
+    },
+    {
+      "name": "CodebaseAnalyzer",
+      "line": 43,
+      "file": ".\\mcp_server.py",
+      "bases": [],
+      "methods": [
+        "__init__",
+        "analyze_codebase",
+        "_analyze_file",
+        "_analyze_python",
+        "_analyze_javascript",
+        "_analyze_typescript",
+        "_analyze_java",
+        "_analyze_cpp",
+        "_analyze_csharp",
+        "_analyze_go",
+        "_analyze_rust"
+      ]
+    },
+    {
+      "name": "GitHubAnalyzer",
+      "line": 276,
+      "file": ".\\mcp_server.py",
+      "bases": [],
+      "methods": [
+        "__init__",
+        "clone_or_update_repo",
+        "get_repo_info"
+      ]
+    },
+    {
+      "name": "SimpleCodebaseAnalyzer",
+      "line": 16,
+      "file": ".\\test_standalone.py",
+      "bases": [],
+      "methods": [
+        "__init__",
+        "analyze_codebase"
+      ]
+    }
+  ],
+  "functions": [
+    {
+      "name": "__init__",
+      "line": 19,
+      "file": ".\\codebase_visualizer.py",
+      "args": [
+        "self"
+      ]
+    },
+    {
+      "name": "create_codebase_graph",
+      "line": 52,
+      "file": ".\\codebase_visualizer.py",
+      "args": [
+        "self",
+        "analysis_data",
+        "output_file"
+      ]
+    },
+    {
+      "name": "_add_node",
+      "line": 253,
+      "file": ".\\codebase_visualizer.py",
+      "args": [
+        "self",
+        "net",
+        "node_id",
+        "node_info"
+      ]
+    },
+    {
+      "name": "_configure_network",
+      "line": 319,
+      "file": ".\\codebase_visualizer.py",
+      "args": [
+        "self",
+        "net"
+      ]
+    },
+    {
+      "name": "_save_enhanced_graph",
+      "line": 369,
+      "file": ".\\codebase_visualizer.py",
+      "args": [
+        "self",
+        "net",
+        "output_file",
+        "analysis_data"
+      ]
+    },
+    {
+      "name": "demo_codebase_analysis",
+      "line": 11,
+      "file": ".\\demo_mcp.py",
+      "args": []
+    },
+    {
+      "name": "visualize_graph",
+      "line": 37,
+      "file": ".\\generate_knowledge_graph.py",
+      "args": [
+        "graph_documents"
+      ]
+    },
+    {
+      "name": "generate_knowledge_graph",
+      "line": 331,
+      "file": ".\\generate_knowledge_graph.py",
+      "args": [
+        "text"
+      ]
+    },
+    {
+      "name": "format_analysis_for_llm",
+      "line": 522,
+      "file": ".\\mcp_server.py",
+      "args": [
+        "analysis_data"
+      ]
+    },
+    {
+      "name": "__init__",
+      "line": 46,
+      "file": ".\\mcp_server.py",
+      "args": [
+        "self"
+      ]
+    },
+    {
+      "name": "analyze_codebase",
+      "line": 62,
+      "file": ".\\mcp_server.py",
+      "args": [
+        "self",
+        "path"
+      ]
+    },
+    {
+      "name": "_analyze_file",
+      "line": 107,
+      "file": ".\\mcp_server.py",
+      "args": [
+        "self",
+        "file_path"
+      ]
+    },
+    {
+      "name": "_analyze_python",
+      "line": 116,
+      "file": ".\\mcp_server.py",
+      "args": [
+        "self",
+        "file_path"
+      ]
+    },
+    {
+      "name": "_analyze_javascript",
+      "line": 171,
+      "file": ".\\mcp_server.py",
+      "args": [
+        "self",
+        "file_path"
+      ]
+    },
+    {
+      "name": "_analyze_typescript",
+      "line": 214,
+      "file": ".\\mcp_server.py",
+      "args": [
+        "self",
+        "file_path"
+      ]
+    },
+    {
+      "name": "_analyze_java",
+      "line": 218,
+      "file": ".\\mcp_server.py",
+      "args": [
+        "self",
+        "file_path"
+      ]
+    },
+    {
+      "name": "_analyze_cpp",
+      "line": 260,
+      "file": ".\\mcp_server.py",
+      "args": [
+        "self",
+        "file_path"
+      ]
+    },
+    {
+      "name": "_analyze_csharp",
+      "line": 264,
+      "file": ".\\mcp_server.py",
+      "args": [
+        "self",
+        "file_path"
+      ]
+    },
+    {
+      "name": "_analyze_go",
+      "line": 268,
+      "file": ".\\mcp_server.py",
+      "args": [
+        "self",
+        "file_path"
+      ]
+    },
+    {
+      "name": "_analyze_rust",
+      "line": 272,
+      "file": ".\\mcp_server.py",
+      "args": [
+        "self",
+        "file_path"
+      ]
+    },
+    {
+      "name": "__init__",
+      "line": 279,
+      "file": ".\\mcp_server.py",
+      "args": [
+        "self"
+      ]
+    },
+    {
+      "name": "clone_or_update_repo",
+      "line": 282,
+      "file": ".\\mcp_server.py",
+      "args": [
+        "self",
+        "repo_url",
+        "target_dir"
+      ]
+    },
+    {
+      "name": "get_repo_info",
+      "line": 297,
+      "file": ".\\mcp_server.py",
+      "args": [
+        "self",
+        "repo_url"
+      ]
+    },
+    {
+      "name": "test_sample_analysis",
+      "line": 41,
+      "file": ".\\test_mcp.py",
+      "args": []
+    },
+    {
+      "name": "test_visualization",
+      "line": 64,
+      "file": ".\\test_standalone.py",
+      "args": []
+    },
+    {
+      "name": "test_simple_analysis",
+      "line": 200,
+      "file": ".\\test_standalone.py",
+      "args": []
+    },
+    {
+      "name": "main",
+      "line": 219,
+      "file": ".\\test_standalone.py",
+      "args": []
+    },
+    {
+      "name": "__init__",
+      "line": 19,
+      "file": ".\\test_standalone.py",
+      "args": [
+        "self"
+      ]
+    },
+    {
+      "name": "analyze_codebase",
+      "line": 22,
+      "file": ".\\test_standalone.py",
+      "args": [
+        "self",
+        "path"
+      ]
+    }
+  ],
+  "imports": [
+    {
+      "module": "streamlit",
+      "alias": "st",
+      "file": ".\\app.py",
+      "line": 2
+    },
+    {
+      "module": "streamlit.components.v1",
+      "alias": "components",
+      "file": ".\\app.py",
+      "line": 3
+    },
+    {
+      "module": "generate_knowledge_graph.generate_knowledge_graph",
+      "alias": null,
+      "from": "generate_knowledge_graph",
+      "file": ".\\app.py",
+      "line": 4
+    },
+    {
+      "module": "os",
+      "alias": null,
+      "file": ".\\codebase_visualizer.py",
+      "line": 9
+    },
+    {
+      "module": "json",
+      "alias": null,
+      "file": ".\\codebase_visualizer.py",
+      "line": 10
+    },
+    {
+      "module": "typing.Dict",
+      "alias": null,
+      "from": "typing",
+      "file": ".\\codebase_visualizer.py",
+      "line": 11
+    },
+    {
+      "module": "typing.List",
+      "alias": null,
+      "from": "typing",
+      "file": ".\\codebase_visualizer.py",
+      "line": 11
+    },
+    {
+      "module": "typing.Any",
+      "alias": null,
+      "from": "typing",
+      "file": ".\\codebase_visualizer.py",
+      "line": 11
+    },
+    {
+      "module": "typing.Set",
+      "alias": null,
+      "from": "typing",
+      "file": ".\\codebase_visualizer.py",
+      "line": 11
+    },
+    {
+      "module": "typing.Tuple",
+      "alias": null,
+      "from": "typing",
+      "file": ".\\codebase_visualizer.py",
+      "line": 11
+    },
+    {
+      "module": "pyvis.network.Network",
+      "alias": null,
+      "from": "pyvis.network",
+      "file": ".\\codebase_visualizer.py",
+      "line": 12
+    },
+    {
+      "module": "colorsys",
+      "alias": null,
+      "file": ".\\codebase_visualizer.py",
+      "line": 13
+    },
+    {
+      "module": "hashlib",
+      "alias": null,
+      "file": ".\\codebase_visualizer.py",
+      "line": 14
+    },
+    {
+      "module": "os",
+      "alias": null,
+      "file": ".\\demo_mcp.py",
+      "line": 6
+    },
+    {
+      "module": "json",
+      "alias": null,
+      "file": ".\\demo_mcp.py",
+      "line": 7
+    },
+    {
+      "module": "pathlib.Path",
+      "alias": null,
+      "from": "pathlib",
+      "file": ".\\demo_mcp.py",
+      "line": 8
+    },
+    {
+      "module": "codebase_visualizer.CodebaseVisualizer",
+      "alias": null,
+      "from": "codebase_visualizer",
+      "file": ".\\demo_mcp.py",
+      "line": 9
+    },
+    {
+      "module": "langchain_experimental.graph_transformers.LLMGraphTransformer",
+      "alias": null,
+      "from": "langchain_experimental.graph_transformers",
+      "file": ".\\generate_knowledge_graph.py",
+      "line": 1
+    },
+    {
+      "module": "langchain_core.documents.Document",
+      "alias": null,
+      "from": "langchain_core.documents",
+      "file": ".\\generate_knowledge_graph.py",
+      "line": 2
+    },
+    {
+      "module": "langchain_openai.ChatOpenAI",
+      "alias": null,
+      "from": "langchain_openai",
+      "file": ".\\generate_knowledge_graph.py",
+      "line": 3
+    },
+    {
+      "module": "pyvis.network.Network",
+      "alias": null,
+      "from": "pyvis.network",
+      "file": ".\\generate_knowledge_graph.py",
+      "line": 4
+    },
+    {
+      "module": "dotenv.load_dotenv",
+      "alias": null,
+      "from": "dotenv",
+      "file": ".\\generate_knowledge_graph.py",
+      "line": 6
+    },
+    {
+      "module": "os",
+      "alias": null,
+      "file": ".\\generate_knowledge_graph.py",
+      "line": 7
+    },
+    {
+      "module": "asyncio",
+      "alias": null,
+      "file": ".\\generate_knowledge_graph.py",
+      "line": 8
+    },
+    {
+      "module": "asyncio",
+      "alias": null,
+      "file": ".\\mcp_server.py",
+      "line": 10
+    },
+    {
+      "module": "json",
+      "alias": null,
+      "file": ".\\mcp_server.py",
+      "line": 11
+    },
+    {
+      "module": "os",
+      "alias": null,
+      "file": ".\\mcp_server.py",
+      "line": 12
+    },
+    {
+      "module": "ast",
+      "alias": null,
+      "file": ".\\mcp_server.py",
+      "line": 13
+    },
+    {
+      "module": "subprocess",
+      "alias": null,
+      "file": ".\\mcp_server.py",
+      "line": 14
+    },
+    {
+      "module": "pathlib.Path",
+      "alias": null,
+      "from": "pathlib",
+      "file": ".\\mcp_server.py",
+      "line": 15
+    },
+    {
+      "module": "typing.Dict",
+      "alias": null,
+      "from": "typing",
+      "file": ".\\mcp_server.py",
+      "line": 16
+    },
+    {
+      "module": "typing.List",
+      "alias": null,
+      "from": "typing",
+      "file": ".\\mcp_server.py",
+      "line": 16
+    },
+    {
+      "module": "typing.Optional",
+      "alias": null,
+      "from": "typing",
+      "file": ".\\mcp_server.py",
+      "line": 16
+    },
+    {
+      "module": "typing.Any",
+      "alias": null,
+      "from": "typing",
+      "file": ".\\mcp_server.py",
+      "line": 16
+    },
+    {
+      "module": "typing.Tuple",
+      "alias": null,
+      "from": "typing",
+      "file": ".\\mcp_server.py",
+      "line": 16
+    },
+    {
+      "module": "logging",
+      "alias": null,
+      "file": ".\\mcp_server.py",
+      "line": 17
+    },
+    {
+      "module": "urllib.parse.urlparse",
+      "alias": null,
+      "from": "urllib.parse",
+      "file": ".\\mcp_server.py",
+      "line": 18
+    },
+    {
+      "module": "mcp.server.models.InitializationOptions",
+      "alias": null,
+      "from": "mcp.server.models",
+      "file": ".\\mcp_server.py",
+      "line": 20
+    },
+    {
+      "module": "mcp.server.NotificationOptions",
+      "alias": null,
+      "from": "mcp.server",
+      "file": ".\\mcp_server.py",
+      "line": 21
+    },
+    {
+      "module": "mcp.server.Server",
+      "alias": null,
+      "from": "mcp.server",
+      "file": ".\\mcp_server.py",
+      "line": 21
+    },
+    {
+      "module": "mcp.types.Resource",
+      "alias": null,
+      "from": "mcp.types",
+      "file": ".\\mcp_server.py",
+      "line": 22
+    },
+    {
+      "module": "mcp.types.Tool",
+      "alias": null,
+      "from": "mcp.types",
+      "file": ".\\mcp_server.py",
+      "line": 22
+    },
+    {
+      "module": "mcp.types.TextContent",
+      "alias": null,
+      "from": "mcp.types",
+      "file": ".\\mcp_server.py",
+      "line": 22
+    },
+    {
+      "module": "mcp.types.ImageContent",
+      "alias": null,
+      "from": "mcp.types",
+      "file": ".\\mcp_server.py",
+      "line": 22
+    },
+    {
+      "module": "mcp.types.EmbeddedResource",
+      "alias": null,
+      "from": "mcp.types",
+      "file": ".\\mcp_server.py",
+      "line": 22
+    },
+    {
+      "module": "mcp.types",
+      "alias": "types",
+      "file": ".\\mcp_server.py",
+      "line": 29
+    },
+    {
+      "module": "generate_knowledge_graph.generate_knowledge_graph",
+      "alias": null,
+      "from": "generate_knowledge_graph",
+      "file": ".\\mcp_server.py",
+      "line": 32
+    },
+    {
+      "module": "generate_knowledge_graph.visualize_graph",
+      "alias": null,
+      "from": "generate_knowledge_graph",
+      "file": ".\\mcp_server.py",
+      "line": 32
+    },
+    {
+      "module": "generate_knowledge_graph.extract_graph_data",
+      "alias": null,
+      "from": "generate_knowledge_graph",
+      "file": ".\\mcp_server.py",
+      "line": 32
+    },
+    {
+      "module": "codebase_visualizer.CodebaseVisualizer",
+      "alias": null,
+      "from": "codebase_visualizer",
+      "file": ".\\mcp_server.py",
+      "line": 33
+    },
+    {
+      "module": "pyvis.network.Network",
+      "alias": null,
+      "from": "pyvis.network",
+      "file": ".\\mcp_server.py",
+      "line": 34
+    },
+    {
+      "module": "requests",
+      "alias": null,
+      "file": ".\\mcp_server.py",
+      "line": 35
+    },
+    {
+      "module": "mcp.server.stdio.stdio_server",
+      "alias": null,
+      "from": "mcp.server.stdio",
+      "file": ".\\mcp_server.py",
+      "line": 579
+    },
+    {
+      "module": "re",
+      "alias": null,
+      "file": ".\\mcp_server.py",
+      "line": 177
+    },
+    {
+      "module": "re",
+      "alias": null,
+      "file": ".\\mcp_server.py",
+      "line": 223
+    },
+    {
+      "module": "json",
+      "alias": null,
+      "file": ".\\test_mcp.py",
+      "line": 6
+    },
+    {
+      "module": "asyncio",
+      "alias": null,
+      "file": ".\\test_mcp.py",
+      "line": 7
+    },
+    {
+      "module": "mcp_server.codebase_analyzer",
+      "alias": null,
+      "from": "mcp_server",
+      "file": ".\\test_mcp.py",
+      "line": 8
+    },
+    {
+      "module": "mcp_server.codebase_visualizer",
+      "alias": null,
+      "from": "mcp_server",
+      "file": ".\\test_mcp.py",
+      "line": 8
+    },
+    {
+      "module": "json",
+      "alias": null,
+      "file": ".\\test_standalone.py",
+      "line": 6
+    },
+    {
+      "module": "os",
+      "alias": null,
+      "file": ".\\test_standalone.py",
+      "line": 7
+    },
+    {
+      "module": "sys",
+      "alias": null,
+      "file": ".\\test_standalone.py",
+      "line": 8
+    },
+    {
+      "module": "codebase_visualizer.CodebaseVisualizer",
+      "alias": null,
+      "from": "codebase_visualizer",
+      "file": ".\\test_standalone.py",
+      "line": 13
+    },
+    {
+      "module": "traceback",
+      "alias": null,
+      "file": ".\\test_standalone.py",
+      "line": 197
+    }
+  ],
+  "dependencies": [],
+  "structure": {},
+  "metrics": {
+    "total_files": 7,
+    "total_classes": 4,
+    "total_functions": 29,
+    "total_imports": 64
+  }
+}
