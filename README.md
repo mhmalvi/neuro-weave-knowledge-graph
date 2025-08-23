@@ -130,6 +130,13 @@ The system uses:
 3. **Graph Generation**: Build interactive network visualizations
 4. **MCP Integration**: Provide tools for AI assistant integration
 
+## 👨‍💻 Author
+
+**[mhmalvi](https://github.com/mhmalvi)**
+- 🚀 Creator and maintainer of NeuroWeave Knowledge Graph
+- 🧠 Developer of the MCP server implementation  
+- 🎨 Designer of the neural-themed visualization system
+
 ## License
 
 This project is licensed under the MIT License - a permissive open source license that allows for free use, modification, and distribution of the software.
