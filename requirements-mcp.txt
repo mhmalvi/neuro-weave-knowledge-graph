@@ -1,0 +1,5 @@
+# Core MCP Server Dependencies Only
+mcp>=1.0.0
+pyvis>=0.3.2
+python-dotenv>=1.0.0
+requests>=2.31.0

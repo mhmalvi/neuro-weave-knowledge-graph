@@ -1,0 +1,33 @@
+{
+  "version": 2,
+  "name": "neuroweave-mcp",
+  "builds": [
+    {
+      "src": "api/*.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/health",
+      "dest": "/api/health"
+    },
+    {
+      "src": "/mcp/(.*)",
+      "dest": "/api/mcp"
+    },
+    {
+      "src": "/",
+      "dest": "/api/index"
+    }
+  ],
+  "env": {
+    "OPENAI_API_KEY": "@openai_api_key",
+    "GITHUB_TOKEN": "@github_token"
+  },
+  "functions": {
+    "api/*.py": {
+      "maxDuration": 30
+    }
+  }
+}

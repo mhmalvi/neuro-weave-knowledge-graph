@@ -2,6 +2,88 @@
 import streamlit as st
 import streamlit.components.v1 as components  # For embedding custom HTML
 from generate_knowledge_graph import generate_knowledge_graph
+from mcp_server import GitHubAnalyzer, CodebaseAnalyzer
+from codebase_visualizer import CodebaseVisualizer
+import os
+import re
+from urllib.parse import urlparse
+
+# GitHub Analysis Functions
+@st.cache_data(ttl=3600)  # Cache for 1 hour
+def validate_github_url(url: str) -> dict:
+    """Validate GitHub URL and return repository info"""
+    try:
+        # Clean URL
+        url = url.strip().rstrip('/')
+        if url.endswith('.git'):
+            url = url[:-4]
+            
+        # Parse URL
+        parsed = urlparse(url)
+        if 'github.com' not in parsed.netloc.lower():
+            return {"valid": False, "error": "Only GitHub repositories are supported"}
+        
+        # Extract owner and repo
+        path_parts = parsed.path.strip('/').split('/')
+        if len(path_parts) < 2:
+            return {"valid": False, "error": "Invalid GitHub repository URL"}
+        
+        owner, repo = path_parts[0], path_parts[1]
+        
+        return {
+            "valid": True,
+            "owner": owner,
+            "repo": repo,
+            "full_name": f"{owner}/{repo}",
+            "url": url
+        }
+    except Exception as e:
+        return {"valid": False, "error": f"Invalid URL format: {str(e)}"}
+
+def analyze_github_repository(repo_url: str, progress_placeholder):
+    """Complete GitHub repository analysis pipeline"""
+    try:
+        # Initialize analyzers
+        github_analyzer = GitHubAnalyzer()
+        codebase_analyzer = CodebaseAnalyzer()
+        visualizer = CodebaseVisualizer()
+        
+        # Stage 1: Validate URL
+        progress_placeholder.markdown("🔍 **Validating Repository URL...**")
+        url_info = validate_github_url(repo_url)
+        if not url_info["valid"]:
+            return None, None, url_info["error"]
+        
+        # Stage 2: Get repository info (optional, for display)
+        progress_placeholder.markdown("📊 **Fetching Repository Information...**")
+        try:
+            repo_info = github_analyzer.get_repo_info(repo_url)
+        except:
+            repo_info = {"name": url_info["repo"], "full_name": url_info["full_name"]}
+        
+        # Stage 3: Clone repository
+        progress_placeholder.markdown("📥 **Cloning Repository...**")
+        target_dir = f"./temp_repos/{url_info['repo']}"
+        local_path = github_analyzer.clone_or_update_repo(repo_url, target_dir)
+        
+        # Stage 4: Analyze codebase
+        progress_placeholder.markdown("🧠 **Analyzing Codebase Structure...**")
+        analysis = codebase_analyzer.analyze_codebase(local_path)
+        analysis['repo_info'] = repo_info
+        analysis['repo_url'] = repo_url
+        
+        # Stage 5: Generate visualization
+        progress_placeholder.markdown("🎨 **Generating Knowledge Graph...**")
+        output_file = f"{url_info['repo']}_analysis.html"
+        network = visualizer.create_codebase_graph(analysis, output_file)
+        
+        progress_placeholder.markdown("✨ **Analysis Complete!**")
+        return analysis, network, output_file
+        
+    except Exception as e:
+        error_msg = f"Analysis failed: {str(e)}"
+        progress_placeholder.markdown(f"❌ **{error_msg}**")
+        return None, None, error_msg
 
 # Set up Streamlit page configuration
 st.set_page_config(
@@ -172,7 +254,7 @@ st.sidebar.markdown("""
 
 input_method = st.sidebar.radio(
     "🧬 Select cognitive input method:",
-    ["📄 Upload Neural Data", "⌨️ Direct Input"],  # Options for uploading a file or manually inputting text
+    ["📄 Upload Neural Data", "⌨️ Direct Input", "🌐 GitHub Repository"],  # Options for uploading a file, manually inputting text, or analyzing GitHub repo
 )
 
 # Case 1: User chooses to upload a .txt file
@@ -207,7 +289,7 @@ if input_method == "📄 Upload Neural Data":
                 components.html(HtmlFile.read(), height=1000)
 
 # Case 2: User chooses direct neural input
-else:
+elif input_method == "⌨️ Direct Input":
     # Text area for direct cognitive input
     st.sidebar.markdown("#### 🧬 Direct Cognitive Input")
     text = st.sidebar.text_area("🧠 Input cognitive data", height=300, placeholder="Enter your text data for neural analysis...")
@@ -233,6 +315,73 @@ else:
                 # Render neural visualization interface
                 HtmlFile = open(output_file, 'r', encoding='utf-8')
                 components.html(HtmlFile.read(), height=1000)
+
+# Case 3: User chooses GitHub repository analysis
+else:
+    # GitHub repository input
+    st.sidebar.markdown("#### 🔗 Repository Analysis")
+    repo_url = st.sidebar.text_input(
+        "🌐 Repository URL:", 
+        placeholder="https://github.com/user/repo",
+        help="Enter a GitHub repository URL for codebase analysis"
+    )
+    
+    if repo_url:
+        # Validate URL in real-time
+        url_info = validate_github_url(repo_url)
+        
+        if url_info["valid"]:
+            st.sidebar.success(f"✅ Valid GitHub URL: **{url_info['full_name']}**")
+            
+            # Neural processing section
+            st.sidebar.markdown("---")
+            st.sidebar.markdown("### 🚀 Neural Processing")
+            if st.sidebar.button("🔍 Analyze Repository", key="github_btn"):
+                
+                # Create progress placeholder
+                progress_placeholder = st.sidebar.empty()
+                
+                # Run analysis
+                analysis, network, result = analyze_github_repository(repo_url, progress_placeholder)
+                
+                if analysis and network:
+                    # Success - display results
+                    st.success("✨ Repository analysis complete!")
+                    
+                    # Display repository metrics
+                    metrics = analysis.get('metrics', {})
+                    repo_name = analysis.get('repo_info', {}).get('name', 'Repository')
+                    
+                    st.markdown(f"### 🧠 {repo_name} - Codebase Architecture")
+                    
+                    # Metrics display
+                    col1, col2, col3, col4 = st.columns(4)
+                    with col1:
+                        st.metric("📁 Files", metrics.get('total_files', 0))
+                    with col2:
+                        st.metric("🏗️ Classes", metrics.get('total_classes', 0))
+                    with col3:
+                        st.metric("⚡ Functions", metrics.get('total_functions', 0))
+                    with col4:
+                        st.metric("📦 Dependencies", metrics.get('total_imports', 0))
+                    
+                    st.markdown("*Interactive codebase architecture mapping*")
+                    
+                    # Render codebase visualization
+                    HtmlFile = open(result, 'r', encoding='utf-8')
+                    components.html(HtmlFile.read(), height=1000)
+                    
+                    # Download link
+                    st.markdown(f"📥 **Download:** [Open {result} in new tab](./{result})")
+                    
+                else:
+                    # Error occurred
+                    st.error(f"❌ **Analysis Failed**\n\n{result}")
+                    progress_placeholder.empty()
+        else:
+            st.sidebar.error(f"❌ {url_info['error']}")
+    else:
+        st.sidebar.info("💡 Enter a GitHub repository URL to begin analysis")
 
 # Add neural footer at the end
 st.markdown("---")

@@ -1,7 +1,9 @@
 # 🧠 NeuroWeave Knowledge Graph
 ### *Advanced MCP Server for Codebase Analysis & Interactive Visualization*
 
-A comprehensive Model Context Protocol (MCP) server that analyzes codebases and generates interactive knowledge graph visualizations, featuring multi-language support, neural-themed styling, and seamless GitHub integration.
+A comprehensive Model Context Protocol (MCP) server that analyzes codebases and generates interactive knowledge graph visualizations for **Claude Code CLI**. Features multi-language support, neural-themed styling, and seamless GitHub integration.
+
+> 🚀 **Ready for Claude Code CLI** - One-command setup for instant codebase analysis
 
 ## 🚀 Key Features
 
@@ -28,80 +30,152 @@ A comprehensive Model Context Protocol (MCP) server that analyzes codebases and 
 - `generate_codebase_graph` - Interactive visualizations
 - `get_repo_info` - Repository metadata extraction
 
-## Installation
+## 🚀 Quick Start (Claude Code CLI)
 
-### 🔧 System Requirements
+### 🌐 **Remote Installation (Recommended)**
 
-- Python 3.8+ (Neural Runtime Environment)
-- OpenAI API Key (Cognitive Access Token)
-
-### 🧬 Neural Dependencies
-
-The NeuroWeave system requires the following cognitive modules:
-
-- langchain (>= 0.1.0): Core Neural Language Framework
-- langchain-experimental (>= 0.0.45): Advanced Cognitive Modules
-- langchain-openai (>= 0.1.0): OpenAI Neural Interface
-- python-dotenv (>= 1.0.0): Environment Neural Configuration
-- pyvis (>= 0.3.2): Synaptic Visualization Engine
-- streamlit (>= 1.32.0): Neural Web Interface
-
-Initialize all neural dependencies using the cognitive requirements manifest:
-
+**One-command remote setup - no local installation needed:**
 ```bash
-pip install -r requirements.txt
+claude mcp add --transport http codebase-kg https://neuroweave-mcp.vercel.app
 ```
 
-### 🔧 Installation Steps
+**Features:**
+- ✅ **Zero setup** - works immediately
+- ✅ **No dependencies** - runs on Vercel serverless  
+- ✅ **GitHub analysis** - analyze any public repository
+- ✅ **Always updated** - latest version automatically
 
-1. Clone the repository:
+### ⚡ **Local Installation (Full Features)**
+
+**Windows:**
+```cmd
+git clone https://github.com/mhmalvi/neuro-weave-knowledge-graph.git
+cd neuro-weave-knowledge-graph
+install.bat
+```
+
+**Linux/Mac:**
+```bash
+git clone https://github.com/mhmalvi/neuro-weave-knowledge-graph.git
+cd neuro-weave-knowledge-graph
+chmod +x install.sh && ./install.sh
+```
+
+### 🎯 Instant Usage
+
+After installation, just ask Claude Code:
+- "**Analyze this codebase**"
+- "**Create a knowledge graph for my project**"  
+- "**Show me the structure of https://github.com/user/repo**"
+- "**Generate a visualization of the dependencies**"
+
+### 🔧 Manual Installation
+
+1. **Clone & Setup:**
    ```bash
    git clone https://github.com/mhmalvi/neuro-weave-knowledge-graph.git
    cd neuro-weave-knowledge-graph
    ```
 
-2. Install dependencies:
+2. **Install Core Dependencies:**
    ```bash
-   pip install -r requirements.txt
+   pip install -r requirements-mcp.txt
    ```
 
-3. Configure environment variables in `.env`:
-   ```
-   OPENAI_API_KEY=your_openai_api_key_here
-   GITHUB_TOKEN=your_github_token_here  # Optional
+3. **Configure Environment:**
+   ```bash
+   cp .env.example .env
+   # Edit .env and add your OpenAI API key
    ```
 
-## 🚀 Usage
+4. **Add to Claude Code:**
+   ```bash
+   claude mcp add codebase-knowledge-graph python ./mcp_server.py
+   ```
 
-### Streamlit Web Interface
+### 📋 Requirements
+
+- **Python 3.8+**
+- **OpenAI API Key** (required for enhanced analysis)
+- **GitHub Token** (optional, for better rate limits)
+
+## 💡 Usage Examples
+
+### 🔍 Codebase Analysis
+```
+👤 You: "Analyze this codebase and show me its structure"
+🤖 Claude: [Analyzes current directory and generates knowledge graph]
+```
+
+### 🌐 GitHub Repository Analysis  
+```
+👤 You: "Create a knowledge graph for https://github.com/microsoft/vscode"
+🤖 Claude: [Clones repo, analyzes structure, generates interactive visualization]
+```
+
+### 🎨 Custom Analysis
+```
+👤 You: "Show me all the classes and their relationships in this Python project"
+🤖 Claude: [Generates focused visualization of class hierarchies]
+```
+
+## 📁 File Structure
+
+```
+├── mcp_server.py           # Core MCP server implementation
+├── codebase_visualizer.py  # Specialized code visualization
+├── generate_knowledge_graph.py # Text-based graph generation  
+├── requirements-mcp.txt    # Minimal MCP dependencies
+├── requirements-full.txt   # Full features (AI + Web UI)
+├── install.sh / install.bat # Auto-installation scripts
+├── .env.example           # Environment template
+└── LICENSE               # MIT license
+```
+
+## 🎛️ Advanced Configuration
+
+### Environment Variables
 ```bash
-streamlit run app.py
-```
-Opens the web interface at http://localhost:8501
+# Required
+OPENAI_API_KEY=your_openai_api_key
 
-### MCP Server Integration
+# Optional  
+GITHUB_TOKEN=your_github_token
 
-#### Claude Desktop Configuration
-Add to `claude_desktop_config.json`:
-```json
-{
-  "mcpServers": {
-    "codebase-knowledge-graph": {
-      "command": "python",
-      "args": ["path/to/mcp_server.py"],
-      "env": {
-        "OPENAI_API_KEY": "your_api_key",
-        "GITHUB_TOKEN": "your_github_token"
-      }
-    }
-  }
-}
+# Streamlit (for web UI only)
+STREAMLIT_SERVER_PORT=8501
 ```
 
-#### Claude Code Integration
-```bash
-claude mcp add codebase-knowledge-graph python mcp_server.py
-```
+### Dependency Options
+- **Minimal MCP:** `pip install -r requirements-mcp.txt`
+- **Full Featured:** `pip install -r requirements-full.txt`
+- **Web UI Only:** `pip install streamlit && streamlit run app.py`
+
+## 🌐 Deploy Your Own Remote MCP Server
+
+### Deploy to Vercel (Free)
+
+1. **Fork this repository**
+2. **Deploy to Vercel:**
+   ```bash
+   npm install -g vercel
+   vercel --prod
+   ```
+3. **Set environment variables in Vercel dashboard:**
+   - `OPENAI_API_KEY` (optional)
+   - `GITHUB_TOKEN` (optional)
+
+4. **Use your deployment:**
+   ```bash
+   claude mcp add --transport http my-codebase-kg https://your-project.vercel.app
+   ```
+
+### Deploy to Other Platforms
+
+- **Netlify:** Use `netlify-plugin-python`
+- **Railway:** Direct Python deployment
+- **Render:** Web service with Python runtime
+- **DigitalOcean App Platform:** Python app
 
 ## 🎯 How It Works
 
@@ -136,6 +210,99 @@ The system uses:
 - 🚀 Creator and maintainer of NeuroWeave Knowledge Graph
 - 🧠 Developer of the MCP server implementation  
 - 🎨 Designer of the neural-themed visualization system
+
+
+NeuroWeave Knowledge Graph Codebase Analysis
+
+  Architecture Overview
+
+  Two Independent Systems:
+  1. Streamlit Web Interface (app.py) - Standalone web application
+  2. MCP Server (mcp_server.py) - AI assistant integration service
+
+  Component Analysis
+
+  🎨 Streamlit Frontend (app.py)
+
+  State: Fully functional web application
+  - Purpose: Interactive web interface for knowledge graph generation
+  - Input Methods:
+    - File upload (.txt files)
+    - Direct text input via text area
+  - Processing: Calls generate_knowledge_graph() from generate_knowledge_graph.py
+  - Output: Interactive HTML visualization embedded using components.html()
+  - Styling: Extensive cyberpunk/neural theme CSS with animations
+  - Flow: User Input → Text Processing → LLM Graph Transform → PyVis Visualization        
+
+  ⚡ MCP Server (mcp_server.py)
+
+  State: Complete MCP protocol implementation
+  - Purpose: Provides AI assistants (like Claude) with codebase analysis tools
+  - Key Classes:
+    - CodebaseAnalyzer - AST parsing for multiple languages
+    - GitHubAnalyzer - Repository cloning and GitHub API integration
+    - CodebaseVisualizer - Specialized code structure visualization
+  - Tools Exposed:
+    - analyze_codebase - Local directory analysis
+    - analyze_github_repo - GitHub repo cloning + analysis
+    - generate_codebase_graph - Interactive visualization generation
+    - get_repo_info - GitHub API metadata retrieval
+
+  🧠 Core Knowledge Graph Engine (generate_knowledge_graph.py)
+
+  State: Text-to-graph transformation system
+  - LLM Integration: Uses GPT-4o via LangChain for entity/relationship extraction
+  - Async Processing: extract_graph_data() for LLM calls
+  - Visualization: PyVis network with neural styling and physics simulation
+  - Output: Enhanced HTML with custom CSS/JavaScript effects
+
+  📊 Specialized Codebase Visualizer (codebase_visualizer.py)
+
+  State: Code-specific graph generation
+  - Node Types: Files, classes, functions, methods, imports, packages
+  - Relationships: Contains, inherits, calls, imports, depends_on
+  - Styling: Type-specific colors, shapes, and sizes
+  - Physics: Force-directed layout with collision detection
+
+  Data Flow Analysis
+
+  Streamlit App Flow:
+
+  User Input (text/file) → generate_knowledge_graph() → LLM Processing →
+  PyVis Graph → Enhanced HTML → Streamlit Display
+
+  MCP Server Flow:
+
+  AI Assistant Request → MCP Tool Call → Codebase Analysis →
+  Graph Generation → JSON Response → AI Assistant Processing
+
+  Current State Assessment
+
+  ✅ Working Components:
+  - Streamlit web interface is fully functional
+  - MCP server implements complete protocol
+  - Multi-language code analysis (Python, JS, Java, etc.)
+  - GitHub integration with cloning capability
+  - Interactive visualizations with neural theming
+  - Dual visualization modes (text-based vs code-structure)
+
+  🔧 Configuration Requirements:
+  - OpenAI API key for LLM processing
+  - Optional GitHub token for repository access
+  - Environment variables via .env file
+
+  📦 Dependencies:
+  - Core: langchain, streamlit, pyvis, mcp
+  - Analysis: ast (Python), regex (other languages)
+  - Integration: requests (GitHub API), subprocess (git)
+
+  🚀 Deployment:
+  - Web App: streamlit run app.py
+  - MCP Server: Configured in Claude Desktop or via MCP client
+  - Both systems operate independently
+
+  The codebase represents a sophisticated knowledge graph system with dual interfaces     
+   - a user-friendly web app and a powerful MCP server for AI integration.
 
 ## License
 
