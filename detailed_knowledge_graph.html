@@ -1,0 +1,756 @@
+<html>
+    <head>
+            <style>
+                @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap');
+                
+                body {
+                    background: #0a0a0a;
+                    overflow: hidden;
+                    font-family: 'Orbitron', monospace;
+                    margin: 0;
+                    padding: 0;
+                }
+                
+                /* Enhanced neural grid background */
+                body::before {
+                    content: '';
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-image: 
+                        linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+                        radial-gradient(circle at 25% 25%, rgba(0, 255, 255, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 75% 75%, rgba(255, 0, 255, 0.15) 0%, transparent 50%);
+                    background-size: 30px 30px, 30px 30px, 100% 100%, 100% 100%;
+                    animation: neural-grid-pulse 6s ease-in-out infinite alternate;
+                    pointer-events: none;
+                    z-index: -1;
+                }
+                
+                @keyframes neural-grid-pulse {
+                    0% { opacity: 0.3; transform: scale(1); }
+                    100% { opacity: 0.6; transform: scale(1.02); }
+                }
+                
+                /* Enhanced network container */
+                #mynetworkid {
+                    border: 2px solid #00ffff;
+                    border-radius: 15px;
+                    box-shadow: 
+                        0 0 40px rgba(0, 255, 255, 0.6),
+                        inset 0 0 40px rgba(0, 255, 255, 0.1);
+                    background: radial-gradient(circle at center, rgba(0, 0, 0, 0.95) 0%, rgba(10, 10, 10, 0.98) 100%);
+                    backdrop-filter: blur(5px);
+                }
+                
+                /* Info panel */
+                .info-panel {
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: rgba(0, 0, 0, 0.9);
+                    border: 1px solid #00ffff;
+                    border-radius: 10px;
+                    padding: 15px;
+                    z-index: 1000;
+                    color: #00ffff;
+                    font-family: 'Rajdhani', sans-serif;
+                    backdrop-filter: blur(10px);
+                    box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+                }
+                
+                .info-panel h3 {
+                    margin: 0 0 10px 0;
+                    color: #ffffff;
+                    font-family: 'Orbitron', monospace;
+                    font-size: 16px;
+                }
+                
+                .metric {
+                    margin: 5px 0;
+                    font-size: 14px;
+                }
+                
+                .metric-value {
+                    color: #ffffff;
+                    font-weight: bold;
+                }
+                
+                /* Enhanced tooltips */
+                .vis-tooltip {
+                    background: rgba(0, 0, 0, 0.95) !important;
+                    border: 1px solid #00ffff !important;
+                    border-radius: 8px !important;
+                    color: #00ffff !important;
+                    font-family: 'Rajdhani', sans-serif !important;
+                    font-size: 14px !important;
+                    box-shadow: 0 0 25px rgba(0, 255, 255, 0.7) !important;
+                    backdrop-filter: blur(10px) !important;
+                }
+                
+                /* Loading enhancement */
+                .vis-loading-text {
+                    color: #00ffff !important;
+                    font-family: 'Orbitron', monospace !important;
+                    font-size: 18px !important;
+                    text-shadow: 0 0 15px #00ffff !important;
+                }
+                
+                /* Control panels */
+                .vis-configuration-wrapper {
+                    background: rgba(0, 0, 0, 0.95) !important;
+                    border: 1px solid #00ffff !important;
+                    border-radius: 10px !important;
+                    backdrop-filter: blur(10px);
+                }
+                
+                .vis-configuration-wrapper .vis-configuration {
+                    color: #00ffff !important;
+                    font-family: 'Rajdhani', sans-serif !important;
+                }
+            </style>
+            
+            <div class="info-panel">
+                <h3>📊 Codebase Metrics</h3>
+                <div class="metric">Repository: <span class="metric-value">Local Codebase</span></div>
+                <div class="metric">Files: <span class="metric-value">4</span></div>
+                <div class="metric">Classes: <span class="metric-value">3</span></div>
+                <div class="metric">Functions: <span class="metric-value">4</span></div>
+                <div class="metric">Imports: <span class="metric-value">4</span></div>
+            </div>
+            
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Add title overlay
+                    const titleDiv = document.createElement('div');
+                    titleDiv.innerHTML = `
+                        <div style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1000; text-align: center;">
+                            <h1 style="color: #00ffff; font-family: 'Orbitron', monospace; font-size: 2.5rem; margin: 0; text-shadow: 0 0 25px #00ffff; animation: title-glow 3s ease-in-out infinite alternate;">
+                                🧠 Codebase Architecture Map
+                            </h1>
+                            <p style="color: #00ffff; font-family: 'Rajdhani', sans-serif; opacity: 0.9; margin: 8px 0 0 0; font-size: 1.2rem;">
+                                Interactive Code Structure Visualization
+                            </p>
+                        </div>
+                    `;
+                    document.body.appendChild(titleDiv);
+                    
+                    // Add enhanced animations
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        @keyframes title-glow {
+                            0% { text-shadow: 0 0 25px #00ffff, 0 0 35px #00ffff, 0 0 45px #00ffff; }
+                            100% { text-shadow: 0 0 35px #00ffff, 0 0 45px #00ffff, 0 0 55px #00ffff; }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                    
+                    // Enhanced canvas effects
+                    const canvas = document.querySelector('canvas');
+                    if (canvas) {
+                        canvas.style.filter = 'drop-shadow(0 0 15px rgba(0, 255, 255, 0.4))';
+                    }
+                    
+                    console.log('🧠 NeuroWeave Codebase Visualization loaded successfully');
+                });
+            </script>
+            
+        <meta charset="utf-8">
+        
+            <script>function neighbourhoodHighlight(params) {
+  // console.log("in nieghbourhoodhighlight");
+  allNodes = nodes.get({ returnType: "Object" });
+  // originalNodes = JSON.parse(JSON.stringify(allNodes));
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    highlightActive = true;
+    var i, j;
+    var selectedNode = params.nodes[0];
+    var degrees = 2;
+
+    // mark all nodes as hard to read.
+    for (let nodeId in allNodes) {
+      // nodeColors[nodeId] = allNodes[nodeId].color;
+      allNodes[nodeId].color = "rgba(200,200,200,0.5)";
+      if (allNodes[nodeId].hiddenLabel === undefined) {
+        allNodes[nodeId].hiddenLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+    var connectedNodes = network.getConnectedNodes(selectedNode);
+    var allConnectedNodes = [];
+
+    // get the second degree nodes
+    for (i = 1; i < degrees; i++) {
+      for (j = 0; j < connectedNodes.length; j++) {
+        allConnectedNodes = allConnectedNodes.concat(
+          network.getConnectedNodes(connectedNodes[j])
+        );
+      }
+    }
+
+    // all second degree nodes get a different color and their label back
+    for (i = 0; i < allConnectedNodes.length; i++) {
+      // allNodes[allConnectedNodes[i]].color = "pink";
+      allNodes[allConnectedNodes[i]].color = "rgba(150,150,150,0.75)";
+      if (allNodes[allConnectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[allConnectedNodes[i]].label =
+          allNodes[allConnectedNodes[i]].hiddenLabel;
+        allNodes[allConnectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // all first degree nodes get their own color and their label back
+    for (i = 0; i < connectedNodes.length; i++) {
+      // allNodes[connectedNodes[i]].color = undefined;
+      allNodes[connectedNodes[i]].color = nodeColors[connectedNodes[i]];
+      if (allNodes[connectedNodes[i]].hiddenLabel !== undefined) {
+        allNodes[connectedNodes[i]].label =
+          allNodes[connectedNodes[i]].hiddenLabel;
+        allNodes[connectedNodes[i]].hiddenLabel = undefined;
+      }
+    }
+
+    // the main node gets its own color and its label back.
+    // allNodes[selectedNode].color = undefined;
+    allNodes[selectedNode].color = nodeColors[selectedNode];
+    if (allNodes[selectedNode].hiddenLabel !== undefined) {
+      allNodes[selectedNode].label = allNodes[selectedNode].hiddenLabel;
+      allNodes[selectedNode].hiddenLabel = undefined;
+    }
+  } else if (highlightActive === true) {
+    // console.log("highlightActive was true");
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      // allNodes[nodeId].color = "purple";
+      allNodes[nodeId].color = nodeColors[nodeId];
+      // delete allNodes[nodeId].color;
+      if (allNodes[nodeId].hiddenLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].hiddenLabel;
+        allNodes[nodeId].hiddenLabel = undefined;
+      }
+    }
+    highlightActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    // console.log("Nothing was selected");
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        // console.log(allNodes[nodeId]);
+        // allNodes[nodeId].color = {};
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function filterHighlight(params) {
+  allNodes = nodes.get({ returnType: "Object" });
+  // if something is selected:
+  if (params.nodes.length > 0) {
+    filterActive = true;
+    let selectedNodes = params.nodes;
+
+    // hiding all nodes and saving the label
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = true;
+      if (allNodes[nodeId].savedLabel === undefined) {
+        allNodes[nodeId].savedLabel = allNodes[nodeId].label;
+        allNodes[nodeId].label = undefined;
+      }
+    }
+
+    for (let i=0; i < selectedNodes.length; i++) {
+      allNodes[selectedNodes[i]].hidden = false;
+      if (allNodes[selectedNodes[i]].savedLabel !== undefined) {
+        allNodes[selectedNodes[i]].label = allNodes[selectedNodes[i]].savedLabel;
+        allNodes[selectedNodes[i]].savedLabel = undefined;
+      }
+    }
+
+  } else if (filterActive === true) {
+    // reset all nodes
+    for (let nodeId in allNodes) {
+      allNodes[nodeId].hidden = false;
+      if (allNodes[nodeId].savedLabel !== undefined) {
+        allNodes[nodeId].label = allNodes[nodeId].savedLabel;
+        allNodes[nodeId].savedLabel = undefined;
+      }
+    }
+    filterActive = false;
+  }
+
+  // transform the object into an array
+  var updateArray = [];
+  if (params.nodes.length > 0) {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  } else {
+    for (let nodeId in allNodes) {
+      if (allNodes.hasOwnProperty(nodeId)) {
+        updateArray.push(allNodes[nodeId]);
+      }
+    }
+    nodes.update(updateArray);
+  }
+}
+
+function selectNode(nodes) {
+  network.selectNodes(nodes);
+  neighbourhoodHighlight({ nodes: nodes });
+  return nodes;
+}
+
+function selectNodes(nodes) {
+  network.selectNodes(nodes);
+  filterHighlight({nodes: nodes});
+  return nodes;
+}
+
+function highlightFilter(filter) {
+  let selectedNodes = []
+  let selectedProp = filter['property']
+  if (filter['item'] === 'node') {
+    let allNodes = nodes.get({ returnType: "Object" });
+    for (let nodeId in allNodes) {
+      if (allNodes[nodeId][selectedProp] && filter['value'].includes((allNodes[nodeId][selectedProp]).toString())) {
+        selectedNodes.push(nodeId)
+      }
+    }
+  }
+  else if (filter['item'] === 'edge'){
+    let allEdges = edges.get({returnType: 'object'});
+    // check if the selected property exists for selected edge and select the nodes connected to the edge
+    for (let edge in allEdges) {
+      if (allEdges[edge][selectedProp] && filter['value'].includes((allEdges[edge][selectedProp]).toString())) {
+        selectedNodes.push(allEdges[edge]['from'])
+        selectedNodes.push(allEdges[edge]['to'])
+      }
+    }
+  }
+  selectNodes(selectedNodes)
+}</script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+            
+            
+            
+            
+            
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/css/tom-select.min.css" integrity="sha512-43fHB3GLgZfz8QXl1RPQ8O66oIgv3po9cJ5erMt1c4QISq9dYb195T3vr5ImnJPXuVroKcGBPXBFKETW8jrPNQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/tom-select/2.0.0-rc.4/js/tom-select.complete.js" integrity="sha512-jeF9CfnvzDiw9G9xiksVjxR2lib44Gnovvkv+3CgCG6NXCD4gqlA5nDAVW5WjpA+i+/zKsUWV5xNEbW1X/HH0Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 1200px;
+                 background-color: #0a0a0a;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+                <div id="select-menu" class="card-header">
+                    <div class="row no-gutters">
+                        <div class="col-10 pb-2">
+                            <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="selectNode([value]);"
+                            id="select-node"
+                            placeholder="Select node..."
+                            >
+                                <option selected>Select a Node by ID</option>
+                                
+                                    <option value="file:.\app.py">file:.\app.py</option>
+                                
+                                    <option value="package:streamlit">package:streamlit</option>
+                                
+                                    <option value="module:streamlit.components">module:streamlit.components</option>
+                                
+                                    <option value="module:streamlit.components.v1">module:streamlit.components.v1</option>
+                                
+                                    <option value="package:generate_knowledge_graph">package:generate_knowledge_graph</option>
+                                
+                                    <option value="module:generate_knowledge_graph.generate_knowledge_graph">module:generate_knowledge_graph.generate_knowledge_graph</option>
+                                
+                                    <option value="file:.\codebase_visualizer.py">file:.\codebase_visualizer.py</option>
+                                
+                                    <option value="class:.\codebase_visualizer.py:CodebaseVisualizer">class:.\codebase_visualizer.py:CodebaseVisualizer</option>
+                                
+                                    <option value="method:.\codebase_visualizer.py:CodebaseVisualizer:__init__">method:.\codebase_visualizer.py:CodebaseVisualizer:__init__</option>
+                                
+                                    <option value="method:.\codebase_visualizer.py:CodebaseVisualizer:create_codebase_graph">method:.\codebase_visualizer.py:CodebaseVisualizer:create_codebase_graph</option>
+                                
+                                    <option value="method:.\codebase_visualizer.py:CodebaseVisualizer:_add_node">method:.\codebase_visualizer.py:CodebaseVisualizer:_add_node</option>
+                                
+                                    <option value="method:.\codebase_visualizer.py:CodebaseVisualizer:_configure_network">method:.\codebase_visualizer.py:CodebaseVisualizer:_configure_network</option>
+                                
+                                    <option value="method:.\codebase_visualizer.py:CodebaseVisualizer:_save_enhanced_graph">method:.\codebase_visualizer.py:CodebaseVisualizer:_save_enhanced_graph</option>
+                                
+                                    <option value="function:.\codebase_visualizer.py:__init__">function:.\codebase_visualizer.py:__init__</option>
+                                
+                                    <option value="function:.\codebase_visualizer.py:create_codebase_graph">function:.\codebase_visualizer.py:create_codebase_graph</option>
+                                
+                                    <option value="package:pyvis">package:pyvis</option>
+                                
+                                    <option value="module:pyvis.network">module:pyvis.network</option>
+                                
+                                    <option value="module:pyvis.network.Network">module:pyvis.network.Network</option>
+                                
+                                    <option value="file:.\mcp_server.py">file:.\mcp_server.py</option>
+                                
+                                    <option value="class:.\mcp_server.py:CodebaseAnalyzer">class:.\mcp_server.py:CodebaseAnalyzer</option>
+                                
+                                    <option value="method:.\mcp_server.py:CodebaseAnalyzer:__init__">method:.\mcp_server.py:CodebaseAnalyzer:__init__</option>
+                                
+                                    <option value="method:.\mcp_server.py:CodebaseAnalyzer:analyze_codebase">method:.\mcp_server.py:CodebaseAnalyzer:analyze_codebase</option>
+                                
+                                    <option value="method:.\mcp_server.py:CodebaseAnalyzer:_analyze_file">method:.\mcp_server.py:CodebaseAnalyzer:_analyze_file</option>
+                                
+                                    <option value="method:.\mcp_server.py:CodebaseAnalyzer:_analyze_python">method:.\mcp_server.py:CodebaseAnalyzer:_analyze_python</option>
+                                
+                                    <option value="method:.\mcp_server.py:CodebaseAnalyzer:_analyze_javascript">method:.\mcp_server.py:CodebaseAnalyzer:_analyze_javascript</option>
+                                
+                                    <option value="class:.\mcp_server.py:GitHubAnalyzer">class:.\mcp_server.py:GitHubAnalyzer</option>
+                                
+                                    <option value="method:.\mcp_server.py:GitHubAnalyzer:__init__">method:.\mcp_server.py:GitHubAnalyzer:__init__</option>
+                                
+                                    <option value="method:.\mcp_server.py:GitHubAnalyzer:clone_or_update_repo">method:.\mcp_server.py:GitHubAnalyzer:clone_or_update_repo</option>
+                                
+                                    <option value="method:.\mcp_server.py:GitHubAnalyzer:get_repo_info">method:.\mcp_server.py:GitHubAnalyzer:get_repo_info</option>
+                                
+                                    <option value="function:.\mcp_server.py:format_analysis_for_llm">function:.\mcp_server.py:format_analysis_for_llm</option>
+                                
+                                    <option value="package:mcp">package:mcp</option>
+                                
+                                    <option value="module:mcp.server">module:mcp.server</option>
+                                
+                                    <option value="module:mcp.server.Server">module:mcp.server.Server</option>
+                                
+                                    <option value="file:.\generate_knowledge_graph.py">file:.\generate_knowledge_graph.py</option>
+                                
+                                    <option value="function:.\generate_knowledge_graph.py:visualize_graph">function:.\generate_knowledge_graph.py:visualize_graph</option>
+                                
+                                    <option value="function:.\generate_knowledge_graph.py:generate_knowledge_graph">function:.\generate_knowledge_graph.py:generate_knowledge_graph</option>
+                                
+                                    <option value="package:langchain_openai">package:langchain_openai</option>
+                                
+                                    <option value="module:langchain_openai.ChatOpenAI">module:langchain_openai.ChatOpenAI</option>
+                                
+                            </select>
+                        </div>
+                        <div class="col-2 pb-2">
+                            <button type="button" class="btn btn-primary btn-block" onclick="neighbourhoodHighlight({nodes: []});">Reset Selection</button>
+                        </div>
+                    </div>
+                </div>
+            
+            
+              <div id="filter-menu" class="card-header">
+                <div class="row no-gutters">
+                  <div class="col-3 pb-2">
+                    <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="updateFilter(value, 'item')"
+                            id="select-item"
+                        >
+                        <option value="">Select a network item</option>
+                        <option value="edge">edge</option>
+                        <option value="node">node</option>
+                    </select>
+                  </div>
+                  <div class="col-3 pb-2">
+                    <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            onchange="updateFilter(value, 'property')"
+                            id="select-property"
+                        >
+                        <option value="">Select a property...</option>
+                    </select>
+                  </div>
+                  <div class="col-3 pb-2">
+                    <select
+                            class="form-select"
+                            aria-label="Default select example"
+                            id="select-value"
+                        >
+                        <option value="">Select value(s)...</option>
+                    </select>
+                  </div>
+                  <div class="col-1 pb-2">
+                    <button type="button" class="btn btn-primary btn-block" onclick="highlightFilter(filter);">Filter</button>
+                  </div>
+                  <div class="col-2 pb-2">
+                    <button type="button" class="btn btn-primary btn-block" onclick="clearFilter(true)">Reset Selection</button>
+                  </div>
+                </div>
+              </div>
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+                  new TomSelect("#select-node",{
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      }
+                  });
+              
+
+              
+                  // explicitly using onItemAdd and this function as we need to save multiple values
+                  let updateValueFilter = function() {
+                      return function () {
+                      filter['value'].push(arguments[0])
+                      }
+                  }
+
+                  let valueControl = new TomSelect("#select-value",{
+                      maxItems: null,
+                      valueField: 'id',
+                      labelField: 'title',
+                      searchField: 'title',
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      },
+                      onItemAdd: updateValueFilter()
+                  });
+
+                  let addValues = function() {
+                      return function () {
+                          // clear the current value options and add the selected attribute values
+                          // tom-select handles duplicates
+                          let selectedProperty = arguments[0];
+                          valueControl.clear();
+                          valueControl.clearOptions();
+                          filter['value'] = []
+                          if (filter['item'] === 'node') {
+                              for (let each in allNodes) {
+                                  valueControl.addOption({
+                                      id:allNodes[each][selectedProperty],
+                                      title:allNodes[each][selectedProperty]
+                                  })
+                              }
+                          }
+                          else if (filter['item'] === 'edge') {
+                              for (let each in allEdges) {
+                                  valueControl.addOption({
+                                      id:allEdges[each][selectedProperty],
+                                      title:allEdges[each][selectedProperty]
+                                  })
+                              }
+                          }
+                      }
+                  };
+
+                  let propControl = new TomSelect("#select-property",{
+                      valueField: 'id',
+                      labelField: 'title',
+                      searchField: 'title',
+                      create: false,
+                      sortField: {
+                          field: "text",
+                          direction: "asc"
+                      },
+                      onItemAdd: addValues()
+                  });
+
+                  let addProperties = function() {
+                      return function () {
+                          // loops through the selected network item and adds the attributes to dropdown
+                          // tom-select handles duplicates
+                          clearFilter(false)
+                          if (arguments[0] === 'edge') {
+                              for (let each in allEdges) {
+                                  if (allEdges.hasOwnProperty(each)) {
+                                      for (let eachProp in allEdges[each]) {
+                                          if (allEdges[each].hasOwnProperty(eachProp)) {
+                                              propControl.addOption({id: eachProp, title: eachProp})
+                                          }
+                                      }
+                                  }
+                              }
+                          }
+                          else if (arguments[0] === 'node') {
+                              for (let each in allNodes) {
+                                  if (allNodes.hasOwnProperty(each)) {
+                                      for (let eachProp in allNodes[each]) {
+                                          if (allNodes[each].hasOwnProperty(eachProp)
+                                              && (eachProp !== 'hidden' && eachProp !== 'savedLabel'
+                                                  && eachProp !== 'hiddenLabel')) {
+                                              propControl.addOption({id: eachProp, title: eachProp})
+
+                                          }
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  };
+
+                  let itemControl = new TomSelect("#select-item",{
+                      create: false,
+                      sortField:{
+                          field: "text",
+                          direction: "asc"
+                      },
+                      onItemAdd: addProperties()
+                  });
+
+                  function clearFilter(reset) {
+                      // utility function to clear all the selected filter options
+                      // if reset is set to true, the existing filter will be removed
+                      // else, only the dropdown options are cleared
+                      propControl.clear();
+                      propControl.clearOptions();
+                      valueControl.clear();
+                      valueControl.clearOptions();
+                      filter = {
+                          item : '',
+                          property : '',
+                          value : []
+                      }
+                      if (reset) {
+                          itemControl.clear();
+                          filterHighlight({nodes: []})
+                      }
+                  }
+
+                  function updateFilter(value, key) {
+                      // key could be 'item' or 'property' and value is as selected in dropdown
+                      filter[key] = value
+                  }
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "file", "id": "file:.\\app.py", "label": "app.py", "shadow": {"color": "#00ffff", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "square", "size": 25, "title": "\ud83e\udde0 File: app.py\n\ud83d\uddc2\ufe0f Path: .\\app.py"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "package", "id": "package:streamlit", "label": "streamlit", "shadow": {"color": "#8000ff", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "hexagon", "size": 35, "title": "\ud83e\udde0 Package: streamlit"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "module", "id": "module:streamlit.components", "label": "components", "shadow": {"color": "#00ccff", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "ellipse", "size": 25, "title": "\ud83e\udde0 Module: components"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "module", "id": "module:streamlit.components.v1", "label": "v1", "shadow": {"color": "#00ccff", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "ellipse", "size": 25, "title": "\ud83e\udde0 Module: v1"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "package", "id": "package:generate_knowledge_graph", "label": "generate_knowledge_graph", "shadow": {"color": "#8000ff", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "hexagon", "size": 35, "title": "\ud83e\udde0 Package: generate_knowledge_graph"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "module", "id": "module:generate_knowledge_graph.generate_knowledge_graph", "label": "generate_knowledge_graph", "shadow": {"color": "#00ccff", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "ellipse", "size": 25, "title": "\ud83e\udde0 Module: generate_knowledge_graph"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "file", "id": "file:.\\codebase_visualizer.py", "label": "codebase_visualizer.py", "shadow": {"color": "#00ffff", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "square", "size": 25, "title": "\ud83e\udde0 File: codebase_visualizer.py\n\ud83d\uddc2\ufe0f Path: .\\codebase_visualizer.py"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "class", "id": "class:.\\codebase_visualizer.py:CodebaseVisualizer", "label": "CodebaseVisualizer", "shadow": {"color": "#ff00ff", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "triangle", "size": 30, "title": "\ud83e\udde0 Class: CodebaseVisualizer\n\ud83d\udcc1 File: .\\codebase_visualizer.py\n\ud83d\udccd Line: 16\n\ud83d\udd27 Methods: __init__, create_codebase_graph, _add_node, _configure_network, _save_enhanced_graph"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "method", "id": "method:.\\codebase_visualizer.py:CodebaseVisualizer:__init__", "label": "__init__", "shadow": {"color": "#ffff00", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "diamond", "size": 15, "title": "\ud83e\udde0 Method: __init__\n\ud83d\udcc1 File: .\\codebase_visualizer.py"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "method", "id": "method:.\\codebase_visualizer.py:CodebaseVisualizer:create_codebase_graph", "label": "create_codebase_graph", "shadow": {"color": "#ffff00", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "diamond", "size": 15, "title": "\ud83e\udde0 Method: create_codebase_graph\n\ud83d\udcc1 File: .\\codebase_visualizer.py"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "method", "id": "method:.\\codebase_visualizer.py:CodebaseVisualizer:_add_node", "label": "_add_node", "shadow": {"color": "#ffff00", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "diamond", "size": 15, "title": "\ud83e\udde0 Method: _add_node\n\ud83d\udcc1 File: .\\codebase_visualizer.py"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "method", "id": "method:.\\codebase_visualizer.py:CodebaseVisualizer:_configure_network", "label": "_configure_network", "shadow": {"color": "#ffff00", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "diamond", "size": 15, "title": "\ud83e\udde0 Method: _configure_network\n\ud83d\udcc1 File: .\\codebase_visualizer.py"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "method", "id": "method:.\\codebase_visualizer.py:CodebaseVisualizer:_save_enhanced_graph", "label": "_save_enhanced_graph", "shadow": {"color": "#ffff00", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "diamond", "size": 15, "title": "\ud83e\udde0 Method: _save_enhanced_graph\n\ud83d\udcc1 File: .\\codebase_visualizer.py"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "function", "id": "function:.\\codebase_visualizer.py:__init__", "label": "__init__", "shadow": {"color": "#00ff00", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "dot", "size": 20, "title": "\ud83e\udde0 Function: __init__\n\ud83d\udcc1 File: .\\codebase_visualizer.py\n\ud83d\udccd Line: 19\n\u2699\ufe0f Args: self"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "function", "id": "function:.\\codebase_visualizer.py:create_codebase_graph", "label": "create_codebase_graph", "shadow": {"color": "#00ff00", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "dot", "size": 20, "title": "\ud83e\udde0 Function: create_codebase_graph\n\ud83d\udcc1 File: .\\codebase_visualizer.py\n\ud83d\udccd Line: 52\n\u2699\ufe0f Args: self, analysis_data, output_file"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "package", "id": "package:pyvis", "label": "pyvis", "shadow": {"color": "#8000ff", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "hexagon", "size": 35, "title": "\ud83e\udde0 Package: pyvis"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "module", "id": "module:pyvis.network", "label": "network", "shadow": {"color": "#00ccff", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "ellipse", "size": 25, "title": "\ud83e\udde0 Module: network"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "module", "id": "module:pyvis.network.Network", "label": "Network", "shadow": {"color": "#00ccff", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "ellipse", "size": 25, "title": "\ud83e\udde0 Module: Network"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "file", "id": "file:.\\mcp_server.py", "label": "mcp_server.py", "shadow": {"color": "#00ffff", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "square", "size": 25, "title": "\ud83e\udde0 File: mcp_server.py\n\ud83d\uddc2\ufe0f Path: .\\mcp_server.py"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "class", "id": "class:.\\mcp_server.py:CodebaseAnalyzer", "label": "CodebaseAnalyzer", "shadow": {"color": "#ff00ff", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "triangle", "size": 30, "title": "\ud83e\udde0 Class: CodebaseAnalyzer\n\ud83d\udcc1 File: .\\mcp_server.py\n\ud83d\udccd Line: 43\n\ud83d\udd27 Methods: __init__, analyze_codebase, _analyze_file, _analyze_python, _analyze_javascript"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "method", "id": "method:.\\mcp_server.py:CodebaseAnalyzer:__init__", "label": "__init__", "shadow": {"color": "#ffff00", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "diamond", "size": 15, "title": "\ud83e\udde0 Method: __init__\n\ud83d\udcc1 File: .\\mcp_server.py"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "method", "id": "method:.\\mcp_server.py:CodebaseAnalyzer:analyze_codebase", "label": "analyze_codebase", "shadow": {"color": "#ffff00", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "diamond", "size": 15, "title": "\ud83e\udde0 Method: analyze_codebase\n\ud83d\udcc1 File: .\\mcp_server.py"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "method", "id": "method:.\\mcp_server.py:CodebaseAnalyzer:_analyze_file", "label": "_analyze_file", "shadow": {"color": "#ffff00", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "diamond", "size": 15, "title": "\ud83e\udde0 Method: _analyze_file\n\ud83d\udcc1 File: .\\mcp_server.py"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "method", "id": "method:.\\mcp_server.py:CodebaseAnalyzer:_analyze_python", "label": "_analyze_python", "shadow": {"color": "#ffff00", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "diamond", "size": 15, "title": "\ud83e\udde0 Method: _analyze_python\n\ud83d\udcc1 File: .\\mcp_server.py"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "method", "id": "method:.\\mcp_server.py:CodebaseAnalyzer:_analyze_javascript", "label": "_analyze_javascript", "shadow": {"color": "#ffff00", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "diamond", "size": 15, "title": "\ud83e\udde0 Method: _analyze_javascript\n\ud83d\udcc1 File: .\\mcp_server.py"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "class", "id": "class:.\\mcp_server.py:GitHubAnalyzer", "label": "GitHubAnalyzer", "shadow": {"color": "#ff00ff", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "triangle", "size": 30, "title": "\ud83e\udde0 Class: GitHubAnalyzer\n\ud83d\udcc1 File: .\\mcp_server.py\n\ud83d\udccd Line: 276\n\ud83d\udd27 Methods: __init__, clone_or_update_repo, get_repo_info"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "method", "id": "method:.\\mcp_server.py:GitHubAnalyzer:__init__", "label": "__init__", "shadow": {"color": "#ffff00", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "diamond", "size": 15, "title": "\ud83e\udde0 Method: __init__\n\ud83d\udcc1 File: .\\mcp_server.py"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "method", "id": "method:.\\mcp_server.py:GitHubAnalyzer:clone_or_update_repo", "label": "clone_or_update_repo", "shadow": {"color": "#ffff00", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "diamond", "size": 15, "title": "\ud83e\udde0 Method: clone_or_update_repo\n\ud83d\udcc1 File: .\\mcp_server.py"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "method", "id": "method:.\\mcp_server.py:GitHubAnalyzer:get_repo_info", "label": "get_repo_info", "shadow": {"color": "#ffff00", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "diamond", "size": 15, "title": "\ud83e\udde0 Method: get_repo_info\n\ud83d\udcc1 File: .\\mcp_server.py"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "function", "id": "function:.\\mcp_server.py:format_analysis_for_llm", "label": "format_analysis_for_llm", "shadow": {"color": "#00ff00", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "dot", "size": 20, "title": "\ud83e\udde0 Function: format_analysis_for_llm\n\ud83d\udcc1 File: .\\mcp_server.py\n\ud83d\udccd Line: 522\n\u2699\ufe0f Args: analysis_data"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "package", "id": "package:mcp", "label": "mcp", "shadow": {"color": "#8000ff", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "hexagon", "size": 35, "title": "\ud83e\udde0 Package: mcp"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "module", "id": "module:mcp.server", "label": "server", "shadow": {"color": "#00ccff", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "ellipse", "size": 25, "title": "\ud83e\udde0 Module: server"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "module", "id": "module:mcp.server.Server", "label": "Server", "shadow": {"color": "#00ccff", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "ellipse", "size": 25, "title": "\ud83e\udde0 Module: Server"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "file", "id": "file:.\\generate_knowledge_graph.py", "label": "generate_knowledge_graph.py", "shadow": {"color": "#00ffff", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "square", "size": 25, "title": "\ud83e\udde0 File: generate_knowledge_graph.py\n\ud83d\uddc2\ufe0f Path: .\\generate_knowledge_graph.py"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "function", "id": "function:.\\generate_knowledge_graph.py:visualize_graph", "label": "visualize_graph", "shadow": {"color": "#00ff00", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "dot", "size": 20, "title": "\ud83e\udde0 Function: visualize_graph\n\ud83d\udcc1 File: .\\generate_knowledge_graph.py\n\ud83d\udccd Line: 37\n\u2699\ufe0f Args: graph_documents"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "function", "id": "function:.\\generate_knowledge_graph.py:generate_knowledge_graph", "label": "generate_knowledge_graph", "shadow": {"color": "#00ff00", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "dot", "size": 20, "title": "\ud83e\udde0 Function: generate_knowledge_graph\n\ud83d\udcc1 File: .\\generate_knowledge_graph.py\n\ud83d\udccd Line: 331\n\u2699\ufe0f Args: text"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "package", "id": "package:langchain_openai", "label": "langchain_openai", "shadow": {"color": "#8000ff", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "hexagon", "size": 35, "title": "\ud83e\udde0 Package: langchain_openai"}, {"borderWidth": 2, "borderWidthSelected": 4, "font": {"color": "#00ffff"}, "group": "module", "id": "module:langchain_openai.ChatOpenAI", "label": "ChatOpenAI", "shadow": {"color": "#00ccff", "enabled": true, "size": 8, "x": 0, "y": 0}, "shape": "ellipse", "size": 25, "title": "\ud83e\udde0 Module: ChatOpenAI"}]);
+                  edges = new vis.DataSet([{"arrows": "to", "color": "#ff6600", "dashes": true, "from": "file:.\\app.py", "label": "imports", "to": "package:streamlit", "width": 2}, {"arrows": "to", "color": "#00ffff", "from": "package:streamlit", "label": "contains", "to": "module:streamlit.components", "width": 1}, {"arrows": "to", "color": "#00ffff", "from": "module:streamlit.components", "label": "contains", "to": "module:streamlit.components.v1", "width": 1}, {"arrows": "to", "color": "#ff6600", "dashes": true, "from": "file:.\\app.py", "label": "imports", "to": "module:streamlit.components.v1", "width": 2}, {"arrows": "to", "color": "#00ffff", "from": "package:generate_knowledge_graph", "label": "contains", "to": "module:generate_knowledge_graph.generate_knowledge_graph", "width": 1}, {"arrows": "to", "color": "#ff6600", "dashes": true, "from": "file:.\\app.py", "label": "imports", "to": "module:generate_knowledge_graph.generate_knowledge_graph", "width": 2}, {"arrows": "to", "color": "#00ffff", "from": "file:.\\codebase_visualizer.py", "label": "contains", "to": "class:.\\codebase_visualizer.py:CodebaseVisualizer", "width": 2}, {"arrows": "to", "color": "#00ffff", "from": "class:.\\codebase_visualizer.py:CodebaseVisualizer", "label": "contains", "to": "method:.\\codebase_visualizer.py:CodebaseVisualizer:__init__", "width": 1}, {"arrows": "to", "color": "#00ffff", "from": "class:.\\codebase_visualizer.py:CodebaseVisualizer", "label": "contains", "to": "method:.\\codebase_visualizer.py:CodebaseVisualizer:create_codebase_graph", "width": 1}, {"arrows": "to", "color": "#00ffff", "from": "class:.\\codebase_visualizer.py:CodebaseVisualizer", "label": "contains", "to": "method:.\\codebase_visualizer.py:CodebaseVisualizer:_add_node", "width": 1}, {"arrows": "to", "color": "#00ffff", "from": "class:.\\codebase_visualizer.py:CodebaseVisualizer", "label": "contains", "to": "method:.\\codebase_visualizer.py:CodebaseVisualizer:_configure_network", "width": 1}, {"arrows": "to", "color": "#00ffff", "from": "class:.\\codebase_visualizer.py:CodebaseVisualizer", "label": "contains", "to": "method:.\\codebase_visualizer.py:CodebaseVisualizer:_save_enhanced_graph", "width": 1}, {"arrows": "to", "color": "#00ffff", "from": "file:.\\codebase_visualizer.py", "label": "contains", "to": "function:.\\codebase_visualizer.py:__init__", "width": 2}, {"arrows": "to", "color": "#00ffff", "from": "file:.\\codebase_visualizer.py", "label": "contains", "to": "function:.\\codebase_visualizer.py:create_codebase_graph", "width": 2}, {"arrows": "to", "color": "#00ffff", "from": "package:pyvis", "label": "contains", "to": "module:pyvis.network", "width": 1}, {"arrows": "to", "color": "#00ffff", "from": "module:pyvis.network", "label": "contains", "to": "module:pyvis.network.Network", "width": 1}, {"arrows": "to", "color": "#ff6600", "dashes": true, "from": "file:.\\codebase_visualizer.py", "label": "imports", "to": "module:pyvis.network.Network", "width": 2}, {"arrows": "to", "color": "#00ffff", "from": "file:.\\mcp_server.py", "label": "contains", "to": "class:.\\mcp_server.py:CodebaseAnalyzer", "width": 2}, {"arrows": "to", "color": "#00ffff", "from": "class:.\\mcp_server.py:CodebaseAnalyzer", "label": "contains", "to": "method:.\\mcp_server.py:CodebaseAnalyzer:__init__", "width": 1}, {"arrows": "to", "color": "#00ffff", "from": "class:.\\mcp_server.py:CodebaseAnalyzer", "label": "contains", "to": "method:.\\mcp_server.py:CodebaseAnalyzer:analyze_codebase", "width": 1}, {"arrows": "to", "color": "#00ffff", "from": "class:.\\mcp_server.py:CodebaseAnalyzer", "label": "contains", "to": "method:.\\mcp_server.py:CodebaseAnalyzer:_analyze_file", "width": 1}, {"arrows": "to", "color": "#00ffff", "from": "class:.\\mcp_server.py:CodebaseAnalyzer", "label": "contains", "to": "method:.\\mcp_server.py:CodebaseAnalyzer:_analyze_python", "width": 1}, {"arrows": "to", "color": "#00ffff", "from": "class:.\\mcp_server.py:CodebaseAnalyzer", "label": "contains", "to": "method:.\\mcp_server.py:CodebaseAnalyzer:_analyze_javascript", "width": 1}, {"arrows": "to", "color": "#00ffff", "from": "file:.\\mcp_server.py", "label": "contains", "to": "class:.\\mcp_server.py:GitHubAnalyzer", "width": 2}, {"arrows": "to", "color": "#00ffff", "from": "class:.\\mcp_server.py:GitHubAnalyzer", "label": "contains", "to": "method:.\\mcp_server.py:GitHubAnalyzer:__init__", "width": 1}, {"arrows": "to", "color": "#00ffff", "from": "class:.\\mcp_server.py:GitHubAnalyzer", "label": "contains", "to": "method:.\\mcp_server.py:GitHubAnalyzer:clone_or_update_repo", "width": 1}, {"arrows": "to", "color": "#00ffff", "from": "class:.\\mcp_server.py:GitHubAnalyzer", "label": "contains", "to": "method:.\\mcp_server.py:GitHubAnalyzer:get_repo_info", "width": 1}, {"arrows": "to", "color": "#00ffff", "from": "file:.\\mcp_server.py", "label": "contains", "to": "function:.\\mcp_server.py:format_analysis_for_llm", "width": 2}, {"arrows": "to", "color": "#00ffff", "from": "package:mcp", "label": "contains", "to": "module:mcp.server", "width": 1}, {"arrows": "to", "color": "#00ffff", "from": "module:mcp.server", "label": "contains", "to": "module:mcp.server.Server", "width": 1}, {"arrows": "to", "color": "#ff6600", "dashes": true, "from": "file:.\\mcp_server.py", "label": "imports", "to": "module:mcp.server.Server", "width": 2}, {"arrows": "to", "color": "#00ffff", "from": "file:.\\generate_knowledge_graph.py", "label": "contains", "to": "function:.\\generate_knowledge_graph.py:visualize_graph", "width": 2}, {"arrows": "to", "color": "#00ffff", "from": "file:.\\generate_knowledge_graph.py", "label": "contains", "to": "function:.\\generate_knowledge_graph.py:generate_knowledge_graph", "width": 2}, {"arrows": "to", "color": "#00ffff", "from": "package:langchain_openai", "label": "contains", "to": "module:langchain_openai.ChatOpenAI", "width": 1}, {"arrows": "to", "color": "#ff6600", "dashes": true, "from": "file:.\\generate_knowledge_graph.py", "label": "imports", "to": "module:langchain_openai.ChatOpenAI", "width": 2}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"physics": {"forceAtlas2Based": {"gravitationalConstant": -200, "centralGravity": 0.015, "springLength": 300, "springConstant": 0.08, "damping": 0.4, "avoidOverlap": 1}, "maxVelocity": 50, "minVelocity": 0.1, "solver": "forceAtlas2Based", "timestep": 0.35, "adaptiveTimestep": true}, "interaction": {"hover": true, "hoverConnectedEdges": true, "selectConnectedEdges": true, "tooltipDelay": 200, "zoomView": true, "dragView": true, "multiselect": true}, "manipulation": {"enabled": false}, "layout": {"improvedLayout": true, "hierarchical": {"enabled": false}, "randomSeed": 42}, "groups": {"file": {"color": {"background": "#00ffff"}, "shape": "square"}, "class": {"color": {"background": "#ff00ff"}, "shape": "triangle"}, "function": {"color": {"background": "#00ff00"}, "shape": "dot"}, "method": {"color": {"background": "#ffff00"}, "shape": "diamond"}, "package": {"color": {"background": "#8000ff"}, "shape": "hexagon"}, "module": {"color": {"background": "#00ccff"}, "shape": "ellipse"}, "repository": {"color": {"background": "#ff0080"}, "shape": "star"}}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+                    network.on("selectNode", neighbourhoodHighlight);
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>

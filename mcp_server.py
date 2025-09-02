@@ -16,6 +16,10 @@ from pathlib import Path
 from typing import Dict, List, Optional, Any, Tuple
 import logging
 from urllib.parse import urlparse
+import webbrowser
+import threading
+from http.server import HTTPServer, SimpleHTTPRequestHandler
+import socket
 
 from mcp.server.models import InitializationOptions
 from mcp.server import NotificationOptions, Server
@@ -437,10 +441,25 @@ async def handle_call_tool(name: str, arguments: dict) -> list[types.TextContent
             path = arguments["path"]
             analysis = codebase_analyzer.analyze_codebase(path)
             
+            # Create user-friendly summary instead of raw JSON
+            metrics = analysis.get('metrics', {})
+            summary = f"""🔍 **Codebase Analysis Complete!**
+
+📁 **Project Path:** {path}
+📈 **Analysis Results:**
+• **Files Analyzed:** {metrics.get('total_files', 0)} files
+• **Classes Found:** {metrics.get('total_classes', 0)} classes
+• **Functions Found:** {metrics.get('total_functions', 0)} functions  
+• **Import Dependencies:** {metrics.get('total_imports', 0)} imports
+
+🚀 **Ready for Visualization:** Use this analysis to generate an interactive knowledge graph!
+
+📊 **Next Steps:** Ask me to "generate knowledge graph" to create an interactive visualization of this codebase structure."""
+            
             return [
                 types.TextContent(
                     type="text",
-                    text=json.dumps(analysis, indent=2, default=str)
+                    text=summary
                 )
             ]
         
@@ -462,10 +481,29 @@ async def handle_call_tool(name: str, arguments: dict) -> list[types.TextContent
             analysis['repo_url'] = repo_url
             analysis['local_path'] = local_path
             
+            # Create user-friendly summary
+            metrics = analysis.get('metrics', {})
+            repo_name = repo_url.split('/')[-1]
+            summary = f"""🔍 **GitHub Repository Analysis Complete!**
+
+🌐 **Repository:** {repo_name}
+🔗 **URL:** {repo_url}
+📁 **Local Path:** {local_path}
+
+📈 **Analysis Results:**
+• **Files Analyzed:** {metrics.get('total_files', 0)} files
+• **Classes Found:** {metrics.get('total_classes', 0)} classes
+• **Functions Found:** {metrics.get('total_functions', 0)} functions  
+• **Import Dependencies:** {metrics.get('total_imports', 0)} imports
+
+🚀 **Ready for Visualization:** Repository successfully cloned and analyzed!
+
+📊 **Next Steps:** Ask me to "generate knowledge graph" to create an interactive visualization of this repository's architecture."""
+            
             return [
                 types.TextContent(
                     type="text",
-                    text=json.dumps(analysis, indent=2, default=str)
+                    text=summary
                 )
             ]
         
@@ -477,17 +515,46 @@ async def handle_call_tool(name: str, arguments: dict) -> list[types.TextContent
             net = codebase_visualizer.create_codebase_graph(analysis_data, output_file)
             
             if net:
+                # Get absolute path for easy access
+                abs_path = os.path.abspath(output_file)
+                
+                # Create user-friendly summary
+                metrics = analysis_data.get('metrics', {})
+                repo_name = analysis_data.get('repo_url', 'Your Project').split('/')[-1] if 'repo_url' in analysis_data else 'Your Project'
+                
+                summary = f"""🎉 **Knowledge Graph Generated Successfully!**
+
+🚀 **Quick Access:**
+• 📁 **File Location:** `{abs_path}`
+• 🌐 **Open in Browser:** Double-click the file or drag to your browser
+• 📊 **Interactive Visualization Ready**
+
+📈 **Analysis Summary:**
+• **Project:** {repo_name}
+• **Files Analyzed:** {metrics.get('total_files', 0)} files
+• **Classes Found:** {metrics.get('total_classes', 0)} classes  
+• **Functions Found:** {metrics.get('total_functions', 0)} functions
+• **Dependencies:** {metrics.get('total_imports', 0)} imports
+
+🔄 **What's Available:**
+• Interactive node exploration
+• Zoom and pan controls
+• Hover details for each component
+• Visual relationship mapping
+
+💡 **Next Steps:** Click the link above to explore your codebase architecture, or ask me to analyze specific components!"""
+                
                 return [
                     types.TextContent(
                         type="text",
-                        text=f"Codebase knowledge graph generated successfully and saved to {output_file}. Open the HTML file in a browser to view the interactive visualization."
+                        text=summary
                     )
                 ]
             else:
                 return [
                     types.TextContent(
                         type="text",
-                        text="Failed to generate codebase knowledge graph"
+                        text="❌ Failed to generate knowledge graph. Please check your analysis data and try again."
                     )
                 ]
         
@@ -518,6 +585,38 @@ async def handle_call_tool(name: str, arguments: dict) -> list[types.TextContent
                 text=f"Error: {str(e)}"
             )
         ]
+
+def _find_free_port() -> int:
+    """Find an available port for local server"""
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.bind(('', 0))
+        s.listen(1)
+        port = s.getsockname()[1]
+    return port
+
+def _start_local_server(html_file: str) -> int:
+    """Start a local HTTP server to serve the HTML file"""
+    port = _find_free_port()
+    
+    class CustomHandler(SimpleHTTPRequestHandler):
+        def log_message(self, format, *args):
+            # Suppress server logs
+            pass
+    
+    def run_server():
+        try:
+            httpd = HTTPServer(('localhost', port), CustomHandler)
+            # Set a timeout so server doesn't run forever
+            httpd.timeout = 300  # 5 minutes
+            httpd.serve_forever()
+        except:
+            pass  # Silently handle any server errors
+    
+    # Start server in background thread
+    server_thread = threading.Thread(target=run_server, daemon=True)
+    server_thread.start()
+    
+    return port
 
 def format_analysis_for_llm(analysis_data: Dict[str, Any]) -> str:
     """Format codebase analysis data into a text summary for LLM processing"""

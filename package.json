@@ -1,0 +1,18 @@
+{
+  "name": "neuroweave-mcp-server",
+  "version": "1.0.0",
+  "description": "NeuroWeave Knowledge Graph MCP Server - Remote deployment",
+  "main": "api/index.py",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo Building Python dependencies...",
+    "deploy": "vercel --prod"
+  },
+  "keywords": ["mcp", "codebase", "analysis", "knowledge-graph", "vercel"],
+  "author": "mhmalvi",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mhmalvi/neuro-weave-knowledge-graph.git"
+  }
+}
