@@ -33,9 +33,8 @@ from mcp.types import (
 import mcp.types as types
 
 # Import our existing knowledge graph functionality
-from generate_knowledge_graph import generate_knowledge_graph, visualize_graph, extract_graph_data
 from codebase_visualizer import CodebaseVisualizer
-from cyberpunk_knowledge_graph_generator import CyberpunkKnowledgeGraphGenerator
+from enterprise_cyberpunk_generator import EnterpriseCyberpunkGenerator
 from enhanced_ecological_analyzer import EnhancedEcologicalAnalyzer
 from pyvis.network import Network
 import requests
@@ -329,7 +328,7 @@ class GitHubAnalyzer:
 codebase_analyzer = CodebaseAnalyzer()
 github_analyzer = GitHubAnalyzer()
 codebase_visualizer = CodebaseVisualizer()
-cyberpunk_generator = CyberpunkKnowledgeGraphGenerator()
+enterprise_cyberpunk_generator = EnterpriseCyberpunkGenerator()
 enhanced_analyzer = EnhancedEcologicalAnalyzer()
 
 @app.list_resources()
@@ -359,11 +358,11 @@ async def handle_get_resource(uri: types.AnyUrl) -> str:
         return json.dumps({"message": "Run analyze_codebase tool first"})
     elif uri == "codebase://graph":
         # Return the generated knowledge graph HTML
-        graph_file = "neural_map.html"
+        graph_file = "enterprise_cyberpunk_neural_graph.html"
         if os.path.exists(graph_file):
             with open(graph_file, 'r', encoding='utf-8') as f:
                 return f.read()
-        return "<html><body><h1>No graph generated yet. Run generate_codebase_graph tool first.</h1></body></html>"
+        return "<html><body><h1>No graph generated yet. Run generate_enterprise_cyberpunk_graph tool first.</h1></body></html>"
     else:
         raise ValueError(f"Unknown resource: {uri}")
 
@@ -436,8 +435,8 @@ async def handle_list_tools() -> list[Tool]:
             }
         ),
         Tool(
-            name="generate_cyberpunk_graph",
-            description="Generate a stunning cyberpunk neural network knowledge graph visualization with futuristic styling and advanced controls",
+            name="generate_enterprise_cyberpunk_graph",
+            description="Generate enterprise-grade cyberpunk neural network knowledge graph with professional hierarchical information architecture, semantic clustering, quality analytics, and advanced interactive controls",
             inputSchema={
                 "type": "object",
                 "properties": {
@@ -447,7 +446,7 @@ async def handle_list_tools() -> list[Tool]:
                     },
                     "output_file": {
                         "type": "string",
-                        "description": "Optional output HTML filename (default: cyberpunk_neural_graph.html)"
+                        "description": "Optional output HTML filename (default: enterprise_cyberpunk_neural_graph.html)"
                     }
                 },
                 "required": ["analysis_data"]
@@ -623,9 +622,9 @@ async def handle_call_tool(name: str, arguments: dict) -> list[types.TextContent
 • Code complexity metrics
 • Dependency flow analysis
 
-⚡ **Ready for Cyberpunk Visualization:** This enhanced analysis includes all the rich metadata needed for stunning neural network visualizations!
+⚡ **Ready for Enterprise Cyberpunk Visualization:** This enhanced analysis includes all the rich metadata needed for enterprise-grade neural network visualizations!
 
-🚀 **Next Steps:** Ask me to "generate cyberpunk graph" to create an immersive futuristic visualization of your codebase consciousness!"""
+🚀 **Next Steps:** Ask me to "generate enterprise cyberpunk graph" to create an immersive enterprise-grade visualization of your codebase consciousness!"""
             
             return [
                 types.TextContent(
@@ -634,12 +633,12 @@ async def handle_call_tool(name: str, arguments: dict) -> list[types.TextContent
                 )
             ]
         
-        elif name == "generate_cyberpunk_graph":
+        elif name == "generate_enterprise_cyberpunk_graph":
             analysis_data = arguments["analysis_data"]
-            output_file = arguments.get("output_file", "cyberpunk_neural_graph.html")
+            output_file = arguments.get("output_file", "enterprise_cyberpunk_neural_graph.html")
             
-            # Generate the cyberpunk visualization
-            result_file = cyberpunk_generator.generate_cyberpunk_graph(analysis_data, output_file)
+            # Generate the enterprise cyberpunk visualization
+            result_file = enterprise_cyberpunk_generator.generate_enterprise_graph(analysis_data, output_file)
             
             if result_file:
                 # Get absolute path for easy access
@@ -665,10 +664,11 @@ async def handle_call_tool(name: str, arguments: dict) -> list[types.TextContent
                 if total_complexity > 500:
                     activity_level = 'CRITICAL'
                 
-                summary = f"""🌃 **Cyberpunk Neural Network Knowledge Graph Generated!**
+                summary = f"""🌃 **Enterprise Cyberpunk Neural Network Knowledge Graph Generated!**
 
 ⚡ **Neural Matrix Status:** ONLINE
 🧠 **Digital Consciousness:** ACTIVATED
+🏢 **Enterprise Controls:** ENGAGED
 
 🎮 **Quick Access:**
 • 📁 **File Location:** `{abs_path}`
@@ -683,15 +683,16 @@ async def handle_call_tool(name: str, arguments: dict) -> list[types.TextContent
 • **Complexity Score:** {total_complexity}
 • **Activity Level:** {activity_level}
 
-✨ **Cyberpunk Features:**
-• Electric cyan/magenta/lime color scheme
-• Floating digital particles & scan lines
-• Neural network grid background
-• Advanced interactive controls
-• Real-time activity monitoring
-• Network pulse animations
+✨ **Enterprise Cyberpunk Features:**
+• Professional semantic color coding system
+• Hierarchical information architecture
+• Advanced filtering and search capabilities
+• Quality analytics and metrics dashboard
+• Progressive information disclosure
+• Enterprise-grade performance optimization
+• Responsive professional design
 
-🚀 **Experience:** Explore your codebase as a living digital consciousness with stunning futuristic visuals that make you feel like you're navigating the neural pathways of an AI mind!
+🚀 **Experience:** Explore your codebase through an enterprise-grade cyberpunk interface with professional analytics, hierarchical organization, and stunning neural visualizations designed for serious code analysis!
 
 💡 **Next Steps:** Open the file to dive into your cyberpunk neural codebase matrix!"""
                 
@@ -705,7 +706,7 @@ async def handle_call_tool(name: str, arguments: dict) -> list[types.TextContent
                 return [
                     types.TextContent(
                         type="text",
-                        text="❌ Failed to generate cyberpunk neural graph. Please check your analysis data and try again."
+                        text="❌ Failed to generate enterprise cyberpunk neural graph. Please check your analysis data and try again."
                     )
                 ]
         

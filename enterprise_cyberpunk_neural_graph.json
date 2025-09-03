@@ -1,0 +1,147 @@
+{
+  "overview": {
+    "total_nodes": 193,
+    "total_edges": 188,
+    "total_files": 22,
+    "total_complexity": 599,
+    "average_complexity": 27.23,
+    "network_density": 0.0101,
+    "hierarchy_depth": 3
+  },
+  "quality": {
+    "average_quality_score": 4.39,
+    "quality_distribution": {
+      "excellent": 3,
+      "good": 6,
+      "warning": 2,
+      "critical": 11
+    },
+    "maintainability_index": 0
+  },
+  "architecture": {
+    "patterns_detected": [],
+    "anti_patterns": [
+      "Long Parameter List: _create_cyberpunk_edge"
+    ],
+    "modularity_score": 0.5795454545454546
+  },
+  "performance": {
+    "hotspots": [
+      {
+        "name": "mcp_stdio_simple.py",
+        "file": "I:\\CYBERPUNK\\Neuoro-weave-KG\\neuro\\neuro-weave-knowledge-graph\\api\\mcp_stdio_simple.py",
+        "score": 51.8,
+        "complexity": 82,
+        "lines": 649,
+        "nodeId": "neural_23"
+      },
+      {
+        "name": "mcp.py",
+        "file": "I:\\CYBERPUNK\\Neuoro-weave-KG\\neuro\\neuro-weave-knowledge-graph\\api\\mcp.py",
+        "score": 50.81,
+        "complexity": 78,
+        "lines": 1003,
+        "nodeId": "neural_21"
+      },
+      {
+        "name": "enhanced_ecological_analyzer.py",
+        "file": "I:\\CYBERPUNK\\Neuoro-weave-KG\\neuro\\neuro-weave-knowledge-graph\\enhanced_ecological_analyzer.py",
+        "score": 46.74,
+        "complexity": 74,
+        "lines": 585,
+        "nodeId": "neural_7"
+      },
+      {
+        "name": "mcp_server.py",
+        "file": "I:\\CYBERPUNK\\Neuoro-weave-KG\\neuro\\neuro-weave-knowledge-graph\\mcp_server.py",
+        "score": 44.78,
+        "complexity": 69,
+        "lines": 846,
+        "nodeId": "neural_10"
+      },
+      {
+        "name": "enhanced_knowledge_graph_generator.py",
+        "file": "I:\\CYBERPUNK\\Neuoro-weave-KG\\neuro\\neuro-weave-knowledge-graph\\enhanced_knowledge_graph_generator.py",
+        "score": 31.96,
+        "complexity": 42,
+        "lines": 1691,
+        "nodeId": "neural_8"
+      },
+      {
+        "name": "mcp_stdio_server.py",
+        "file": "I:\\CYBERPUNK\\Neuoro-weave-KG\\neuro\\neuro-weave-knowledge-graph\\api\\mcp_stdio_server.py",
+        "score": 31.14,
+        "complexity": 48,
+        "lines": 584,
+        "nodeId": "neural_22"
+      },
+      {
+        "name": "cyberpunk_knowledge_graph_generator.py",
+        "file": "I:\\CYBERPUNK\\Neuoro-weave-KG\\neuro\\neuro-weave-knowledge-graph\\cyberpunk_knowledge_graph_generator.py",
+        "score": 31.13,
+        "complexity": 43,
+        "lines": 1333,
+        "nodeId": "neural_5"
+      },
+      {
+        "name": "codebase_visualizer.py",
+        "file": "I:\\CYBERPUNK\\Neuoro-weave-KG\\neuro\\neuro-weave-knowledge-graph\\codebase_visualizer.py",
+        "score": 23.82,
+        "complexity": 36,
+        "lines": 555,
+        "nodeId": "neural_4"
+      },
+      {
+        "name": "app.py",
+        "file": "I:\\CYBERPUNK\\Neuoro-weave-KG\\neuro\\neuro-weave-knowledge-graph\\app.py",
+        "score": 16.64,
+        "complexity": 25,
+        "lines": 409,
+        "nodeId": "neural_2"
+      },
+      {
+        "name": "test_mcp_direct.py",
+        "file": "I:\\CYBERPUNK\\Neuoro-weave-KG\\neuro\\neuro-weave-knowledge-graph\\test_mcp_direct.py",
+        "score": 14.47,
+        "complexity": 23,
+        "lines": 167,
+        "nodeId": "neural_14"
+      },
+      {
+        "name": "test_mcp_simple.py",
+        "file": "I:\\CYBERPUNK\\Neuoro-weave-KG\\neuro\\neuro-weave-knowledge-graph\\test_mcp_simple.py",
+        "score": 11.96,
+        "complexity": 19,
+        "lines": 141,
+        "nodeId": "neural_15"
+      }
+    ],
+    "complexity_outliers": [
+      {
+        "name": "enhanced_ecological_analyzer.py",
+        "complexity": 74,
+        "threshold": 54.45454545454545
+      },
+      {
+        "name": "mcp_server.py",
+        "complexity": 69,
+        "threshold": 54.45454545454545
+      },
+      {
+        "name": "mcp.py",
+        "complexity": 78,
+        "threshold": 54.45454545454545
+      },
+      {
+        "name": "mcp_stdio_simple.py",
+        "complexity": 82,
+        "threshold": 54.45454545454545
+      }
+    ]
+  },
+  "security": {
+    "issues_found": 0,
+    "security_score": 10.0,
+    "concerns": []
+  }
+}

@@ -20,7 +20,7 @@ try:
     sys.path.insert(0, parent_dir)
     
     from enhanced_ecological_analyzer import EnhancedEcologicalAnalyzer
-    from cyberpunk_knowledge_graph_generator import CyberpunkKnowledgeGraphGenerator
+    from enterprise_cyberpunk_generator import EnterpriseCyberpunkGenerator
     ENHANCED_AVAILABLE = True
 except ImportError as e:
     ENHANCED_AVAILABLE = False
@@ -118,9 +118,9 @@ def analyze_codebase_enhanced(path: str) -> Dict[str, Any]:
         analyzer = EnhancedEcologicalAnalyzer()
         analysis_result = analyzer.analyze_codebase(path)
         
-        # Generate interactive cyberpunk visualization
-        generator = CyberpunkKnowledgeGraphGenerator()
-        html_file = generator.generate_cyberpunk_graph(analysis_result, f"cyberpunk_neural_graph_{hash(path) % 10000}.html")
+        # Generate enterprise cyberpunk visualization
+        generator = EnterpriseCyberpunkGenerator()
+        html_file = generator.generate_enterprise_graph(analysis_result, f"enterprise_neural_graph_{hash(path) % 10000}.html")
         
         return {
             "analysis": analysis_result,
@@ -143,11 +143,11 @@ def generate_codebase_graph(analysis_data: dict, output_file: str = None) -> Dic
         raise Exception("Enhanced analysis components not available. Install required dependencies.")
     
     try:
-        generator = CyberpunkKnowledgeGraphGenerator()
+        generator = EnterpriseCyberpunkGenerator()
         if output_file is None:
-            output_file = f"cyberpunk_neural_graph_{hash(str(analysis_data)) % 10000}.html"
+            output_file = f"enterprise_neural_graph_{hash(str(analysis_data)) % 10000}.html"
         
-        html_file = generator.generate_cyberpunk_graph(analysis_data, output_file)
+        html_file = generator.generate_enterprise_graph(analysis_data, output_file)
         
         return {
             "visualization_file": html_file,
@@ -268,7 +268,7 @@ def handle_mcp_request(request_data: dict) -> Optional[dict]:
             tools.extend([
                 {
                     "name": "analyze_codebase_enhanced",
-                    "description": "Perform comprehensive enhanced ecological analysis on local codebase with patterns, relationships, and interactive visualization",
+                    "description": "Perform comprehensive enhanced ecological analysis on local codebase with enterprise-grade cyberpunk neural network visualization",
                     "inputSchema": {
                         "type": "object",
                         "properties": {
@@ -282,7 +282,7 @@ def handle_mcp_request(request_data: dict) -> Optional[dict]:
                 },
                 {
                     "name": "generate_codebase_graph",
-                    "description": "Generate interactive knowledge graph from codebase analysis data",
+                    "description": "Generate enterprise-grade cyberpunk neural network knowledge graph with professional analytics and controls",
                     "inputSchema": {
                         "type": "object",
                         "properties": {
@@ -417,25 +417,26 @@ def handle_mcp_request(request_data: dict) -> Optional[dict]:
                 result = analyze_codebase_enhanced(path)
                 summary = result["summary"]
                 
-                enhanced_summary = f"""🔬 **Enhanced Ecological Analysis Complete!**
+                enhanced_summary = f"""🚀 **Enterprise Cyberpunk Neural Analysis Complete!**
 
 📁 **Path:** {path}
 📊 **Files Analyzed:** {summary['files_analyzed']}
 🏗️ **Classes Found:** {summary['classes_found']}
 ⚙️ **Functions Found:** {summary['functions_found']}
 
-🧬 **Advanced Insights:**
+🧠 **Enterprise Intelligence:**
 • **Design Patterns:** {summary['patterns_detected']} detected
 • **Semantic Clusters:** {summary['clusters_created']} created  
 • **Cross-cutting Concerns:** {summary['concerns_identified']} identified
 
-📈 **Interactive Visualization:** {result['visualization_file']}
+🎯 **Professional Visualization:** {result['visualization_file']}
 
-🎯 **Enhanced ecological analysis provides deep insights into:**
-• Architectural patterns and relationships
-• Code quality metrics and maintainability
-• Semantic clustering and cross-cutting concerns
-• Interactive multi-dimensional knowledge graphs"""
+✨ **Enterprise cyberpunk analysis delivers:**
+• Hierarchical information architecture with spatial clustering
+• Professional semantic color coding and quality visualization
+• Advanced interaction controls and filtering capabilities
+• Intelligence analytics with performance hotspot detection
+• Progressive information disclosure and accessibility features"""
                 
                 return create_json_rpc_response(id_val, {
                     "content": [
@@ -479,22 +480,23 @@ def handle_mcp_request(request_data: dict) -> Optional[dict]:
             try:
                 result = generate_codebase_graph(analysis_data, output_file)
                 
-                graph_summary = f"""🕸️ **Interactive Knowledge Graph Generated!**
+                graph_summary = f"""🌟 **Enterprise Neural Network Graph Generated!**
 
-📊 **Graph Statistics:**
-• **Nodes:** {result['nodes_count']} (files, classes, functions)
-• **Edges:** {result['edges_count']} (imports, relationships)
-• **Visualization File:** {result['visualization_file']}
-• **Full Path:** {result['output_path']}
+📊 **Professional Graph Statistics:**
+• **Neural Nodes:** {result['nodes_count']} (hierarchically organized)
+• **Synaptic Connections:** {result['edges_count']} (typed relationships)
+• **Enterprise Visualization:** {result['visualization_file']}
+• **Analytics Report:** {result['output_path'].replace('.html', '.json')}
 
-🎯 **Graph Features:**
-• Interactive node exploration
-• Hierarchical relationships visualization
-• Code structure mapping
-• Dependency analysis
-• Pattern recognition visual aids
+🚀 **Enterprise Features:**
+• Professional cyberpunk neural network design
+• Hierarchical information architecture with spatial clustering
+• Semantic color coding with quality-based visual encoding
+• Advanced interaction controls and professional filtering
+• Intelligence analytics dashboard with performance insights
+• Progressive information disclosure and accessibility compliance
 
-🚀 **Open the HTML file in your browser to explore the interactive knowledge graph!**"""
+✨ **Launch the visualization in your browser for enterprise-grade code exploration!**"""
                 
                 return create_json_rpc_response(id_val, {
                     "content": [
@@ -552,7 +554,7 @@ def main():
                 
                 # Send response (if any)
                 if response is not None:
-                    response_json = json.dumps(response, ensure_ascii=False)
+                    response_json = json.dumps(response, ensure_ascii=True)
                     print(response_json, flush=True)
                     log(f"Sent: {response.get('result', {}).get('content', 'response')}")
                 

@@ -1,0 +1,184 @@
+{
+  "overview": {
+    "total_nodes": 256,
+    "total_edges": 250,
+    "total_files": 26,
+    "total_complexity": 770,
+    "average_complexity": 29.62,
+    "network_density": 0.0077,
+    "hierarchy_depth": 3
+  },
+  "quality": {
+    "average_quality_score": 3.96,
+    "quality_distribution": {
+      "excellent": 3,
+      "good": 7,
+      "warning": 2,
+      "critical": 14
+    },
+    "maintainability_index": 0
+  },
+  "architecture": {
+    "patterns_detected": [],
+    "anti_patterns": [
+      "Long Parameter List: _create_cyberpunk_edge"
+    ],
+    "modularity_score": 0.573076923076923
+  },
+  "performance": {
+    "hotspots": [
+      {
+        "name": "enterprise_cyberpunk_generator.py",
+        "file": "enterprise_cyberpunk_generator.py",
+        "score": 55.22,
+        "complexity": 78,
+        "lines": 2106,
+        "nodeId": "neural_a58050_10"
+      },
+      {
+        "name": "mcp_stdio_simple.py",
+        "file": "api\\mcp_stdio_simple.py",
+        "score": 51.8,
+        "complexity": 82,
+        "lines": 649,
+        "nodeId": "neural_a58050_28"
+      },
+      {
+        "name": "mcp.py",
+        "file": "api\\mcp.py",
+        "score": 50.81,
+        "complexity": 78,
+        "lines": 1003,
+        "nodeId": "neural_a58050_26"
+      },
+      {
+        "name": "enhanced_ecological_analyzer.py",
+        "file": "enhanced_ecological_analyzer.py",
+        "score": 46.74,
+        "complexity": 74,
+        "lines": 585,
+        "nodeId": "neural_a58050_8"
+      },
+      {
+        "name": "mcp_server.py",
+        "file": "mcp_server.py",
+        "score": 44.79,
+        "complexity": 69,
+        "lines": 847,
+        "nodeId": "neural_a58050_12"
+      },
+      {
+        "name": "enhanced_knowledge_graph_generator.py",
+        "file": "enhanced_knowledge_graph_generator.py",
+        "score": 31.96,
+        "complexity": 42,
+        "lines": 1691,
+        "nodeId": "neural_a58050_9"
+      },
+      {
+        "name": "mcp_stdio_server.py",
+        "file": "api\\mcp_stdio_server.py",
+        "score": 31.14,
+        "complexity": 48,
+        "lines": 586,
+        "nodeId": "neural_a58050_27"
+      },
+      {
+        "name": "cyberpunk_knowledge_graph_generator.py",
+        "file": "cyberpunk_knowledge_graph_generator.py",
+        "score": 31.13,
+        "complexity": 43,
+        "lines": 1333,
+        "nodeId": "neural_a58050_6"
+      },
+      {
+        "name": "codebase_visualizer.py",
+        "file": "codebase_visualizer.py",
+        "score": 23.82,
+        "complexity": 36,
+        "lines": 555,
+        "nodeId": "neural_a58050_5"
+      },
+      {
+        "name": "test_enhanced_direct.py",
+        "file": "test_enhanced_direct.py",
+        "score": 21.94,
+        "complexity": 35,
+        "lines": 235,
+        "nodeId": "neural_a58050_15"
+      },
+      {
+        "name": "test_enhanced_mcp.py",
+        "file": "test_enhanced_mcp.py",
+        "score": 21.41,
+        "complexity": 34,
+        "lines": 252,
+        "nodeId": "neural_a58050_16"
+      },
+      {
+        "name": "app.py",
+        "file": "app.py",
+        "score": 16.64,
+        "complexity": 25,
+        "lines": 409,
+        "nodeId": "neural_a58050_3"
+      },
+      {
+        "name": "test_mcp_tools.py",
+        "file": "test_mcp_tools.py",
+        "score": 15.19,
+        "complexity": 24,
+        "lines": 197,
+        "nodeId": "neural_a58050_20"
+      },
+      {
+        "name": "test_mcp_direct.py",
+        "file": "test_mcp_direct.py",
+        "score": 14.47,
+        "complexity": 23,
+        "lines": 167,
+        "nodeId": "neural_a58050_18"
+      },
+      {
+        "name": "test_mcp_simple.py",
+        "file": "test_mcp_simple.py",
+        "score": 11.96,
+        "complexity": 19,
+        "lines": 141,
+        "nodeId": "neural_a58050_19"
+      }
+    ],
+    "complexity_outliers": [
+      {
+        "name": "enhanced_ecological_analyzer.py",
+        "complexity": 74,
+        "threshold": 59.23076923076923
+      },
+      {
+        "name": "enterprise_cyberpunk_generator.py",
+        "complexity": 78,
+        "threshold": 59.23076923076923
+      },
+      {
+        "name": "mcp_server.py",
+        "complexity": 69,
+        "threshold": 59.23076923076923
+      },
+      {
+        "name": "mcp.py",
+        "complexity": 78,
+        "threshold": 59.23076923076923
+      },
+      {
+        "name": "mcp_stdio_simple.py",
+        "complexity": 82,
+        "threshold": 59.23076923076923
+      }
+    ]
+  },
+  "security": {
+    "issues_found": 0,
+    "security_score": 10.0,
+    "concerns": []
+  }
+}

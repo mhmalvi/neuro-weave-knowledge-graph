@@ -84,7 +84,14 @@
       "Read(C:\\Users\\d_rak\\.claude\\projects/**)",
       "Read(C:\\Users\\d_rak\\.claude\\projects\\I--CYBERPUNK-Neuoro-weave-KG-neuro-neuro-weave-knowledge-graph/**)",
       "Read(C:\\Users\\d_rak/**)",
-      "mcp__neuro-weave-kg__analyze_codebase_enhanced"
+      "mcp__neuro-weave-kg__analyze_codebase_enhanced",
+      "Bash(\"C:\\Users\\AAA Technology\\AppData\\Local\\Programs\\Python\\Python310\\python.exe\" -c \"import sys; print(''Python version:'', sys.version)\")",
+      "mcp__ide__executeCode",
+      "Bash(env)",
+      "Bash(start test_cyberpunk_visualization.html)",
+      "Bash(start:*)",
+      "mcp__codebase-kg__analyze_github_repo",
+      "mcp__codebase-kg__get_repo_info"
     ],
     "deny": [],
     "ask": [],
