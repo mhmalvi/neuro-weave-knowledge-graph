@@ -1,9 +1,13 @@
 from http.server import BaseHTTPRequestHandler
 import json
 import os
+import sys
 from urllib.parse import urlparse
 import requests
-from typing import Dict, Any
+from typing import Dict, Any, Optional, List
+
+# Current MCP Protocol version
+MCP_VERSION = "2024-11-05"
 
 # Simplified analyzer for serverless environment
 class ServerlessCodebaseAnalyzer:
@@ -35,10 +39,6 @@ class ServerlessCodebaseAnalyzer:
             
             repo_info = response.json()
             
-            # Get repository contents
-            contents_url = f"https://api.github.com/repos/{owner}/{repo}/contents"
-            contents_response = requests.get(contents_url, headers=headers, timeout=10)
-            
             analysis = {
                 "repo_info": repo_info,
                 "files": [],
@@ -63,99 +63,163 @@ class ServerlessCodebaseAnalyzer:
 
 analyzer = ServerlessCodebaseAnalyzer()
 
+class MCPJsonRpcError:
+    """JSON-RPC 2.0 Error codes"""
+    PARSE_ERROR = -32700
+    INVALID_REQUEST = -32600
+    METHOD_NOT_FOUND = -32601
+    INVALID_PARAMS = -32602
+    INTERNAL_ERROR = -32603
+
+def create_json_rpc_response(id_val: Any, result: Any = None, error: Optional[Dict] = None) -> Dict[str, Any]:
+    """Create a JSON-RPC 2.0 response"""
+    response = {
+        "jsonrpc": "2.0",
+        "id": id_val
+    }
+    
+    if error:
+        response["error"] = error
+    else:
+        response["result"] = result
+    
+    return response
+
+def create_json_rpc_error(code: int, message: str, data: Any = None) -> Dict[str, Any]:
+    """Create a JSON-RPC 2.0 error object"""
+    error = {
+        "code": code,
+        "message": message
+    }
+    if data is not None:
+        error["data"] = data
+    return error
+
 def handle_mcp_request(request_data: dict) -> dict:
-    """Handle MCP protocol requests"""
-    # Handle JSON-RPC format
-    jsonrpc = request_data.get("jsonrpc", "2.0")
-    id_val = request_data.get("id", 1)
+    """Handle MCP protocol requests with proper JSON-RPC 2.0 format"""
+    
+    # Validate JSON-RPC format
+    if not isinstance(request_data, dict):
+        return create_json_rpc_response(
+            None, 
+            error=create_json_rpc_error(MCPJsonRpcError.INVALID_REQUEST, "Request must be a JSON object")
+        )
+    
+    jsonrpc = request_data.get("jsonrpc")
+    if jsonrpc != "2.0":
+        return create_json_rpc_response(
+            request_data.get("id"),
+            error=create_json_rpc_error(MCPJsonRpcError.INVALID_REQUEST, "JSON-RPC version must be 2.0")
+        )
+    
+    id_val = request_data.get("id")
     method = request_data.get("method")
     params = request_data.get("params", {})
     
+    if not method:
+        return create_json_rpc_response(
+            id_val,
+            error=create_json_rpc_error(MCPJsonRpcError.INVALID_REQUEST, "Method is required")
+        )
+    
+    # Handle MCP lifecycle methods
     if method == "initialize":
-        return {
-            "jsonrpc": jsonrpc,
-            "id": id_val,
-            "result": {
-                "protocolVersion": "2024-11-05",
-                "capabilities": {
-                    "tools": {},
-                    "resources": {}
-                },
-                "serverInfo": {
-                    "name": "codebase-knowledge-graph",
-                    "version": "1.0.0"
-                }
-            }
+        client_info = params.get("clientInfo", {})
+        protocol_version = params.get("protocolVersion", MCP_VERSION)
+        
+        # Validate protocol version compatibility
+        if protocol_version != MCP_VERSION:
+            return create_json_rpc_response(
+                id_val,
+                error=create_json_rpc_error(
+                    MCPJsonRpcError.INVALID_PARAMS, 
+                    f"Unsupported protocol version. Expected {MCP_VERSION}, got {protocol_version}"
+                )
+            )
+        
+        result = {
+            "protocolVersion": MCP_VERSION,
+            "capabilities": {
+                "tools": {},
+                "resources": {},
+                "prompts": {},
+                "logging": {}
+            },
+            "serverInfo": {
+                "name": "codebase-knowledge-graph",
+                "version": "1.0.0"
+            },
+            "instructions": "Use analyze_github_repo to analyze GitHub repositories for codebase insights."
         }
+        
+        return create_json_rpc_response(id_val, result)
     
     elif method == "notifications/initialized":
-        # Client acknowledging successful initialization
-        return {
-            "jsonrpc": jsonrpc,
-            "id": id_val,
-            "result": {}
-        }
+        # Client acknowledges successful initialization - no response for notifications
+        return None
     
     elif method == "ping":
-        return {
-            "jsonrpc": jsonrpc,
-            "id": id_val,
-            "result": {}
-        }
+        return create_json_rpc_response(id_val, {})
     
     elif method == "tools/list":
-        return {
-            "jsonrpc": jsonrpc,
-            "id": id_val,
-            "result": {
-                "tools": [
-                {
-                    "name": "analyze_github_repo",
-                    "description": "Analyze a GitHub repository structure and metadata",
-                    "inputSchema": {
-                        "type": "object",
-                        "properties": {
-                            "repo_url": {
-                                "type": "string",
-                                "description": "GitHub repository URL"
-                            }
-                        },
-                        "required": ["repo_url"]
-                    }
-                },
-                {
-                    "name": "get_repo_info",
-                    "description": "Get basic information about a GitHub repository",
-                    "inputSchema": {
-                        "type": "object", 
-                        "properties": {
-                            "repo_url": {
-                                "type": "string",
-                                "description": "GitHub repository URL"
-                            }
-                        },
-                        "required": ["repo_url"]
-                    }
+        tools = [
+            {
+                "name": "analyze_github_repo",
+                "description": "Analyze a GitHub repository structure and metadata",
+                "inputSchema": {
+                    "type": "object",
+                    "properties": {
+                        "repo_url": {
+                            "type": "string",
+                            "description": "GitHub repository URL"
+                        }
+                    },
+                    "required": ["repo_url"]
                 }
-                ]
+            },
+            {
+                "name": "get_repo_info",
+                "description": "Get basic information about a GitHub repository",
+                "inputSchema": {
+                    "type": "object", 
+                    "properties": {
+                        "repo_url": {
+                            "type": "string",
+                            "description": "GitHub repository URL"
+                        }
+                    },
+                    "required": ["repo_url"]
+                }
             }
-        }
+        ]
+        
+        return create_json_rpc_response(id_val, {"tools": tools})
+    
+    elif method == "resources/list":
+        # No resources for this server
+        return create_json_rpc_response(id_val, {"resources": []})
+    
+    elif method == "prompts/list":
+        # No prompts for this server
+        return create_json_rpc_response(id_val, {"prompts": []})
     
     elif method == "tools/call":
         tool_name = params.get("name")
         arguments = params.get("arguments", {})
         
+        if not tool_name:
+            return create_json_rpc_response(
+                id_val,
+                error=create_json_rpc_error(MCPJsonRpcError.INVALID_PARAMS, "Tool name is required")
+            )
+        
         if tool_name == "analyze_github_repo":
             repo_url = arguments.get("repo_url")
             if not repo_url:
-                return {
-                    "jsonrpc": jsonrpc,
-                    "id": id_val,
-                    "error": {
-                        "code": -32602,
-                        "message": "repo_url is required"
-                    }
-                }
+                return create_json_rpc_response(
+                    id_val,
+                    error=create_json_rpc_error(MCPJsonRpcError.INVALID_PARAMS, "repo_url is required")
+                )
             
             try:
                 analysis = analyzer.analyze_github_repo(repo_url)
@@ -177,143 +241,190 @@ def handle_mcp_request(request_data: dict) -> dict:
 
 📊 **Note:** This is a serverless analysis using GitHub API. For full codebase analysis with file-level details, use the local MCP server."""
                 
-                return {
-                    "jsonrpc": jsonrpc,
-                    "id": id_val,
-                    "result": {
-                        "content": [
-                            {
-                                "type": "text",
-                                "text": summary
-                            }
-                        ]
-                    }
-                }
+                return create_json_rpc_response(id_val, {
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": summary
+                        }
+                    ]
+                })
+                
             except Exception as e:
-                return {
-                    "jsonrpc": jsonrpc,
-                    "id": id_val,
-                    "result": {
-                        "content": [
-                            {
-                                "type": "text", 
-                                "text": f"❌ Error analyzing repository: {str(e)}"
-                            }
-                        ]
-                    }
-                }
+                return create_json_rpc_response(id_val, {
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": f"❌ Error analyzing repository: {str(e)}"
+                        }
+                    ]
+                })
         
         elif tool_name == "get_repo_info":
             repo_url = arguments.get("repo_url")
             if not repo_url:
-                return {
-                    "jsonrpc": jsonrpc,
-                    "id": id_val,
-                    "error": {
-                        "code": -32602,
-                        "message": "repo_url is required"
-                    }
-                }
+                return create_json_rpc_response(
+                    id_val,
+                    error=create_json_rpc_error(MCPJsonRpcError.INVALID_PARAMS, "repo_url is required")
+                )
             
             try:
                 analysis = analyzer.analyze_github_repo(repo_url)
-                return {
-                    "jsonrpc": jsonrpc,
-                    "id": id_val,
-                    "result": {
-                        "content": [
-                            {
-                                "type": "text",
-                                "text": json.dumps(analysis["repo_info"], indent=2, default=str)
-                            }
-                        ]
-                    }
-                }
+                return create_json_rpc_response(id_val, {
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": json.dumps(analysis["repo_info"], indent=2, default=str)
+                        }
+                    ]
+                })
             except Exception as e:
-                return {
-                    "jsonrpc": jsonrpc,
-                    "id": id_val,
-                    "result": {
-                        "content": [
-                            {
-                                "type": "text",
-                                "text": f"❌ Error getting repository info: {str(e)}"
-                            }
-                        ]
-                    }
-                }
+                return create_json_rpc_response(id_val, {
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": f"❌ Error getting repository info: {str(e)}"
+                        }
+                    ]
+                })
         
         else:
-            return {
-                "jsonrpc": jsonrpc,
-                "id": id_val,
-                "error": {
-                    "code": -32601,
-                    "message": f"Unknown tool: {tool_name}"
-                }
-            }
+            return create_json_rpc_response(
+                id_val,
+                error=create_json_rpc_error(MCPJsonRpcError.METHOD_NOT_FOUND, f"Unknown tool: {tool_name}")
+            )
     
     else:
-        return {
-            "jsonrpc": jsonrpc,
-            "id": id_val,
-            "error": {
-                "code": -32601,
-                "message": f"Unknown method: {method}"
-            }
-        }
+        return create_json_rpc_response(
+            id_val,
+            error=create_json_rpc_error(MCPJsonRpcError.METHOD_NOT_FOUND, f"Unknown method: {method}")
+        )
 
 class handler(BaseHTTPRequestHandler):
-    def do_POST(self):
-        """Main MCP endpoint"""
-        try:
-            content_length = int(self.headers.get('Content-Length', 0))
-            body = self.rfile.read(content_length).decode('utf-8')
-            request_data = json.loads(body)
-            
-            result = handle_mcp_request(request_data)
-            
+    
+    def do_GET(self):
+        """Handle GET requests for health checks and info"""
+        if self.path.startswith('/health'):
             self.send_response(200)
             self.send_header('Content-Type', 'application/json')
             self.send_header('Access-Control-Allow-Origin', '*')
             self.end_headers()
-            self.wfile.write(json.dumps(result).encode())
             
-        except json.JSONDecodeError as e:
-            error_response = {
-                "jsonrpc": "2.0",
-                "id": None,
-                "error": {
-                    "code": -32700,
-                    "message": "Parse error",
-                    "data": str(e)
-                }
+            health_response = {
+                "status": "healthy",
+                "server": "codebase-knowledge-graph",
+                "version": "1.0.0",
+                "protocol": MCP_VERSION,
+                "timestamp": json.dumps({"$date": {"$numberLong": str(int(__import__("time").time() * 1000))}})
             }
-            self.send_response(400)
+            self.wfile.write(json.dumps(health_response).encode())
+            
+        elif self.path == '/':
+            # Root path - return server info
+            self.send_response(200)
             self.send_header('Content-Type', 'application/json')
             self.send_header('Access-Control-Allow-Origin', '*')
             self.end_headers()
-            self.wfile.write(json.dumps(error_response).encode())
+            
+            info_response = {
+                "server": "NeuroWeave MCP Knowledge Graph Server",
+                "version": "1.0.0",
+                "protocol": MCP_VERSION,
+                "transport": "HTTP",
+                "status": "ready",
+                "capabilities": ["tools"],
+                "tools_available": 2,
+                "endpoint": "/api/mcp"
+            }
+            self.wfile.write(json.dumps(info_response).encode())
+        else:
+            # Return 501 for unsupported GET requests to MCP endpoint
+            self.send_response(501)
+            self.send_header('Content-Type', 'text/html')
+            self.end_headers()
+            error_html = """<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Error response</title>
+    </head>
+    <body>
+        <h1>Error response</h1>
+        <p>Error code: 501</p>
+        <p>Message: Unsupported method ('GET').</p>
+        <p>Error code explanation: 501 - Server does not support this operation.</p>
+    </body>
+</html>"""
+            self.wfile.write(error_html.encode())
+    
+    def do_POST(self):
+        """Handle POST requests for MCP calls"""
+        try:
+            # Read request body
+            content_length = int(self.headers.get('Content-Length', 0))
+            if content_length == 0:
+                self._send_error_response(400, MCPJsonRpcError.INVALID_REQUEST, "Empty request body")
+                return
+            
+            body = self.rfile.read(content_length).decode('utf-8')
+            
+            # Parse JSON
+            try:
+                request_data = json.loads(body)
+            except json.JSONDecodeError as e:
+                self._send_error_response(400, MCPJsonRpcError.PARSE_ERROR, f"Invalid JSON: {str(e)}")
+                return
+            
+            # Handle MCP request
+            result = handle_mcp_request(request_data)
+            
+            # Handle notifications (no response)
+            if result is None:
+                self.send_response(200)
+                self.send_header('Content-Length', '0')
+                self.end_headers()
+                return
+            
+            # Send JSON-RPC response
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.send_header('Access-Control-Allow-Methods', 'POST, OPTIONS, GET')
+            self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+            self.end_headers()
+            
+            response_json = json.dumps(result, ensure_ascii=False)
+            self.wfile.write(response_json.encode('utf-8'))
+            
         except Exception as e:
-            error_response = {
-                "jsonrpc": "2.0",
-                "id": None,
-                "error": {
-                    "code": -32603,
-                    "message": "Internal error",
-                    "data": str(e)
-                }
-            }
-            self.send_response(500)
-            self.send_header('Content-Type', 'application/json')
-            self.send_header('Access-Control-Allow-Origin', '*')
-            self.end_headers()
-            self.wfile.write(json.dumps(error_response).encode())
+            self._send_error_response(500, MCPJsonRpcError.INTERNAL_ERROR, f"Internal server error: {str(e)}")
     
     def do_OPTIONS(self):
-        """Handle preflight OPTIONS requests"""
+        """Handle preflight CORS requests"""
         self.send_response(200)
         self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Access-Control-Allow-Methods', 'POST, OPTIONS')
-        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        self.send_header('Access-Control-Allow-Methods', 'POST, OPTIONS, GET')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+        self.send_header('Access-Control-Max-Age', '86400')
         self.end_headers()
+    
+    def _send_error_response(self, http_status: int, error_code: int, error_message: str):
+        """Send a JSON-RPC error response"""
+        error_response = create_json_rpc_response(
+            None,
+            error=create_json_rpc_error(error_code, error_message)
+        )
+        
+        self.send_response(http_status)
+        self.send_header('Content-Type', 'application/json')
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.end_headers()
+        
+        response_json = json.dumps(error_response)
+        self.wfile.write(response_json.encode('utf-8'))
+    
+    def log_message(self, format, *args):
+        """Override to reduce noise in Vercel logs"""
+        # Only log errors, not every request
+        if "Error" in str(args) or "error" in str(args):
+            super().log_message(format, *args)
