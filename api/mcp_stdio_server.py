@@ -11,8 +11,24 @@ from urllib.parse import urlparse
 import requests
 from typing import Dict, Any, Optional, List
 
+# Import enhanced analysis components
+try:
+    import sys
+    import os
+    # Add parent directory to path for enhanced imports
+    parent_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    sys.path.insert(0, parent_dir)
+    
+    from enhanced_ecological_analyzer import EnhancedEcologicalAnalyzer
+    from enhanced_knowledge_graph_generator import EnhancedKnowledgeGraphGenerator
+    ENHANCED_AVAILABLE = True
+except ImportError as e:
+    ENHANCED_AVAILABLE = False
+    import sys
+    print(f"Enhanced import error: {e}", file=sys.stderr)
+
 # Current MCP Protocol version
-MCP_VERSION = "2024-11-05"
+MCP_VERSION = "2025-06-18"
 
 class MCPJsonRpcError:
     """JSON-RPC 2.0 Error codes"""
@@ -92,6 +108,55 @@ def analyze_github_repo(repo_url: str) -> Dict[str, Any]:
         
     except Exception as e:
         raise Exception(f"Error analyzing repository: {str(e)}")
+
+def analyze_codebase_enhanced(path: str) -> Dict[str, Any]:
+    """Perform enhanced ecological analysis on local codebase"""
+    if not ENHANCED_AVAILABLE:
+        raise Exception("Enhanced analysis components not available. Install required dependencies.")
+    
+    try:
+        analyzer = EnhancedEcologicalAnalyzer()
+        analysis_result = analyzer.analyze_codebase(path)
+        
+        # Generate interactive visualization
+        generator = EnhancedKnowledgeGraphGenerator()
+        html_file = generator.generate_enhanced_graph(analysis_result, f"enhanced_analysis_{hash(path) % 10000}.html")
+        
+        return {
+            "analysis": analysis_result,
+            "visualization_file": html_file,
+            "summary": {
+                "files_analyzed": len(analysis_result.get('files', [])),
+                "classes_found": len(analysis_result.get('classes', [])),
+                "functions_found": len(analysis_result.get('functions', [])),
+                "patterns_detected": len(analysis_result.get('patterns', {}).get('design_patterns', [])),
+                "clusters_created": len(analysis_result.get('semantic_clusters', [])),
+                "concerns_identified": len(analysis_result.get('cross_cutting_concerns', []))
+            }
+        }
+    except Exception as e:
+        raise Exception(f"Error performing enhanced analysis: {str(e)}")
+
+def generate_codebase_graph(analysis_data: dict, output_file: str = None) -> Dict[str, Any]:
+    """Generate interactive knowledge graph from codebase analysis data"""
+    if not ENHANCED_AVAILABLE:
+        raise Exception("Enhanced analysis components not available. Install required dependencies.")
+    
+    try:
+        generator = EnhancedKnowledgeGraphGenerator()
+        if output_file is None:
+            output_file = f"codebase_graph_{hash(str(analysis_data)) % 10000}.html"
+        
+        html_file = generator.generate_enhanced_graph(analysis_data, output_file)
+        
+        return {
+            "visualization_file": html_file,
+            "nodes_count": len(analysis_data.get('files', [])) + len(analysis_data.get('classes', [])) + len(analysis_data.get('functions', [])),
+            "edges_count": len(analysis_data.get('imports', [])),
+            "output_path": os.path.abspath(html_file)
+        }
+    except Exception as e:
+        raise Exception(f"Error generating codebase graph: {str(e)}")
 
 def handle_mcp_request(request_data: dict) -> Optional[dict]:
     """Handle MCP protocol requests with proper JSON-RPC 2.0 format"""
@@ -198,6 +263,43 @@ def handle_mcp_request(request_data: dict) -> Optional[dict]:
             }
         ]
         
+        # Add enhanced analysis tools if available
+        if ENHANCED_AVAILABLE:
+            tools.extend([
+                {
+                    "name": "analyze_codebase_enhanced",
+                    "description": "Perform comprehensive enhanced ecological analysis on local codebase with patterns, relationships, and interactive visualization",
+                    "inputSchema": {
+                        "type": "object",
+                        "properties": {
+                            "path": {
+                                "type": "string", 
+                                "description": "Local path to codebase directory"
+                            }
+                        },
+                        "required": ["path"]
+                    }
+                },
+                {
+                    "name": "generate_codebase_graph",
+                    "description": "Generate interactive knowledge graph from codebase analysis data",
+                    "inputSchema": {
+                        "type": "object",
+                        "properties": {
+                            "analysis_data": {
+                                "type": "object",
+                                "description": "Codebase analysis data (from analyze_codebase_enhanced or similar)"
+                            },
+                            "output_file": {
+                                "type": "string",
+                                "description": "Optional output HTML filename"
+                            }
+                        },
+                        "required": ["analysis_data"]
+                    }
+                }
+            ])
+        
         return create_json_rpc_response(id_val, {"tools": tools})
     
     elif method == "resources/list":
@@ -289,6 +391,126 @@ def handle_mcp_request(request_data: dict) -> Optional[dict]:
                         {
                             "type": "text",
                             "text": f"❌ Error getting repository info: {str(e)}"
+                        }
+                    ]
+                })
+        
+        elif tool_name == "analyze_codebase_enhanced":
+            if not ENHANCED_AVAILABLE:
+                return create_json_rpc_response(id_val, {
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": "Enhanced analysis not available. Missing dependencies: enhanced_ecological_analyzer, enhanced_knowledge_graph_generator"
+                        }
+                    ]
+                })
+            
+            path = arguments.get("path")
+            if not path:
+                return create_json_rpc_response(
+                    id_val,
+                    error=create_json_rpc_error(MCPJsonRpcError.INVALID_PARAMS, "path is required")
+                )
+            
+            try:
+                result = analyze_codebase_enhanced(path)
+                summary = result["summary"]
+                
+                enhanced_summary = f"""🔬 **Enhanced Ecological Analysis Complete!**
+
+📁 **Path:** {path}
+📊 **Files Analyzed:** {summary['files_analyzed']}
+🏗️ **Classes Found:** {summary['classes_found']}
+⚙️ **Functions Found:** {summary['functions_found']}
+
+🧬 **Advanced Insights:**
+• **Design Patterns:** {summary['patterns_detected']} detected
+• **Semantic Clusters:** {summary['clusters_created']} created  
+• **Cross-cutting Concerns:** {summary['concerns_identified']} identified
+
+📈 **Interactive Visualization:** {result['visualization_file']}
+
+🎯 **Enhanced ecological analysis provides deep insights into:**
+• Architectural patterns and relationships
+• Code quality metrics and maintainability
+• Semantic clustering and cross-cutting concerns
+• Interactive multi-dimensional knowledge graphs"""
+                
+                return create_json_rpc_response(id_val, {
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": enhanced_summary
+                        }
+                    ]
+                })
+                
+            except Exception as e:
+                return create_json_rpc_response(id_val, {
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": f"❌ Error performing enhanced analysis: {str(e)}"
+                        }
+                    ]
+                })
+        
+        elif tool_name == "generate_codebase_graph":
+            if not ENHANCED_AVAILABLE:
+                return create_json_rpc_response(id_val, {
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": "Enhanced graph generation not available. Missing dependencies: enhanced_ecological_analyzer, enhanced_knowledge_graph_generator"
+                        }
+                    ]
+                })
+            
+            analysis_data = arguments.get("analysis_data")
+            if not analysis_data:
+                return create_json_rpc_response(
+                    id_val,
+                    error=create_json_rpc_error(MCPJsonRpcError.INVALID_PARAMS, "analysis_data is required")
+                )
+            
+            output_file = arguments.get("output_file")
+            
+            try:
+                result = generate_codebase_graph(analysis_data, output_file)
+                
+                graph_summary = f"""🕸️ **Interactive Knowledge Graph Generated!**
+
+📊 **Graph Statistics:**
+• **Nodes:** {result['nodes_count']} (files, classes, functions)
+• **Edges:** {result['edges_count']} (imports, relationships)
+• **Visualization File:** {result['visualization_file']}
+• **Full Path:** {result['output_path']}
+
+🎯 **Graph Features:**
+• Interactive node exploration
+• Hierarchical relationships visualization
+• Code structure mapping
+• Dependency analysis
+• Pattern recognition visual aids
+
+🚀 **Open the HTML file in your browser to explore the interactive knowledge graph!**"""
+                
+                return create_json_rpc_response(id_val, {
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": graph_summary
+                        }
+                    ]
+                })
+                
+            except Exception as e:
+                return create_json_rpc_response(id_val, {
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": f"❌ Error generating codebase graph: {str(e)}"
                         }
                     ]
                 })
