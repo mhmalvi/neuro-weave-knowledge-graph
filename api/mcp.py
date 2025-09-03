@@ -88,6 +88,21 @@ def handle_mcp_request(request_data: dict) -> dict:
             }
         }
     
+    elif method == "notifications/initialized":
+        # Client acknowledging successful initialization
+        return {
+            "jsonrpc": jsonrpc,
+            "id": id_val,
+            "result": {}
+        }
+    
+    elif method == "ping":
+        return {
+            "jsonrpc": jsonrpc,
+            "id": id_val,
+            "result": {}
+        }
+    
     elif method == "tools/list":
         return {
             "jsonrpc": jsonrpc,
@@ -264,8 +279,31 @@ class handler(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(json.dumps(result).encode())
             
+        except json.JSONDecodeError as e:
+            error_response = {
+                "jsonrpc": "2.0",
+                "id": None,
+                "error": {
+                    "code": -32700,
+                    "message": "Parse error",
+                    "data": str(e)
+                }
+            }
+            self.send_response(400)
+            self.send_header('Content-Type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.end_headers()
+            self.wfile.write(json.dumps(error_response).encode())
         except Exception as e:
-            error_response = {"error": str(e)}
+            error_response = {
+                "jsonrpc": "2.0",
+                "id": None,
+                "error": {
+                    "code": -32603,
+                    "message": "Internal error",
+                    "data": str(e)
+                }
+            }
             self.send_response(500)
             self.send_header('Content-Type', 'application/json')
             self.send_header('Access-Control-Allow-Origin', '*')
