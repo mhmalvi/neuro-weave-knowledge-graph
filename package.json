@@ -6,13 +6,28 @@
   "scripts": {
     "dev": "vercel dev",
     "build": "echo Building Python dependencies...",
-    "deploy": "vercel --prod"
+    "deploy": "vercel --prod",
+    "test:e2e": "playwright test",
+    "test:smoke": "playwright test -g \"@smoke\"",
+    "test:mcp": "playwright test tests/e2e/mcp-server.spec.ts --project=chromium",
+    "test:debug": "playwright test --debug",
+    "report": "playwright show-report"
   },
-  "keywords": ["mcp", "codebase", "analysis", "knowledge-graph", "vercel"],
+  "keywords": [
+    "mcp",
+    "codebase",
+    "analysis",
+    "knowledge-graph",
+    "vercel"
+  ],
   "author": "mhmalvi",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/mhmalvi/neuro-weave-knowledge-graph.git"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "dotenv": "^17.2.2"
   }
 }

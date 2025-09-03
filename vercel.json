@@ -20,8 +20,12 @@
       "dest": "/api/health.py"
     },
     {
-      "src": "/api/mcp",
+      "src": "/api/mcp(.*)",
       "dest": "/api/mcp.py"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/index.py"
     },
     {
       "src": "/(.*)",
