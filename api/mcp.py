@@ -7,7 +7,7 @@ import requests
 from typing import Dict, Any, Optional, List
 
 # Current MCP Protocol version
-MCP_VERSION = "2024-11-05"
+MCP_VERSION = "2025-06-18"
 
 def create_json_rpc_response(id_val: Any, result: Any = None, error: Optional[Dict] = None) -> Dict[str, Any]:
     """Create a JSON-RPC 2.0 response"""

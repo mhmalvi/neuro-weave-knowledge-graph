@@ -25,7 +25,7 @@ def main():
                         'jsonrpc': '2.0',
                         'id': req_id,
                         'result': {
-                            'protocolVersion': '2024-11-05',
+                            'protocolVersion': '2025-06-18',
                             'serverInfo': {
                                 'name': 'codebase-knowledge-graph',
                                 'version': '1.0.0'

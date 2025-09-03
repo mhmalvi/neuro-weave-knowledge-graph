@@ -12,7 +12,7 @@ import requests
 from typing import Dict, Any, Optional, List
 
 # Current MCP Protocol version
-MCP_VERSION = "2024-11-05"
+MCP_VERSION = "2025-06-18"
 
 class MCPJsonRpcError:
     """JSON-RPC 2.0 Error codes"""
