@@ -23,7 +23,7 @@ neuro-weave-kg: https://neuro-weave-knowledge-graph.vercel.app/api/mcp (HTTP) - 
 
 ## Available Tools
 
-Once installed, the following MCP tools will be available in Claude Code CLI:
+Once installed, all 4 MCP tools will be available in Claude Code CLI:
 
 ### 1. `analyze_github_repo`
 Analyze a GitHub repository structure and metadata via GitHub API
@@ -36,6 +36,20 @@ Analyze a GitHub repository structure and metadata via GitHub API
 Get basic information about a GitHub repository
 
 **Usage**: Automatically available when you ask Claude for GitHub repository information
+
+### 3. `analyze_codebase_enhanced` 
+Perform comprehensive enhanced analysis with pattern detection and semantic clustering (serverless version)
+
+**Usage**: Automatically available for deep repository analysis
+
+**Example**: "Perform enhanced analysis on this repository: https://github.com/facebook/react"
+
+### 4. `generate_codebase_graph`
+Generate interactive knowledge graph from GitHub repository data (serverless version)
+
+**Usage**: Automatically available for visualization generation  
+
+**Example**: "Create a knowledge graph visualization for this repository"
 
 ## Features
 

@@ -21,28 +21,33 @@ You should see: `neuro-weave-kg: ✓ Connected`
 
 ## 🛠️ Available Tools
 
-### Remote Tools (HTTP Transport)
+### All 4 Tools Available Remotely (HTTP Transport)
 - **`analyze_github_repo`** - Analyze GitHub repository structure and metadata via GitHub API
-- **`get_repo_info`** - Get basic information about a GitHub repository
+- **`get_repo_info`** - Get basic information about a GitHub repository  
+- **`analyze_codebase_enhanced`** - Enhanced serverless analysis with pattern detection and semantic clustering
+- **`generate_codebase_graph`** - Interactive knowledge graph generation (serverless version with vis.js)
 
 ### Enhanced Local Tools (STDIO Transport)
-For advanced analysis with interactive visualizations, use local installation:
-- **`analyze_codebase_enhanced`** - Deep ecological analysis with pattern detection
-- **`generate_codebase_graph`** - Interactive knowledge graph generation
+For maximum performance and local file system access:
+- **All 4 tools above** PLUS local file system analysis capabilities
+- **Local codebase analysis** - Direct file system access for any project
+- **Enhanced visualizations** - Full-featured interactive HTML graphs
 
 ## 📋 Features
 
 ### 🌐 Remote Serverless Mode
-- Zero local setup required
+- **All 4 tools available** with zero local setup required
 - Hosted on Vercel for 99.9% uptime
-- GitHub API integration for repository analysis
+- GitHub API integration for repository analysis  
+- **Enhanced pattern detection** and semantic clustering
+- **Interactive knowledge graph generation** with vis.js
 - MCP protocol 2025-06-18 compatible
 
 ### 🔬 Enhanced Local Mode  
-- Interactive HTML knowledge graphs
-- Design pattern detection
-- Semantic clustering
-- Cross-cutting concern analysis
+- All remote features PLUS local file system access
+- **Direct codebase analysis** of any local project
+- Full-featured interactive HTML knowledge graphs
+- Advanced design pattern detection  
 - Multi-dimensional relationship mapping
 
 ## 🏗️ Installation Options
