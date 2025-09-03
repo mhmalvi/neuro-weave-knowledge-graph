@@ -65,25 +65,35 @@ analyzer = ServerlessCodebaseAnalyzer()
 
 def handle_mcp_request(request_data: dict) -> dict:
     """Handle MCP protocol requests"""
+    # Handle JSON-RPC format
+    jsonrpc = request_data.get("jsonrpc", "2.0")
+    id_val = request_data.get("id", 1)
     method = request_data.get("method")
     params = request_data.get("params", {})
     
     if method == "initialize":
         return {
-            "protocolVersion": "2024-11-05",
-            "capabilities": {
-                "tools": {},
-                "resources": {}
-            },
-            "serverInfo": {
-                "name": "codebase-knowledge-graph",
-                "version": "1.0.0"
+            "jsonrpc": jsonrpc,
+            "id": id_val,
+            "result": {
+                "protocolVersion": "2024-11-05",
+                "capabilities": {
+                    "tools": {},
+                    "resources": {}
+                },
+                "serverInfo": {
+                    "name": "codebase-knowledge-graph",
+                    "version": "1.0.0"
+                }
             }
         }
     
     elif method == "tools/list":
         return {
-            "tools": [
+            "jsonrpc": jsonrpc,
+            "id": id_val,
+            "result": {
+                "tools": [
                 {
                     "name": "analyze_github_repo",
                     "description": "Analyze a GitHub repository structure and metadata",
@@ -112,7 +122,8 @@ def handle_mcp_request(request_data: dict) -> dict:
                         "required": ["repo_url"]
                     }
                 }
-            ]
+                ]
+            }
         }
     
     elif method == "tools/call":
@@ -122,7 +133,14 @@ def handle_mcp_request(request_data: dict) -> dict:
         if tool_name == "analyze_github_repo":
             repo_url = arguments.get("repo_url")
             if not repo_url:
-                return {"error": "repo_url is required"}
+                return {
+                    "jsonrpc": jsonrpc,
+                    "id": id_val,
+                    "error": {
+                        "code": -32602,
+                        "message": "repo_url is required"
+                    }
+                }
             
             try:
                 analysis = analyzer.analyze_github_repo(repo_url)
@@ -145,53 +163,90 @@ def handle_mcp_request(request_data: dict) -> dict:
 📊 **Note:** This is a serverless analysis using GitHub API. For full codebase analysis with file-level details, use the local MCP server."""
                 
                 return {
-                    "content": [
-                        {
-                            "type": "text",
-                            "text": summary
-                        }
-                    ]
+                    "jsonrpc": jsonrpc,
+                    "id": id_val,
+                    "result": {
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": summary
+                            }
+                        ]
+                    }
                 }
             except Exception as e:
                 return {
-                    "content": [
-                        {
-                            "type": "text", 
-                            "text": f"❌ Error analyzing repository: {str(e)}"
-                        }
-                    ]
+                    "jsonrpc": jsonrpc,
+                    "id": id_val,
+                    "result": {
+                        "content": [
+                            {
+                                "type": "text", 
+                                "text": f"❌ Error analyzing repository: {str(e)}"
+                            }
+                        ]
+                    }
                 }
         
         elif tool_name == "get_repo_info":
             repo_url = arguments.get("repo_url")
             if not repo_url:
-                return {"error": "repo_url is required"}
+                return {
+                    "jsonrpc": jsonrpc,
+                    "id": id_val,
+                    "error": {
+                        "code": -32602,
+                        "message": "repo_url is required"
+                    }
+                }
             
             try:
                 analysis = analyzer.analyze_github_repo(repo_url)
                 return {
-                    "content": [
-                        {
-                            "type": "text",
-                            "text": json.dumps(analysis["repo_info"], indent=2, default=str)
-                        }
-                    ]
+                    "jsonrpc": jsonrpc,
+                    "id": id_val,
+                    "result": {
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": json.dumps(analysis["repo_info"], indent=2, default=str)
+                            }
+                        ]
+                    }
                 }
             except Exception as e:
                 return {
-                    "content": [
-                        {
-                            "type": "text",
-                            "text": f"❌ Error getting repository info: {str(e)}"
-                        }
-                    ]
+                    "jsonrpc": jsonrpc,
+                    "id": id_val,
+                    "result": {
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": f"❌ Error getting repository info: {str(e)}"
+                            }
+                        ]
+                    }
                 }
         
         else:
-            return {"error": f"Unknown tool: {tool_name}"}
+            return {
+                "jsonrpc": jsonrpc,
+                "id": id_val,
+                "error": {
+                    "code": -32601,
+                    "message": f"Unknown tool: {tool_name}"
+                }
+            }
     
     else:
-        return {"error": f"Unknown method: {method}"}
+        return {
+            "jsonrpc": jsonrpc,
+            "id": id_val,
+            "error": {
+                "code": -32601,
+                "message": f"Unknown method: {method}"
+            }
+        }
 
 class handler(BaseHTTPRequestHandler):
     def do_POST(self):
