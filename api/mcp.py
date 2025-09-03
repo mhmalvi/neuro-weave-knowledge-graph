@@ -140,9 +140,16 @@ def handle_mcp_request(request_data: dict) -> dict:
         result = {
             "protocolVersion": MCP_VERSION,
             "capabilities": {
-                "tools": {},
-                "resources": {},
-                "prompts": {},
+                "tools": {
+                    "listChanged": False
+                },
+                "resources": {
+                    "subscribe": False,
+                    "listChanged": False
+                },
+                "prompts": {
+                    "listChanged": False
+                },
                 "logging": {}
             },
             "serverInfo": {
