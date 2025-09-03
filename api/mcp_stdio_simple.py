@@ -59,6 +59,17 @@ def main():
                                     }
                                 },
                                 {
+                                    'name': 'get_repo_info',
+                                    'description': 'Get detailed JSON information about a GitHub repository',
+                                    'inputSchema': {
+                                        'type': 'object',
+                                        'properties': {
+                                            'repo_url': {'type': 'string', 'description': 'GitHub repository URL'}
+                                        },
+                                        'required': ['repo_url']
+                                    }
+                                },
+                                {
                                     'name': 'echo_test',
                                     'description': 'Simple echo test tool',
                                     'inputSchema': {
@@ -132,6 +143,71 @@ def main():
                                         'content': [{'type': 'text', 'text': summary}]
                                     }
                                 }
+                            except Exception as e:
+                                response = {
+                                    'jsonrpc': '2.0',
+                                    'id': req_id,
+                                    'result': {
+                                        'content': [{'type': 'text', 'text': f"❌ Error: {str(e)}"}]
+                                    }
+                                }
+                        print(json.dumps(response), flush=True)
+                        
+                    elif tool_name == 'get_repo_info':
+                        repo_url = args.get('repo_url', '')
+                        if not repo_url:
+                            response = {
+                                'jsonrpc': '2.0',
+                                'id': req_id,
+                                'error': {
+                                    'code': -32602,
+                                    'message': 'repo_url is required'
+                                }
+                            }
+                        else:
+                            try:
+                                import requests
+                                import os
+                                from urllib.parse import urlparse
+                                
+                                parsed = urlparse(repo_url)
+                                path_parts = parsed.path.strip("/").split("/")
+                                if len(path_parts) >= 2:
+                                    owner, repo = path_parts[0], path_parts[1]
+                                    api_url = f"https://api.github.com/repos/{owner}/{repo}"
+                                    
+                                    headers = {}
+                                    github_token = os.getenv("GITHUB_TOKEN")
+                                    if github_token:
+                                        headers["Authorization"] = f"token {github_token}"
+                                    
+                                    resp = requests.get(api_url, headers=headers, timeout=10)
+                                    if resp.status_code == 200:
+                                        repo_info = resp.json()
+                                        # Return raw JSON data
+                                        response = {
+                                            'jsonrpc': '2.0',
+                                            'id': req_id,
+                                            'result': {
+                                                'content': [{'type': 'text', 'text': json.dumps(repo_info, indent=2)}]
+                                            }
+                                        }
+                                    else:
+                                        response = {
+                                            'jsonrpc': '2.0',
+                                            'id': req_id,
+                                            'result': {
+                                                'content': [{'type': 'text', 'text': f"❌ Failed to fetch repository info: HTTP {resp.status_code}"}]
+                                            }
+                                        }
+                                else:
+                                    response = {
+                                        'jsonrpc': '2.0',
+                                        'id': req_id,
+                                        'result': {
+                                            'content': [{'type': 'text', 'text': "❌ Invalid GitHub repository URL"}]
+                                        }
+                                    }
                             except Exception as e:
                                 response = {
                                     'jsonrpc': '2.0',
