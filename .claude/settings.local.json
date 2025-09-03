@@ -32,7 +32,15 @@
       "Bash(dir:*)",
       "Bash(claude mcp add:*)",
       "mcp__github__create_repository",
-      "mcp__vercel__web_fetch_vercel_url"
+      "mcp__vercel__web_fetch_vercel_url",
+      "mcp__vercel__get_access_to_vercel_url",
+      "Read(C:\\Users\\AAA Technology/**)",
+      "Bash(claude mcp remove:*)",
+      "Read(C:\\Users\\AAA Technology/**)",
+      "Read(C:\\Users\\AAA Technology/**)",
+      "Read(C:\\Users\\AAA Technology/**)",
+      "mcp__vercel__deploy_to_vercel",
+      "Bash(vercel deploy:*)"
     ],
     "deny": [],
     "ask": [],
