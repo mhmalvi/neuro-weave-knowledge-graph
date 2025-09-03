@@ -35,6 +35,8 @@ import mcp.types as types
 # Import our existing knowledge graph functionality
 from generate_knowledge_graph import generate_knowledge_graph, visualize_graph, extract_graph_data
 from codebase_visualizer import CodebaseVisualizer
+from cyberpunk_knowledge_graph_generator import CyberpunkKnowledgeGraphGenerator
+from enhanced_ecological_analyzer import EnhancedEcologicalAnalyzer
 from pyvis.network import Network
 import requests
 
@@ -327,6 +329,8 @@ class GitHubAnalyzer:
 codebase_analyzer = CodebaseAnalyzer()
 github_analyzer = GitHubAnalyzer()
 codebase_visualizer = CodebaseVisualizer()
+cyberpunk_generator = CyberpunkKnowledgeGraphGenerator()
+enhanced_analyzer = EnhancedEcologicalAnalyzer()
 
 @app.list_resources()
 async def handle_list_resources() -> list[Resource]:
@@ -412,6 +416,38 @@ async def handle_list_tools() -> list[Tool]:
                     "output_file": {
                         "type": "string",
                         "description": "Output HTML file path (default: neural_map.html)"
+                    }
+                },
+                "required": ["analysis_data"]
+            }
+        ),
+        Tool(
+            name="analyze_codebase_enhanced",
+            description="Perform comprehensive enhanced ecological analysis on local codebase with patterns, relationships, and interactive visualization",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "path": {
+                        "type": "string",
+                        "description": "Local path to codebase directory"
+                    }
+                },
+                "required": ["path"]
+            }
+        ),
+        Tool(
+            name="generate_cyberpunk_graph",
+            description="Generate a stunning cyberpunk neural network knowledge graph visualization with futuristic styling and advanced controls",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "analysis_data": {
+                        "type": "object",
+                        "description": "Codebase analysis data (from analyze_codebase_enhanced or similar)"
+                    },
+                    "output_file": {
+                        "type": "string",
+                        "description": "Optional output HTML filename (default: cyberpunk_neural_graph.html)"
                     }
                 },
                 "required": ["analysis_data"]
@@ -555,6 +591,121 @@ async def handle_call_tool(name: str, arguments: dict) -> list[types.TextContent
                     types.TextContent(
                         type="text",
                         text="❌ Failed to generate knowledge graph. Please check your analysis data and try again."
+                    )
+                ]
+        
+        elif name == "analyze_codebase_enhanced":
+            path = arguments["path"]
+            analysis = enhanced_analyzer.analyze_codebase(path)
+            
+            # Create user-friendly summary for enhanced analysis
+            files_count = len(analysis.get('files', []))
+            classes_count = sum(len(f.get('classes', [])) for f in analysis.get('files', []))
+            functions_count = sum(len(f.get('functions', [])) for f in analysis.get('files', []))
+            clusters_count = len(analysis.get('semantic_clusters', []))
+            patterns_count = len(analysis.get('patterns', {}).get('design_patterns', []) + 
+                                analysis.get('patterns', {}).get('architectural_patterns', []))
+            
+            summary = f"""🧠 **Enhanced Ecological Analysis Complete!**
+
+🎯 **Project Path:** {path}
+🔬 **Deep Analysis Results:**
+• **Files Analyzed:** {files_count} files
+• **Neural Cores (Classes):** {classes_count} classes
+• **Synapses (Functions):** {functions_count} functions
+• **Semantic Clusters:** {clusters_count} clusters
+• **Architectural Patterns:** {patterns_count} patterns
+
+🌐 **Advanced Features Detected:**
+• Semantic relationship mapping
+• Cross-cutting concern analysis
+• Architectural pattern detection
+• Code complexity metrics
+• Dependency flow analysis
+
+⚡ **Ready for Cyberpunk Visualization:** This enhanced analysis includes all the rich metadata needed for stunning neural network visualizations!
+
+🚀 **Next Steps:** Ask me to "generate cyberpunk graph" to create an immersive futuristic visualization of your codebase consciousness!"""
+            
+            return [
+                types.TextContent(
+                    type="text",
+                    text=summary
+                )
+            ]
+        
+        elif name == "generate_cyberpunk_graph":
+            analysis_data = arguments["analysis_data"]
+            output_file = arguments.get("output_file", "cyberpunk_neural_graph.html")
+            
+            # Generate the cyberpunk visualization
+            result_file = cyberpunk_generator.generate_cyberpunk_graph(analysis_data, output_file)
+            
+            if result_file:
+                # Get absolute path for easy access
+                abs_path = os.path.abspath(result_file)
+                
+                # Calculate stats from analysis data
+                files_count = len(analysis_data.get('files', []))
+                classes_count = sum(len(f.get('classes', [])) for f in analysis_data.get('files', []))
+                functions_count = sum(len(f.get('functions', [])) for f in analysis_data.get('files', []))
+                clusters_count = len(analysis_data.get('semantic_clusters', []))
+                
+                # Calculate total complexity
+                total_complexity = 0
+                for file_data in analysis_data.get('files', []):
+                    total_complexity += file_data.get('complexity', 0)
+                
+                # Determine activity level
+                activity_level = 'LOW'
+                if total_complexity > 100:
+                    activity_level = 'MEDIUM'
+                if total_complexity > 300:
+                    activity_level = 'HIGH'
+                if total_complexity > 500:
+                    activity_level = 'CRITICAL'
+                
+                summary = f"""🌃 **Cyberpunk Neural Network Knowledge Graph Generated!**
+
+⚡ **Neural Matrix Status:** ONLINE
+🧠 **Digital Consciousness:** ACTIVATED
+
+🎮 **Quick Access:**
+• 📁 **File Location:** `{abs_path}`
+• 🌐 **Open in Browser:** Double-click or drag to browser
+• 🎛️ **Interactive Controls:** Gravity field, node filters, pulse animations
+
+🔬 **Neural Network Metrics:**
+• **Data Crystals (Files):** {files_count}
+• **Neural Cores (Classes):** {classes_count}  
+• **Synapses (Functions):** {functions_count}
+• **Neural Clusters:** {clusters_count}
+• **Complexity Score:** {total_complexity}
+• **Activity Level:** {activity_level}
+
+✨ **Cyberpunk Features:**
+• Electric cyan/magenta/lime color scheme
+• Floating digital particles & scan lines
+• Neural network grid background
+• Advanced interactive controls
+• Real-time activity monitoring
+• Network pulse animations
+
+🚀 **Experience:** Explore your codebase as a living digital consciousness with stunning futuristic visuals that make you feel like you're navigating the neural pathways of an AI mind!
+
+💡 **Next Steps:** Open the file to dive into your cyberpunk neural codebase matrix!"""
+                
+                return [
+                    types.TextContent(
+                        type="text",
+                        text=summary
+                    )
+                ]
+            else:
+                return [
+                    types.TextContent(
+                        type="text",
+                        text="❌ Failed to generate cyberpunk neural graph. Please check your analysis data and try again."
                     )
                 ]
         

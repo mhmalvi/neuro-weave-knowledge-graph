@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>🌃 Cyberpunk Neural Network Knowledge Graph</title>
+        
+        <!-- Vis.js Network Library -->
+        <script src="lib/bindings/utils.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        
+        <!-- Bootstrap for UI Components -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous" />
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+
+        <!-- Custom Cyberpunk Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+        <style type="text/css">
+            /* === CYBERPUNK NEURAL NETWORK STYLING === */
+            
+            /* Global Variables for Cyberpunk Theme */
+            :root {
+                --cyber-cyan: #00FFFF;
+                --cyber-magenta: #FF00FF;
+                --cyber-lime: #39FF14;
+                --cyber-purple: #4B0082;
+                --cyber-blue: #0080FF;
+                --cyber-pink: #FF1493;
+                --cyber-orange: #FF4500;
+                --cyber-void: #000000;
+                --cyber-dark-purple: #1a0d2e;
+                --cyber-darker-purple: #0d0a1a;
+                --cyber-grid: rgba(0, 255, 255, 0.2);
+                --cyber-glow: 0 0 20px;
+            }
+
+            /* Main Container and Background */
+            body {
+                margin: 0;
+                padding: 0;
+                background: radial-gradient(ellipse at center, var(--cyber-dark-purple) 0%, var(--cyber-darker-purple) 50%, var(--cyber-void) 100%);
+                font-family: 'Rajdhani', 'Courier New', monospace;
+                color: var(--cyber-cyan);
+                overflow: hidden;
+            }
+
+            /* Cyberpunk Background Grid */
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: 
+                    linear-gradient(var(--cyber-grid) 1px, transparent 1px),
+                    linear-gradient(90deg, var(--cyber-grid) 1px, transparent 1px);
+                background-size: 50px 50px;
+                animation: gridPulse 4s ease-in-out infinite;
+                pointer-events: none;
+                z-index: 0;
+            }
+
+            @keyframes gridPulse {
+                0%, 100% { opacity: 0.3; }
+                50% { opacity: 0.6; }
+            }
+
+            /* Floating Digital Particles */
+            .cyber-particles {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 1;
+            }
+
+            .particle {
+                position: absolute;
+                width: 2px;
+                height: 2px;
+                background: var(--cyber-cyan);
+                border-radius: 50%;
+                opacity: 0.6;
+                animation: float 20s linear infinite;
+                box-shadow: var(--cyber-glow) var(--cyber-cyan);
+            }
+
+            @keyframes float {
+                0% {
+                    transform: translateY(100vh) translateX(0);
+                    opacity: 0;
+                }
+                10% { opacity: 1; }
+                90% { opacity: 1; }
+                100% {
+                    transform: translateY(-10vh) translateX(100px);
+                    opacity: 0;
+                }
+            }
+
+            /* Neural Network Container */
+            #mynetwork {
+                width: 100%;
+                height: 100vh;
+                background: transparent;
+                border: none;
+                position: relative;
+                z-index: 2;
+            }
+
+            /* Cyberpunk Title Styling */
+            .cyber-title {
+                position: absolute;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 10;
+                font-family: 'Orbitron', monospace;
+                font-size: 2.5em;
+                font-weight: 900;
+                color: var(--cyber-cyan);
+                text-shadow: 
+                    0 0 10px var(--cyber-cyan),
+                    0 0 20px var(--cyber-cyan),
+                    0 0 30px var(--cyber-cyan);
+                animation: titleGlitch 3s ease-in-out infinite;
+                text-align: center;
+            }
+
+            @keyframes titleGlitch {
+                0%, 90%, 100% { transform: translateX(-50%) translateY(0); }
+                95% { transform: translateX(-50%) translateY(-2px); }
+                97% { transform: translateX(-48%) translateY(1px); }
+                99% { transform: translateX(-52%) translateY(-1px); }
+            }
+
+            /* Cyberpunk Loading Bar */
+            #loadingBar {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 520px;
+                height: 60px;
+                background: rgba(0, 0, 0, 0.8);
+                border: 2px solid var(--cyber-cyan);
+                border-radius: 10px;
+                box-shadow: 
+                    0 0 20px var(--cyber-cyan),
+                    inset 0 0 20px rgba(0, 255, 255, 0.1);
+                z-index: 15;
+            }
+
+            #bar {
+                position: absolute;
+                top: 4px;
+                left: 4px;
+                height: 48px;
+                min-width: 20px;
+                background: linear-gradient(90deg, var(--cyber-cyan), var(--cyber-magenta), var(--cyber-lime));
+                border-radius: 6px;
+                animation: loadingPulse 1s ease-in-out infinite;
+            }
+
+            @keyframes loadingPulse {
+                0%, 100% { opacity: 0.8; }
+                50% { opacity: 1; }
+            }
+
+            #text {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: var(--cyber-cyan);
+                font-family: 'Orbitron', monospace;
+                font-size: 18px;
+                font-weight: bold;
+                text-shadow: 0 0 10px var(--cyber-cyan);
+            }
+
+            /* Cyberpunk Control Panels */
+            .cyber-panel {
+                position: absolute;
+                background: rgba(0, 0, 0, 0.8);
+                border: 1px solid var(--cyber-cyan);
+                border-radius: 8px;
+                padding: 15px;
+                backdrop-filter: blur(10px);
+                box-shadow: 
+                    0 0 15px var(--cyber-cyan),
+                    inset 0 0 15px rgba(0, 255, 255, 0.1);
+                z-index: 5;
+                font-family: 'Rajdhani', monospace;
+                color: var(--cyber-cyan);
+            }
+
+            .cyber-panel::before {
+                content: '';
+                position: absolute;
+                top: -1px;
+                left: -1px;
+                right: -1px;
+                bottom: -1px;
+                background: linear-gradient(45deg, var(--cyber-cyan), var(--cyber-magenta), var(--cyber-lime), var(--cyber-cyan));
+                border-radius: 8px;
+                z-index: -1;
+                animation: borderFlow 3s linear infinite;
+            }
+
+            @keyframes borderFlow {
+                0% { background-position: 0% 50%; }
+                100% { background-position: 100% 50%; }
+            }
+
+            /* Custom Node Hover Effects */
+            .vis-network .vis-nodes .vis-node {
+                transition: all 0.3s ease;
+            }
+
+            .vis-network .vis-nodes .vis-node:hover {
+                transform: scale(1.1);
+            }
+
+            /* Legend Items */
+            .legend-item {
+                display: flex;
+                align-items: center;
+                margin: 8px 0;
+                padding: 5px;
+                border-radius: 4px;
+                transition: all 0.3s ease;
+            }
+
+            .legend-item:hover {
+                background: rgba(0, 255, 255, 0.1);
+                box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+            }
+
+            .legend-shape {
+                width: 20px;
+                height: 20px;
+                margin-right: 10px;
+                border: 2px solid;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .legend-files { 
+                background: var(--cyber-magenta);
+                border-color: var(--cyber-magenta);
+                box-shadow: 0 0 10px var(--cyber-magenta);
+            }
+
+            .legend-classes { 
+                background: var(--cyber-lime);
+                border-color: var(--cyber-lime);
+                box-shadow: 0 0 10px var(--cyber-lime);
+                clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            }
+
+            .legend-functions { 
+                background: var(--cyber-cyan);
+                border-color: var(--cyber-cyan);
+                box-shadow: 0 0 10px var(--cyber-cyan);
+                border-radius: 50%;
+            }
+
+            .legend-methods { 
+                background: var(--cyber-pink);
+                border-color: var(--cyber-pink);
+                box-shadow: 0 0 10px var(--cyber-pink);
+                transform: rotate(45deg);
+            }
+
+            /* Cyberpunk Scrollbar */
+            ::-webkit-scrollbar {
+                width: 8px;
+            }
+
+            ::-webkit-scrollbar-track {
+                background: var(--cyber-void);
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background: var(--cyber-cyan);
+                border-radius: 4px;
+                box-shadow: 0 0 5px var(--cyber-cyan);
+            }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: var(--cyber-magenta);
+                box-shadow: 0 0 10px var(--cyber-magenta);
+            }
+
+            /* Digital Scan Lines Effect */
+            .scanlines {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 3;
+                opacity: 0.1;
+                background: linear-gradient(
+                    transparent 0%,
+                    rgba(0, 255, 255, 0.1) 50%,
+                    transparent 51%,
+                    transparent 100%
+                );
+                background-size: 100% 4px;
+                animation: scanlineMove 0.1s linear infinite;
+            }
+
+            @keyframes scanlineMove {
+                0% { background-position: 0 0; }
+                100% { background-position: 0 4px; }
+            }
+
+            @keyframes activityWave {
+                0%, 100% { opacity: 0.3; transform: scaleY(0.5); }
+                50% { opacity: 1; transform: scaleY(1); }
+            }
+
+            @keyframes pulseExpand {
+                0% {
+                    transform: translate(-50%, -50%) scale(0);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translate(-50%, -50%) scale(5);
+                    opacity: 0;
+                }
+            }
+        </style>
+
+        <center>
+            <div class="cyber-title">🌃 NEURAL CODEBASE MATRIX 🌃</div>
+        </center>
+    </head>
+
+    <body>
+        <!-- Cyberpunk Background Particles -->
+        <div class="cyber-particles" id="particleContainer"></div>
+        
+        <!-- Digital Scan Lines -->
+        <div class="scanlines"></div>
+
+        <!-- Main Network Container -->
+        <div id="mynetwork" class="card-body"></div>
+
+        <!-- Cyberpunk Control Panel -->
+        <div class="cyber-panel control-panel" style="top: 80px; left: 20px; width: 280px;">
+            <h5 style="margin-bottom: 15px; color: var(--cyber-lime); font-family: 'Orbitron', monospace;">
+                🎛️ NEURAL CONTROLS 🎛️
+            </h5>
+            
+            <!-- Search Interface -->
+            <div style="margin-bottom: 15px;">
+                <input type="text" id="nodeSearch" placeholder="SEARCH NEURAL NODES..." 
+                       style="width: 100%; padding: 8px; background: rgba(0,0,0,0.8); border: 1px solid var(--cyber-cyan); 
+                              border-radius: 4px; color: var(--cyber-cyan); font-family: 'Rajdhani', monospace; 
+                              box-shadow: 0 0 10px rgba(0,255,255,0.3);">
+            </div>
+
+            <!-- Physics Controls -->
+            <div style="margin-bottom: 15px;">
+                <label style="color: var(--cyber-magenta); font-size: 12px; margin-bottom: 5px; display: block;">GRAVITY FIELD</label>
+                <input type="range" id="gravitySlider" min="-15000" max="-2000" value="-8000" 
+                       style="width: 100%; accent-color: var(--cyber-magenta);">
+                <span id="gravityValue" style="color: var(--cyber-cyan); font-size: 11px;">-8000</span>
+            </div>
+
+            <!-- Node Filters -->
+            <div style="margin-bottom: 15px;">
+                <label style="color: var(--cyber-lime); font-size: 12px; margin-bottom: 8px; display: block;">NODE FILTERS</label>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px;">
+                    <label style="display: flex; align-items: center; font-size: 11px; color: var(--cyber-cyan);">
+                        <input type="checkbox" id="showFiles" checked style="margin-right: 5px; accent-color: var(--cyber-magenta);">
+                        Files
+                    </label>
+                    <label style="display: flex; align-items: center; font-size: 11px; color: var(--cyber-cyan);">
+                        <input type="checkbox" id="showClasses" checked style="margin-right: 5px; accent-color: var(--cyber-lime);">
+                        Classes
+                    </label>
+                    <label style="display: flex; align-items: center; font-size: 11px; color: var(--cyber-cyan);">
+                        <input type="checkbox" id="showFunctions" checked style="margin-right: 5px; accent-color: var(--cyber-cyan);">
+                        Functions
+                    </label>
+                    <label style="display: flex; align-items: center; font-size: 11px; color: var(--cyber-cyan);">
+                        <input type="checkbox" id="showMethods" checked style="margin-right: 5px; accent-color: var(--cyber-pink);">
+                        Methods
+                    </label>
+                </div>
+            </div>
+
+            <!-- Animation Controls -->
+            <div style="margin-bottom: 15px;">
+                <button id="pulseBtn" style="width: 48%; padding: 8px 4px; margin-right: 4%; background: linear-gradient(45deg, var(--cyber-cyan), var(--cyber-blue)); 
+                                           border: none; border-radius: 4px; color: black; font-family: 'Orbitron', monospace; 
+                                           font-size: 10px; font-weight: bold; cursor: pointer; box-shadow: 0 0 15px var(--cyber-cyan);">
+                    PULSE
+                </button>
+                <button id="resetBtn" style="width: 48%; padding: 8px 4px; background: linear-gradient(45deg, var(--cyber-magenta), var(--cyber-pink)); 
+                                           border: none; border-radius: 4px; color: black; font-family: 'Orbitron', monospace; 
+                                           font-size: 10px; font-weight: bold; cursor: pointer; box-shadow: 0 0 15px var(--cyber-magenta);">
+                    RESET
+                </button>
+            </div>
+        </div>
+
+        <!-- Cyberpunk Legend Panel -->
+        <div class="cyber-panel legend-panel" style="top: 80px; right: 20px; min-width: 250px;">
+            <h5 style="margin-bottom: 15px; color: var(--cyber-lime); font-family: 'Orbitron', monospace;">
+                ⚡ NODE TYPES ⚡
+            </h5>
+            <div class="legend-item">
+                <div class="legend-shape legend-files"></div>
+                <span>Files (Data Crystals)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-shape legend-classes"></div>
+                <span>Classes (Neural Cores)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-shape legend-functions"></div>
+                <span>Functions (Synapses)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-shape legend-methods"></div>
+                <span>Methods (Processors)</span>
+            </div>
+        </div>
+
+        <!-- Neural Activity Stats Panel -->
+        <div class="cyber-panel stats-panel" style="bottom: 20px; left: 20px; min-width: 300px;">
+            <h5 style="margin-bottom: 15px; color: var(--cyber-lime); font-family: 'Orbitron', monospace;">
+                📊 NEURAL METRICS 📊
+            </h5>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-size: 12px;">
+                <div>
+                    <span style="color: var(--cyber-magenta);">TOTAL NODES:</span>
+                    <span id="nodeCount" style="color: var(--cyber-cyan); font-weight: bold;">16</span>
+                </div>
+                <div>
+                    <span style="color: var(--cyber-lime);">CONNECTIONS:</span>
+                    <span id="edgeCount" style="color: var(--cyber-cyan); font-weight: bold;">16</span>
+                </div>
+                <div>
+                    <span style="color: var(--cyber-pink);">COMPLEXITY:</span>
+                    <span id="totalComplexity" style="color: var(--cyber-cyan); font-weight: bold;">40</span>
+                </div>
+                <div>
+                    <span style="color: var(--cyber-orange);">ACTIVITY:</span>
+                    <span id="networkActivity" style="color: var(--cyber-lime); font-weight: bold;">LOW</span>
+                </div>
+            </div>
+            
+            <!-- Real-time Activity Graph -->
+            <div style="margin-top: 15px; height: 40px; background: rgba(0,0,0,0.5); border: 1px solid var(--cyber-cyan); 
+                        border-radius: 4px; position: relative; overflow: hidden;">
+                <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; 
+                           background: linear-gradient(to top, transparent 60%, var(--cyber-cyan) 80%, transparent 100%); 
+                           animation: activityWave 2s ease-in-out infinite;"></div>
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+                           color: var(--cyber-cyan); font-size: 10px; font-family: 'Orbitron', monospace; font-weight: bold;">
+                    NEURAL ACTIVITY
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading Bar -->
+        <div id="loadingBar">
+            <div class="outerBorder">
+                <div id="text">INITIALIZING NEURAL MATRIX...</div>
+                <div id="bar"></div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+            // === CYBERPUNK PARTICLE SYSTEM ===
+            function createParticleSystem() {
+                const particleContainer = document.getElementById('particleContainer');
+                
+                function createParticle() {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    
+                    // Random starting position
+                    particle.style.left = Math.random() * 100 + 'vw';
+                    particle.style.animationDuration = (Math.random() * 15 + 10) + 's';
+                    particle.style.animationDelay = Math.random() * 5 + 's';
+                    
+                    // Random color variation
+                    const colors = ['#00FFFF', '#FF00FF', '#39FF14', '#0080FF', '#FF1493'];
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.backgroundColor = color;
+                    particle.style.boxShadow = `0 0 10px ${color}`;
+                    
+                    particleContainer.appendChild(particle);
+                    
+                    // Remove particle after animation
+                    setTimeout(() => {
+                        if (particle.parentNode) {
+                            particle.parentNode.removeChild(particle);
+                        }
+                    }, 25000);
+                }
+                
+                // Create particles continuously
+                setInterval(createParticle, 500);
+                
+                // Initial burst of particles
+                for (let i = 0; i < 20; i++) {
+                    setTimeout(createParticle, i * 100);
+                }
+            }
+
+            // === NEURAL NETWORK SETUP ===
+            var edges, nodes, network;
+            var options, data;
+            var filter = {
+                item: '',
+                property: '',
+                value: []
+            };
+
+            // Enhanced cyberpunk network drawing function
+            function drawGraph() {
+                var container = document.getElementById('mynetwork');
+
+                // Parse nodes with cyberpunk enhancements
+                nodes = new vis.DataSet([
+  {
+    "id": "node_0",
+    "label": "main.py",
+    "group": "files",
+    "shape": "box",
+    "size": 24.0,
+    "title": "\ud83d\udcc4 File<br/>File: main.py<br/>Lines: 120<br/>Complexity: 15",
+    "font": {
+      "color": "#00FFFF",
+      "face": "Orbitron, monospace",
+      "strokeWidth": 2,
+      "strokeColor": "#000000"
+    },
+    "color": {
+      "background": "#FF00FF",
+      "border": "#FF1493",
+      "highlight": {
+        "background": "#FF69B4",
+        "border": "#FF1493"
+      },
+      "hover": {
+        "background": "#FF69B4",
+        "border": "#FF1493"
+      }
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#FF00FF",
+      "size": 10
+    },
+    "borderWidth": 3,
+    "borderWidthSelected": 5
+  },
+  {
+    "id": "node_1",
+    "label": "Application",
+    "group": "classes",
+    "shape": "triangle",
+    "size": 21,
+    "title": "\ud83e\udde0 Neural Core<br/>Class: Application<br/>File: main.py<br/>Methods: 2<br/>Line: 10",
+    "font": {
+      "color": "#00FFFF",
+      "face": "Orbitron, monospace",
+      "strokeWidth": 2,
+      "strokeColor": "#000000"
+    },
+    "color": {
+      "background": "#39FF14",
+      "border": "#00FF00",
+      "highlight": {
+        "background": "#7FFF00",
+        "border": "#00FF00"
+      },
+      "hover": {
+        "background": "#7FFF00",
+        "border": "#00FF00"
+      }
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#39FF14",
+      "size": 10
+    },
+    "borderWidth": 3,
+    "borderWidthSelected": 5
+  },
+  {
+    "id": "node_2",
+    "label": "__init__",
+    "group": "methods",
+    "shape": "diamond",
+    "size": 14,
+    "title": "\ud83d\udd27 Processor<br/>Method: __init__<br/>Class: Application<br/>Complexity: 2<br/>Args: 2",
+    "font": {
+      "color": "#00FFFF",
+      "face": "Orbitron, monospace",
+      "strokeWidth": 2,
+      "strokeColor": "#000000"
+    },
+    "color": {
+      "background": "#FF1493",
+      "border": "#FF69B4",
+      "highlight": {
+        "background": "#FFB6C1",
+        "border": "#FF69B4"
+      },
+      "hover": {
+        "background": "#FFB6C1",
+        "border": "#FF69B4"
+      }
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#FF1493",
+      "size": 10
+    },
+    "borderWidth": 3,
+    "borderWidthSelected": 5
+  },
+  {
+    "id": "node_3",
+    "label": "run",
+    "group": "methods",
+    "shape": "diamond",
+    "size": 32,
+    "title": "\ud83d\udd27 Processor<br/>Method: run<br/>Class: Application<br/>Complexity: 8<br/>Args: 1",
+    "font": {
+      "color": "#00FFFF",
+      "face": "Orbitron, monospace",
+      "strokeWidth": 2,
+      "strokeColor": "#000000"
+    },
+    "color": {
+      "background": "#FF1493",
+      "border": "#FF69B4",
+      "highlight": {
+        "background": "#FFB6C1",
+        "border": "#FF69B4"
+      },
+      "hover": {
+        "background": "#FFB6C1",
+        "border": "#FF69B4"
+      }
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#FF1493",
+      "size": 10
+    },
+    "borderWidth": 3,
+    "borderWidthSelected": 5
+  },
+  {
+    "id": "node_4",
+    "label": "main",
+    "group": "functions",
+    "shape": "dot",
+    "size": 19,
+    "title": "\u26a1 Synapse<br/>Function: main<br/>File: main.py<br/>Complexity: 3<br/>Args: 0",
+    "font": {
+      "color": "#00FFFF",
+      "face": "Orbitron, monospace",
+      "strokeWidth": 2,
+      "strokeColor": "#000000"
+    },
+    "color": {
+      "background": "#00FFFF",
+      "border": "#0080FF",
+      "highlight": {
+        "background": "#87CEEB",
+        "border": "#0080FF"
+      },
+      "hover": {
+        "background": "#87CEEB",
+        "border": "#0080FF"
+      }
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#00FFFF",
+      "size": 10
+    },
+    "borderWidth": 3,
+    "borderWidthSelected": 5
+  },
+  {
+    "id": "node_5",
+    "label": "setup_logging",
+    "group": "functions",
+    "shape": "dot",
+    "size": 16,
+    "title": "\u26a1 Synapse<br/>Function: setup_logging<br/>File: main.py<br/>Complexity: 2<br/>Args: 1",
+    "font": {
+      "color": "#00FFFF",
+      "face": "Orbitron, monospace",
+      "strokeWidth": 2,
+      "strokeColor": "#000000"
+    },
+    "color": {
+      "background": "#00FFFF",
+      "border": "#0080FF",
+      "highlight": {
+        "background": "#87CEEB",
+        "border": "#0080FF"
+      },
+      "hover": {
+        "background": "#87CEEB",
+        "border": "#0080FF"
+      }
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#00FFFF",
+      "size": 10
+    },
+    "borderWidth": 3,
+    "borderWidthSelected": 5
+  },
+  {
+    "id": "node_6",
+    "label": "config.py",
+    "group": "files",
+    "shape": "box",
+    "size": 10.0,
+    "title": "\ud83d\udcc4 File<br/>File: config.py<br/>Lines: 45<br/>Complexity: 5",
+    "font": {
+      "color": "#00FFFF",
+      "face": "Orbitron, monospace",
+      "strokeWidth": 2,
+      "strokeColor": "#000000"
+    },
+    "color": {
+      "background": "#FF00FF",
+      "border": "#FF1493",
+      "highlight": {
+        "background": "#FF69B4",
+        "border": "#FF1493"
+      },
+      "hover": {
+        "background": "#FF69B4",
+        "border": "#FF1493"
+      }
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#FF00FF",
+      "size": 10
+    },
+    "borderWidth": 3,
+    "borderWidthSelected": 5
+  },
+  {
+    "id": "node_7",
+    "label": "Configuration",
+    "group": "classes",
+    "shape": "triangle",
+    "size": 21,
+    "title": "\ud83e\udde0 Neural Core<br/>Class: Configuration<br/>File: config.py<br/>Methods: 2<br/>Line: 5",
+    "font": {
+      "color": "#00FFFF",
+      "face": "Orbitron, monospace",
+      "strokeWidth": 2,
+      "strokeColor": "#000000"
+    },
+    "color": {
+      "background": "#39FF14",
+      "border": "#00FF00",
+      "highlight": {
+        "background": "#7FFF00",
+        "border": "#00FF00"
+      },
+      "hover": {
+        "background": "#7FFF00",
+        "border": "#00FF00"
+      }
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#39FF14",
+      "size": 10
+    },
+    "borderWidth": 3,
+    "borderWidthSelected": 5
+  },
+  {
+    "id": "node_8",
+    "label": "__init__",
+    "group": "methods",
+    "shape": "diamond",
+    "size": 11,
+    "title": "\ud83d\udd27 Processor<br/>Method: __init__<br/>Class: Configuration<br/>Complexity: 1<br/>Args: 1",
+    "font": {
+      "color": "#00FFFF",
+      "face": "Orbitron, monospace",
+      "strokeWidth": 2,
+      "strokeColor": "#000000"
+    },
+    "color": {
+      "background": "#FF1493",
+      "border": "#FF69B4",
+      "highlight": {
+        "background": "#FFB6C1",
+        "border": "#FF69B4"
+      },
+      "hover": {
+        "background": "#FFB6C1",
+        "border": "#FF69B4"
+      }
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#FF1493",
+      "size": 10
+    },
+    "borderWidth": 3,
+    "borderWidthSelected": 5
+  },
+  {
+    "id": "node_9",
+    "label": "load_from_file",
+    "group": "methods",
+    "shape": "diamond",
+    "size": 20,
+    "title": "\ud83d\udd27 Processor<br/>Method: load_from_file<br/>Class: Configuration<br/>Complexity: 4<br/>Args: 2",
+    "font": {
+      "color": "#00FFFF",
+      "face": "Orbitron, monospace",
+      "strokeWidth": 2,
+      "strokeColor": "#000000"
+    },
+    "color": {
+      "background": "#FF1493",
+      "border": "#FF69B4",
+      "highlight": {
+        "background": "#FFB6C1",
+        "border": "#FF69B4"
+      },
+      "hover": {
+        "background": "#FFB6C1",
+        "border": "#FF69B4"
+      }
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#FF1493",
+      "size": 10
+    },
+    "borderWidth": 3,
+    "borderWidthSelected": 5
+  },
+  {
+    "id": "node_10",
+    "label": "flask",
+    "group": "modules",
+    "shape": "ellipse",
+    "size": 12,
+    "title": "\ud83d\udce1 Module<br/>Module: flask",
+    "font": {
+      "color": "#00FFFF",
+      "face": "Orbitron, monospace",
+      "strokeWidth": 2,
+      "strokeColor": "#000000"
+    },
+    "color": {
+      "background": "#4B0082",
+      "border": "#8A2BE2",
+      "highlight": {
+        "background": "#9966CC",
+        "border": "#8A2BE2"
+      },
+      "hover": {
+        "background": "#9966CC",
+        "border": "#8A2BE2"
+      }
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#4B0082",
+      "size": 10
+    },
+    "borderWidth": 3,
+    "borderWidthSelected": 5
+  },
+  {
+    "id": "node_11",
+    "label": "\ud83d\udce6 Core Application",
+    "group": "clusters",
+    "shape": "hexagon",
+    "size": 26,
+    "title": "\ud83c\udf10 Neural Cluster<br/>Cluster: Core Application<br/>Type: functional<br/>Files: 2<br/>Cohesion: 0.85",
+    "font": {
+      "color": "#00FFFF",
+      "face": "Orbitron, monospace",
+      "strokeWidth": 2,
+      "strokeColor": "#000000"
+    },
+    "color": {
+      "background": "#0080FF",
+      "border": "#4169E1",
+      "highlight": {
+        "background": "#6495ED",
+        "border": "#4169E1"
+      },
+      "hover": {
+        "background": "#6495ED",
+        "border": "#4169E1"
+      }
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#0080FF",
+      "size": 10
+    },
+    "borderWidth": 3,
+    "borderWidthSelected": 5
+  },
+  {
+    "id": "node_12",
+    "label": "\ud83c\udfd7\ufe0f Singleton",
+    "group": "patterns",
+    "shape": "star",
+    "size": 25,
+    "title": "\u2b50 Neural Pattern<br/>Pattern: Singleton<br/>Type: Architectural/Design Pattern",
+    "font": {
+      "color": "#00FFFF",
+      "face": "Orbitron, monospace",
+      "strokeWidth": 2,
+      "strokeColor": "#000000"
+    },
+    "color": {
+      "background": "#FF4500",
+      "border": "#FF6347",
+      "highlight": {
+        "background": "#FFA500",
+        "border": "#FF6347"
+      },
+      "hover": {
+        "background": "#FFA500",
+        "border": "#FF6347"
+      }
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#FF4500",
+      "size": 10
+    },
+    "borderWidth": 3,
+    "borderWidthSelected": 5
+  },
+  {
+    "id": "node_13",
+    "label": "\ud83c\udfd7\ufe0f MVC",
+    "group": "patterns",
+    "shape": "star",
+    "size": 25,
+    "title": "\u2b50 Neural Pattern<br/>Pattern: MVC<br/>Type: Architectural/Design Pattern",
+    "font": {
+      "color": "#00FFFF",
+      "face": "Orbitron, monospace",
+      "strokeWidth": 2,
+      "strokeColor": "#000000"
+    },
+    "color": {
+      "background": "#FF4500",
+      "border": "#FF6347",
+      "highlight": {
+        "background": "#FFA500",
+        "border": "#FF6347"
+      },
+      "hover": {
+        "background": "#FFA500",
+        "border": "#FF6347"
+      }
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#FF4500",
+      "size": 10
+    },
+    "borderWidth": 3,
+    "borderWidthSelected": 5
+  },
+  {
+    "id": "node_14",
+    "label": "\u26a1 logging",
+    "group": "concerns",
+    "shape": "triangle",
+    "size": 17,
+    "title": "\ud83d\udd17 Cross-Cutting Neural Bridge<br/>Concern: logging<br/>Affects: 1 neural nodes",
+    "font": {
+      "color": "#00FFFF",
+      "face": "Orbitron, monospace",
+      "strokeWidth": 2,
+      "strokeColor": "#000000"
+    },
+    "color": {
+      "background": "#FFD700",
+      "border": "#FFA500",
+      "highlight": {
+        "background": "#FFFF00",
+        "border": "#FFA500"
+      },
+      "hover": {
+        "background": "#FFFF00",
+        "border": "#FFA500"
+      }
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#FFD700",
+      "size": 10
+    },
+    "borderWidth": 3,
+    "borderWidthSelected": 5
+  },
+  {
+    "id": "node_15",
+    "label": "\u26a1 error_handling",
+    "group": "concerns",
+    "shape": "triangle",
+    "size": 19,
+    "title": "\ud83d\udd17 Cross-Cutting Neural Bridge<br/>Concern: error_handling<br/>Affects: 2 neural nodes",
+    "font": {
+      "color": "#00FFFF",
+      "face": "Orbitron, monospace",
+      "strokeWidth": 2,
+      "strokeColor": "#000000"
+    },
+    "color": {
+      "background": "#FFD700",
+      "border": "#FFA500",
+      "highlight": {
+        "background": "#FFFF00",
+        "border": "#FFA500"
+      },
+      "hover": {
+        "background": "#FFFF00",
+        "border": "#FFA500"
+      }
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#FFD700",
+      "size": 10
+    },
+    "borderWidth": 3,
+    "borderWidthSelected": 5
+  }
+]);
+
+                // Enhanced edges with cyberpunk styling
+                edges = new vis.DataSet([
+  {
+    "from": "node_0",
+    "to": "node_1",
+    "title": "neural_link",
+    "width": 2,
+    "color": {
+      "color": "#666666",
+      "highlight": "#FF00FF"
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#666666",
+      "size": 5
+    },
+    "smooth": {
+      "type": "continuous",
+      "forceDirection": "none"
+    },
+    "arrows": null
+  },
+  {
+    "from": "node_1",
+    "to": "node_2",
+    "title": "neural_pathway",
+    "width": 1,
+    "color": {
+      "color": "#666666",
+      "highlight": "#FF00FF"
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#666666",
+      "size": 5
+    },
+    "smooth": {
+      "type": "continuous",
+      "forceDirection": "none"
+    },
+    "arrows": null
+  },
+  {
+    "from": "node_1",
+    "to": "node_3",
+    "title": "neural_pathway",
+    "width": 1,
+    "color": {
+      "color": "#666666",
+      "highlight": "#FF00FF"
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#666666",
+      "size": 5
+    },
+    "smooth": {
+      "type": "continuous",
+      "forceDirection": "none"
+    },
+    "arrows": null
+  },
+  {
+    "from": "node_0",
+    "to": "node_4",
+    "title": "neural_connection",
+    "width": 1,
+    "color": {
+      "color": "#666666",
+      "highlight": "#FF00FF"
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#666666",
+      "size": 5
+    },
+    "smooth": {
+      "type": "continuous",
+      "forceDirection": "none"
+    },
+    "arrows": null
+  },
+  {
+    "from": "node_0",
+    "to": "node_5",
+    "title": "neural_connection",
+    "width": 1,
+    "color": {
+      "color": "#666666",
+      "highlight": "#FF00FF"
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#666666",
+      "size": 5
+    },
+    "smooth": {
+      "type": "continuous",
+      "forceDirection": "none"
+    },
+    "arrows": null
+  },
+  {
+    "from": "node_6",
+    "to": "node_7",
+    "title": "neural_link",
+    "width": 2,
+    "color": {
+      "color": "#666666",
+      "highlight": "#FF00FF"
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#666666",
+      "size": 5
+    },
+    "smooth": {
+      "type": "continuous",
+      "forceDirection": "none"
+    },
+    "arrows": null
+  },
+  {
+    "from": "node_7",
+    "to": "node_8",
+    "title": "neural_pathway",
+    "width": 1,
+    "color": {
+      "color": "#666666",
+      "highlight": "#FF00FF"
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#666666",
+      "size": 5
+    },
+    "smooth": {
+      "type": "continuous",
+      "forceDirection": "none"
+    },
+    "arrows": null
+  },
+  {
+    "from": "node_7",
+    "to": "node_9",
+    "title": "neural_pathway",
+    "width": 1,
+    "color": {
+      "color": "#666666",
+      "highlight": "#FF00FF"
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#666666",
+      "size": 5
+    },
+    "smooth": {
+      "type": "continuous",
+      "forceDirection": "none"
+    },
+    "arrows": null
+  },
+  {
+    "from": "node_0",
+    "to": "node_6",
+    "title": "neural dependency on config.py",
+    "width": 1,
+    "color": {
+      "color": "#ff8800",
+      "highlight": "#00FFFF"
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#ff8800",
+      "size": 5
+    },
+    "smooth": {
+      "type": "continuous",
+      "forceDirection": "none"
+    },
+    "arrows": "to"
+  },
+  {
+    "from": "node_0",
+    "to": "node_10",
+    "title": "neural dependency on flask",
+    "width": 1,
+    "color": {
+      "color": "#ff8800",
+      "highlight": "#00FFFF"
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#ff8800",
+      "size": 5
+    },
+    "smooth": {
+      "type": "continuous",
+      "forceDirection": "none"
+    },
+    "arrows": "to"
+  },
+  {
+    "from": "node_4",
+    "to": "node_5",
+    "title": "main transmits to setup_logging",
+    "width": 1,
+    "color": {
+      "color": "#00FFFF",
+      "highlight": "#FF4500"
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#00FFFF",
+      "size": 5
+    },
+    "smooth": {
+      "type": "continuous",
+      "forceDirection": "none"
+    },
+    "arrows": "to"
+  },
+  {
+    "from": "node_11",
+    "to": "node_0",
+    "title": "neural cluster with main.py",
+    "width": 2,
+    "color": {
+      "color": "#FF0088",
+      "highlight": "#00FFFF"
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#FF0088",
+      "size": 5
+    },
+    "smooth": {
+      "type": "continuous",
+      "forceDirection": "none"
+    },
+    "arrows": null
+  },
+  {
+    "from": "node_11",
+    "to": "node_6",
+    "title": "neural cluster with config.py",
+    "width": 2,
+    "color": {
+      "color": "#FF0088",
+      "highlight": "#00FFFF"
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#FF0088",
+      "size": 5
+    },
+    "smooth": {
+      "type": "continuous",
+      "forceDirection": "none"
+    },
+    "arrows": null
+  },
+  {
+    "from": "node_14",
+    "to": "node_0",
+    "title": "neural bridge affects main.py",
+    "width": 1,
+    "color": {
+      "color": "#0088FF",
+      "highlight": "#FFD700"
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#0088FF",
+      "size": 5
+    },
+    "smooth": {
+      "type": "continuous",
+      "forceDirection": "none"
+    },
+    "arrows": null
+  },
+  {
+    "from": "node_15",
+    "to": "node_0",
+    "title": "neural bridge affects main.py",
+    "width": 1,
+    "color": {
+      "color": "#0088FF",
+      "highlight": "#FFD700"
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#0088FF",
+      "size": 5
+    },
+    "smooth": {
+      "type": "continuous",
+      "forceDirection": "none"
+    },
+    "arrows": null
+  },
+  {
+    "from": "node_15",
+    "to": "node_6",
+    "title": "neural bridge affects config.py",
+    "width": 1,
+    "color": {
+      "color": "#0088FF",
+      "highlight": "#FFD700"
+    },
+    "shadow": {
+      "enabled": true,
+      "color": "#0088FF",
+      "size": 5
+    },
+    "smooth": {
+      "type": "continuous",
+      "forceDirection": "none"
+    },
+    "arrows": null
+  }
+]);
+
+                // Cyberpunk network options
+                var options = {
+                    physics: {
+                        enabled: true,
+                        stabilization: { iterations: 100 },
+                        barnesHut: {
+                            gravitationalConstant: -8000,
+                            centralGravity: 0.3,
+                            springLength: 120,
+                            springConstant: 0.04,
+                            damping: 0.09,
+                            avoidOverlap: 0.5
+                        }
+                    },
+                    interaction: {
+                        hover: true,
+                        tooltipDelay: 200,
+                        hideEdgesOnDrag: false,
+                        hideNodesOnDrag: false
+                    },
+                    nodes: {
+                        borderWidth: 3,
+                        borderWidthSelected: 5,
+                        font: {
+                            size: 14,
+                            color: '#00FFFF',
+                            face: 'Orbitron, monospace',
+                            strokeWidth: 2,
+                            strokeColor: '#000000'
+                        },
+                        shadow: {
+                            enabled: true,
+                            color: '#00FFFF',
+                            size: 10,
+                            x: 0,
+                            y: 0
+                        }
+                    },
+                    edges: {
+                        width: 2,
+                        shadow: {
+                            enabled: true,
+                            color: '#00FFFF',
+                            size: 5,
+                            x: 0,
+                            y: 0
+                        },
+                        smooth: {
+                            type: 'continuous',
+                            forceDirection: 'none'
+                        }
+                    }
+                };
+
+                data = { nodes: nodes, edges: edges };
+                network = new vis.Network(container, data, options);
+
+                // Cyberpunk loading progress
+                network.on("stabilizationProgress", function(params) {
+                    document.getElementById('loadingBar').removeAttribute("style");
+                    var maxWidth = 496;
+                    var minWidth = 20;
+                    var widthFactor = params.iterations/params.total;
+                    var width = Math.max(minWidth, maxWidth * widthFactor);
+                    document.getElementById('bar').style.width = width + 'px';
+                    document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '% NEURAL SYNC...';
+                });
+
+                network.once("stabilizationIterationsDone", function() {
+                    document.getElementById('text').innerHTML = '100% MATRIX ONLINE';
+                    document.getElementById('bar').style.width = '496px';
+                    document.getElementById('loadingBar').style.opacity = 0;
+                    setTimeout(function() {
+                        document.getElementById('loadingBar').style.display = 'none';
+                    }, 2000);
+                });
+
+                // Enhanced cyberpunk interactions
+                network.on("hoverNode", function(params) {
+                    // Add glow effect on hover
+                    const nodeElement = container.querySelector(`[data-id="${params.node}"]`);
+                    if (nodeElement) {
+                        nodeElement.style.filter = 'brightness(1.5) saturate(1.5)';
+                    }
+                });
+
+                network.on("blurNode", function(params) {
+                    // Remove glow effect
+                    const nodeElement = container.querySelector(`[data-id="${params.node}"]`);
+                    if (nodeElement) {
+                        nodeElement.style.filter = '';
+                    }
+                });
+
+                return network;
+            }
+
+            // === CYBERPUNK CONTROL SYSTEM ===
+            function setupCyberpunkControls() {
+                // Gravity slider control
+                const gravitySlider = document.getElementById('gravitySlider');
+                const gravityValue = document.getElementById('gravityValue');
+                
+                gravitySlider.addEventListener('input', function() {
+                    gravityValue.textContent = this.value;
+                    if (network) {
+                        network.setOptions({
+                            physics: {
+                                barnesHut: {
+                                    gravitationalConstant: parseInt(this.value)
+                                }
+                            }
+                        });
+                    }
+                });
+
+                // Node search functionality
+                const searchInput = document.getElementById('nodeSearch');
+                searchInput.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase();
+                    if (searchTerm === '') {
+                        // Reset all nodes to visible
+                        nodes.forEach(function(node) {
+                            nodes.update({id: node.id, hidden: false});
+                        });
+                        return;
+                    }
+
+                    // Filter nodes based on search
+                    nodes.forEach(function(node) {
+                        const isMatch = node.label.toLowerCase().includes(searchTerm) ||
+                                       (node.title && node.title.toLowerCase().includes(searchTerm));
+                        nodes.update({id: node.id, hidden: !isMatch});
+                    });
+                });
+
+                // Node type filters
+                const filters = {
+                    showFiles: document.getElementById('showFiles'),
+                    showClasses: document.getElementById('showClasses'),
+                    showFunctions: document.getElementById('showFunctions'),
+                    showMethods: document.getElementById('showMethods')
+                };
+
+                Object.keys(filters).forEach(filterId => {
+                    filters[filterId].addEventListener('change', function() {
+                        updateNodeVisibility();
+                    });
+                });
+
+                function updateNodeVisibility() {
+                    const showTypes = {
+                        files: filters.showFiles.checked,
+                        classes: filters.showClasses.checked,
+                        functions: filters.showFunctions.checked,
+                        methods: filters.showMethods.checked
+                    };
+
+                    nodes.forEach(function(node) {
+                        const shouldShow = showTypes[node.group] || false;
+                        nodes.update({id: node.id, hidden: !shouldShow});
+                    });
+                }
+
+                // Animation controls
+                document.getElementById('pulseBtn').addEventListener('click', function() {
+                    triggerNetworkPulse();
+                });
+
+                document.getElementById('resetBtn').addEventListener('click', function() {
+                    if (network) {
+                        network.fit();
+                        network.stabilize();
+                    }
+                });
+            }
+
+            function triggerNetworkPulse() {
+                if (!network) return;
+                
+                const nodeIds = nodes.getIds();
+                let pulseIndex = 0;
+                
+                function pulseNext() {
+                    if (pulseIndex >= nodeIds.length) return;
+                    
+                    const nodeId = nodeIds[pulseIndex];
+                    const originalNode = nodes.get(nodeId);
+                    
+                    // Temporarily increase size and add glow
+                    nodes.update({
+                        id: nodeId,
+                        size: originalNode.size * 1.5,
+                        borderWidth: 6
+                    });
+                    
+                    // Reset after animation
+                    setTimeout(() => {
+                        nodes.update({
+                            id: nodeId,
+                            size: originalNode.size,
+                            borderWidth: originalNode.borderWidth || 3
+                        });
+                    }, 300);
+                    
+                    pulseIndex++;
+                    setTimeout(pulseNext, 100);
+                }
+                
+                pulseNext();
+            }
+
+            // Enhanced particle system with neural pulses
+            function createEnhancedParticleSystem() {
+                createParticleSystem();
+                
+                // Add periodic neural pulse effect
+                setInterval(() => {
+                    if (network && Math.random() > 0.7) {
+                        const nodeIds = nodes.getIds();
+                        const randomNode = nodeIds[Math.floor(Math.random() * nodeIds.length)];
+                        
+                        // Create pulse effect around random node
+                        const nodePosition = network.getPositions([randomNode])[randomNode];
+                        if (nodePosition) {
+                            createPulseEffect(nodePosition.x, nodePosition.y);
+                        }
+                    }
+                }, 3000);
+            }
+
+            function createPulseEffect(x, y) {
+                const networkDiv = document.getElementById('mynetwork');
+                const pulse = document.createElement('div');
+                pulse.style.position = 'absolute';
+                pulse.style.left = x + 'px';
+                pulse.style.top = y + 'px';
+                pulse.style.width = '10px';
+                pulse.style.height = '10px';
+                pulse.style.borderRadius = '50%';
+                pulse.style.border = '2px solid var(--cyber-cyan)';
+                pulse.style.pointerEvents = 'none';
+                pulse.style.animation = 'pulseExpand 1.5s ease-out forwards';
+                
+                networkDiv.appendChild(pulse);
+                
+                setTimeout(() => {
+                    if (pulse.parentNode) {
+                        pulse.parentNode.removeChild(pulse);
+                    }
+                }, 1500);
+            }
+
+            // Initialize the cyberpunk neural network
+            document.addEventListener('DOMContentLoaded', function() {
+                createEnhancedParticleSystem();
+                drawGraph();
+                setupCyberpunkControls();
+            });
+        </script>
+    </body>
+</html>

@@ -20,7 +20,7 @@ try:
     sys.path.insert(0, parent_dir)
     
     from enhanced_ecological_analyzer import EnhancedEcologicalAnalyzer
-    from enhanced_knowledge_graph_generator import EnhancedKnowledgeGraphGenerator
+    from cyberpunk_knowledge_graph_generator import CyberpunkKnowledgeGraphGenerator
     ENHANCED_AVAILABLE = True
 except ImportError as e:
     ENHANCED_AVAILABLE = False
@@ -118,9 +118,9 @@ def analyze_codebase_enhanced(path: str) -> Dict[str, Any]:
         analyzer = EnhancedEcologicalAnalyzer()
         analysis_result = analyzer.analyze_codebase(path)
         
-        # Generate interactive visualization
-        generator = EnhancedKnowledgeGraphGenerator()
-        html_file = generator.generate_enhanced_graph(analysis_result, f"enhanced_analysis_{hash(path) % 10000}.html")
+        # Generate interactive cyberpunk visualization
+        generator = CyberpunkKnowledgeGraphGenerator()
+        html_file = generator.generate_cyberpunk_graph(analysis_result, f"cyberpunk_neural_graph_{hash(path) % 10000}.html")
         
         return {
             "analysis": analysis_result,
@@ -143,11 +143,11 @@ def generate_codebase_graph(analysis_data: dict, output_file: str = None) -> Dic
         raise Exception("Enhanced analysis components not available. Install required dependencies.")
     
     try:
-        generator = EnhancedKnowledgeGraphGenerator()
+        generator = CyberpunkKnowledgeGraphGenerator()
         if output_file is None:
-            output_file = f"codebase_graph_{hash(str(analysis_data)) % 10000}.html"
+            output_file = f"cyberpunk_neural_graph_{hash(str(analysis_data)) % 10000}.html"
         
-        html_file = generator.generate_enhanced_graph(analysis_data, output_file)
+        html_file = generator.generate_cyberpunk_graph(analysis_data, output_file)
         
         return {
             "visualization_file": html_file,

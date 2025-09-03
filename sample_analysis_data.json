@@ -1,0 +1,126 @@
+{
+  "files": [
+    {
+      "file": "main.py",
+      "lines": 120,
+      "complexity": 15,
+      "classes": [
+        {
+          "name": "Application",
+          "line": 10,
+          "methods": [
+            {
+              "name": "__init__",
+              "complexity": 2,
+              "args": ["self", "config"]
+            },
+            {
+              "name": "run",
+              "complexity": 8,
+              "args": ["self"]
+            }
+          ]
+        }
+      ],
+      "functions": [
+        {
+          "name": "main",
+          "complexity": 3,
+          "args": []
+        },
+        {
+          "name": "setup_logging",
+          "complexity": 2,
+          "args": ["level"]
+        }
+      ]
+    },
+    {
+      "file": "config.py",
+      "lines": 45,
+      "complexity": 5,
+      "classes": [
+        {
+          "name": "Configuration",
+          "line": 5,
+          "methods": [
+            {
+              "name": "__init__",
+              "complexity": 1,
+              "args": ["self"]
+            },
+            {
+              "name": "load_from_file",
+              "complexity": 4,
+              "args": ["self", "filepath"]
+            }
+          ]
+        }
+      ],
+      "functions": []
+    }
+  ],
+  "relationships": {
+    "dependency": [
+      {
+        "source": "main.py",
+        "target": "config.py",
+        "import_type": "import"
+      },
+      {
+        "source": "main.py", 
+        "target": "flask",
+        "import_type": "import"
+      }
+    ],
+    "inheritance": [
+      {
+        "parent": "BaseApp",
+        "child": "Application"
+      }
+    ],
+    "call_graph": [
+      {
+        "caller": "main",
+        "callee": "setup_logging"
+      }
+    ]
+  },
+  "semantic_clusters": [
+    {
+      "name": "Core Application",
+      "type": "functional",
+      "files": ["main.py", "config.py"],
+      "cohesion_score": 0.85
+    }
+  ],
+  "patterns": {
+    "design_patterns": ["Singleton"],
+    "architectural_patterns": ["MVC"]
+  },
+  "cross_cutting_concerns": [
+    {
+      "file": "main.py",
+      "concerns": ["logging", "error_handling"]
+    },
+    {
+      "file": "config.py", 
+      "concerns": ["error_handling"]
+    }
+  ],
+  "metrics": {
+    "complexity": {
+      "main.py": {
+        "cyclomatic": 15
+      },
+      "config.py": {
+        "cyclomatic": 5
+      }
+    },
+    "coupling": {
+      "main.py": {
+        "instability": 0.3
+      }
+    }
+  }
+}

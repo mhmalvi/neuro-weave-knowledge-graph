@@ -27,34 +27,34 @@ class EnhancedKnowledgeGraphGenerator:
         self.node_id_counter = 0
         self.node_registry = {}
         
-        # Enhanced color schemes for different relationship types
+        # Cyberpunk color schemes for different relationship types (default style)
         self.node_colors = {
-            'file': '#1f77b4',           # Blue
-            'class': '#ff7f0e',          # Orange  
-            'function': '#2ca02c',       # Green
-            'method': '#d62728',         # Red
-            'import': '#9467bd',         # Purple
-            'module': '#8c564b',         # Brown
-            'pattern': '#e377c2',        # Pink
-            'cluster': '#7f7f7f',        # Gray
-            'concern': '#bcbd22',        # Olive
-            'dependency': '#17becf',     # Cyan
-            'data_flow': '#ff9999',      # Light Red
-            'inheritance': '#66b3ff',    # Light Blue
-            'composition': '#99ff99',    # Light Green
+            'file': '#FF00FF',           # Magenta
+            'class': '#39FF14',          # Neon Green  
+            'function': '#00FFFF',       # Cyan
+            'method': '#FF1493',         # Deep Pink
+            'import': '#9400D3',         # Violet
+            'module': '#FF4500',         # Orange Red
+            'pattern': '#FFD700',        # Gold
+            'cluster': '#C0C0C0',        # Silver
+            'concern': '#ADFF2F',        # Green Yellow
+            'dependency': '#00CED1',     # Dark Turquoise
+            'data_flow': '#FF6347',      # Tomato
+            'inheritance': '#1E90FF',    # Dodger Blue
+            'composition': '#32CD32',    # Lime Green
         }
         
         self.edge_colors = {
-            'contains': '#666666',       # Gray
-            'inherits': '#ff4444',       # Red
-            'calls': '#44ff44',          # Green  
-            'imports': '#4444ff',        # Blue
-            'depends_on': '#ff8800',     # Orange
-            'composes': '#8800ff',       # Purple
-            'flows_to': '#00ff88',       # Teal
-            'clusters_with': '#ff0088',  # Magenta
-            'implements': '#88ff00',     # Lime
-            'associates': '#0088ff',     # Sky Blue
+            'contains': '#808080',       # Gray
+            'inherits': '#FF0000',       # Red
+            'calls': '#00FF00',          # Green  
+            'imports': '#0000FF',        # Blue
+            'depends_on': '#FFA500',     # Orange
+            'composes': '#8A2BE2',       # Blue Violet
+            'flows_to': '#20B2AA',       # Light Sea Green
+            'clusters_with': '#FF1493',  # Deep Pink
+            'implements': '#ADFF2F',     # Green Yellow
+            'associates': '#00BFFF',     # Deep Sky Blue
         }
         
         self.edge_styles = {
@@ -73,12 +73,12 @@ class EnhancedKnowledgeGraphGenerator:
     def generate_enhanced_graph(self, analysis_data: Dict[str, Any], output_file: str = "enhanced_codebase_graph.html") -> str:
         """Generate comprehensive multi-dimensional knowledge graph"""
         
-        # Initialize network with advanced physics
+        # Initialize network with cyberpunk theme
         self.network = Network(
             height="100vh",
             width="100%", 
-            bgcolor="#1a1a1a",
-            font_color="white",
+            bgcolor="#0a0a0a",  # Darker background for cyberpunk feel
+            font_color="#00FFFF",  # Cyan text
             directed=True
         )
         
