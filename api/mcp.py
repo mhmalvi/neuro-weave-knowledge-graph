@@ -3,6 +3,7 @@ import json
 import os
 from urllib.parse import urlparse
 import requests
+from typing import Dict, Any
 
 # Simplified analyzer for serverless environment
 class ServerlessCodebaseAnalyzer:
