@@ -312,6 +312,7 @@ def main():
         print(f"[MCP] {message}", file=sys.stderr)
     
     log("Starting codebase-knowledge-graph MCP server...")
+    sys.stderr.flush()
     
     try:
         for line in sys.stdin:
