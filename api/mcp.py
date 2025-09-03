@@ -1,33 +1,8 @@
-#!/usr/bin/env python3
-"""
-Main MCP API endpoint for Vercel deployment
-Handles all MCP protocol requests
-"""
-
-import asyncio
+from http.server import BaseHTTPRequestHandler
 import json
 import os
-import sys
-import logging
-from typing import Any, Dict, List, Optional
-
-# Add current directory to path for imports
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
-
-try:
-    from fastapi import FastAPI, HTTPException, Request
-    from fastapi.responses import JSONResponse
-    
-    # Import our MCP components (simplified for serverless)
-    import ast
-    import subprocess
-    from urllib.parse import urlparse
-    import requests
-    import time
-    
-except ImportError as e:
-    logging.error(f"Import error: {e}")
+from urllib.parse import urlparse
+import requests
 
 # Simplified analyzer for serverless environment
 class ServerlessCodebaseAnalyzer:
@@ -85,10 +60,9 @@ class ServerlessCodebaseAnalyzer:
         except Exception as e:
             raise Exception(f"Error analyzing repository: {str(e)}")
 
-app = FastAPI()
 analyzer = ServerlessCodebaseAnalyzer()
 
-async def handle_mcp_request(request_data: Dict[str, Any]) -> Dict[str, Any]:
+def handle_mcp_request(request_data: dict) -> dict:
     """Handle MCP protocol requests"""
     method = request_data.get("method")
     params = request_data.get("params", {})
@@ -147,7 +121,7 @@ async def handle_mcp_request(request_data: Dict[str, Any]) -> Dict[str, Any]:
         if tool_name == "analyze_github_repo":
             repo_url = arguments.get("repo_url")
             if not repo_url:
-                raise HTTPException(status_code=400, detail="repo_url is required")
+                return {"error": "repo_url is required"}
             
             try:
                 analysis = analyzer.analyze_github_repo(repo_url)
@@ -190,7 +164,7 @@ async def handle_mcp_request(request_data: Dict[str, Any]) -> Dict[str, Any]:
         elif tool_name == "get_repo_info":
             repo_url = arguments.get("repo_url")
             if not repo_url:
-                raise HTTPException(status_code=400, detail="repo_url is required")
+                return {"error": "repo_url is required"}
             
             try:
                 analysis = analyzer.analyze_github_repo(repo_url)
@@ -213,41 +187,39 @@ async def handle_mcp_request(request_data: Dict[str, Any]) -> Dict[str, Any]:
                 }
         
         else:
-            raise HTTPException(status_code=400, detail=f"Unknown tool: {tool_name}")
+            return {"error": f"Unknown tool: {tool_name}"}
     
     else:
-        raise HTTPException(status_code=400, detail=f"Unknown method: {method}")
+        return {"error": f"Unknown method: {method}"}
 
-@app.post("/mcp")
-async def mcp_endpoint(request: Request):
-    """Main MCP endpoint"""
-    try:
-        body = await request.json()
-        result = await handle_mcp_request(body)
-        return result
-    except Exception as e:
-        logging.error(f"MCP endpoint error: {e}")
-        raise HTTPException(status_code=500, detail=str(e))
-
-# For Vercel
-def handler(request):
-    import json
-    from fastapi.responses import JSONResponse
+class handler(BaseHTTPRequestHandler):
+    def do_POST(self):
+        """Main MCP endpoint"""
+        try:
+            content_length = int(self.headers.get('Content-Length', 0))
+            body = self.rfile.read(content_length).decode('utf-8')
+            request_data = json.loads(body)
+            
+            result = handle_mcp_request(request_data)
+            
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.end_headers()
+            self.wfile.write(json.dumps(result).encode())
+            
+        except Exception as e:
+            error_response = {"error": str(e)}
+            self.send_response(500)
+            self.send_header('Content-Type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.end_headers()
+            self.wfile.write(json.dumps(error_response).encode())
     
-    try:
-        if request.method == "POST":
-            body = json.loads(request.body.decode())
-            
-            # Create event loop for async handling
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
-            
-            try:
-                result = loop.run_until_complete(handle_mcp_request(body))
-                return JSONResponse(content=result)
-            finally:
-                loop.close()
-        else:
-            return JSONResponse(content={"error": "Method not allowed"}, status_code=405)
-    except Exception as e:
-        return JSONResponse(content={"error": str(e)}, status_code=500)
+    def do_OPTIONS(self):
+        """Handle preflight OPTIONS requests"""
+        self.send_response(200)
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'POST, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        self.end_headers()

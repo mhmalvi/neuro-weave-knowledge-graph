@@ -31,7 +31,8 @@
       "Bash(npx:*)",
       "Bash(dir:*)",
       "Bash(claude mcp add:*)",
-      "mcp__github__create_repository"
+      "mcp__github__create_repository",
+      "mcp__vercel__web_fetch_vercel_url"
     ],
     "deny": [],
     "ask": [],
