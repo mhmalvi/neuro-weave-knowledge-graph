@@ -42,7 +42,7 @@ class MCPJsonRpcError:
     INTERNAL_ERROR = -32603
 
 # Enhanced analysis components (serverless-compatible)
-def analyze_github_repo_contents(repo_url: str, max_files: int = 50) -> Dict[str, Any]:
+def analyze_github_repo_contents(repo_url: str, max_files: int = 20, analyze_content: bool = True) -> Dict[str, Any]:
     """Enhanced GitHub repository analysis with file contents"""
     try:
         # Extract owner/repo from URL
@@ -85,12 +85,68 @@ def analyze_github_repo_contents(repo_url: str, max_files: int = 50) -> Dict[str
                     break
                     
                 if item["type"] == "blob" and item["path"].endswith(('.py', '.js', '.ts', '.java', '.cpp', '.c', '.go', '.rs')):
-                    files.append({
+                    file_info = {
                         "path": item["path"],
                         "size": item.get("size", 0),
                         "type": "file",
-                        "language": item["path"].split('.')[-1] if '.' in item["path"] else "unknown"
-                    })
+                        "language": item["path"].split('.')[-1] if '.' in item["path"] else "unknown",
+                        "sha": item.get("sha")
+                    }
+                    
+                    # Analyze file content if requested and file is small enough
+                    if analyze_content and item.get("size", 0) < 50000:  # Skip large files
+                        try:
+                            content_url = f"https://api.github.com/repos/{owner}/{repo}/contents/{item['path']}"
+                            content_response = requests.get(content_url, headers=headers, timeout=10)
+                            
+                            if content_response.status_code == 200:
+                                content_data = content_response.json()
+                                if content_data.get("encoding") == "base64":
+                                    import base64
+                                    content = base64.b64decode(content_data["content"]).decode('utf-8', errors='ignore')
+                                    
+                                    # Simple code analysis based on language
+                                    if item["path"].endswith('.py'):
+                                        # Python analysis
+                                        py_classes = [line.strip()[6:].split('(')[0].split(':')[0] 
+                                                    for line in content.split('\n') 
+                                                    if line.strip().startswith('class ')]
+                                        py_functions = [line.strip()[4:].split('(')[0] 
+                                                      for line in content.split('\n') 
+                                                      if line.strip().startswith('def ')]
+                                        py_imports = [line.strip() 
+                                                    for line in content.split('\n') 
+                                                    if line.strip().startswith(('import ', 'from '))]
+                                        
+                                        classes.extend([{"name": cls, "file": item["path"], "language": "python"} for cls in py_classes])
+                                        functions.extend([{"name": func, "file": item["path"], "language": "python"} for func in py_functions])
+                                        imports.extend([{"statement": imp, "file": item["path"], "language": "python"} for imp in py_imports])
+                                    
+                                    elif item["path"].endswith(('.js', '.ts')):
+                                        # JavaScript/TypeScript analysis
+                                        js_classes = [line.strip()[6:].split(' ')[0].split('{')[0] 
+                                                    for line in content.split('\n') 
+                                                    if 'class ' in line]
+                                        js_functions = [line.strip().split('(')[0].split(' ')[-1] 
+                                                      for line in content.split('\n') 
+                                                      if ('function ' in line or '=>' in line) and not line.strip().startswith('//')]
+                                        js_imports = [line.strip() 
+                                                    for line in content.split('\n') 
+                                                    if line.strip().startswith(('import ', 'const ', 'require('))]
+                                        
+                                        classes.extend([{"name": cls, "file": item["path"], "language": "javascript"} for cls in js_classes if cls])
+                                        functions.extend([{"name": func, "file": item["path"], "language": "javascript"} for func in js_functions if func])
+                                        imports.extend([{"statement": imp, "file": item["path"], "language": "javascript"} for imp in js_imports])
+                                    
+                                    file_info["content_analyzed"] = True
+                                    file_info["lines_of_code"] = len(content.split('\n'))
+                        
+                        except Exception as content_error:
+                            # Skip content analysis if it fails
+                            file_info["content_analyzed"] = False
+                            pass
+                    
+                    files.append(file_info)
                     file_count += 1
         
         analysis = {
@@ -121,8 +177,8 @@ def analyze_github_repo_contents(repo_url: str, max_files: int = 50) -> Dict[str
 def analyze_codebase_enhanced_serverless(repo_url: str) -> Dict[str, Any]:
     """Serverless-compatible enhanced codebase analysis via GitHub API"""
     try:
-        # Use the enhanced GitHub analysis
-        analysis = analyze_github_repo_contents(repo_url, max_files=100)
+        # Use the enhanced GitHub analysis with content parsing
+        analysis = analyze_github_repo_contents(repo_url, max_files=50, analyze_content=True)
         
         # Add enhanced metrics and patterns detection (simplified for serverless)
         file_extensions = {}
@@ -176,21 +232,61 @@ def generate_codebase_graph_serverless(analysis_data: dict, format_type: str = "
     """Generate a serverless-compatible knowledge graph representation"""
     try:
         files = analysis_data.get("files", [])
+        classes = analysis_data.get("classes", [])
+        functions = analysis_data.get("functions", [])
+        imports = analysis_data.get("imports", [])
         metrics = analysis_data.get("metrics", {})
         
         # Create nodes and edges for the graph
         nodes = []
         edges = []
         
-        # Add file nodes
-        for i, file_info in enumerate(files[:50]):  # Limit for performance
+        # Add file nodes with enhanced data
+        for i, file_info in enumerate(files[:30]):  # Limit for performance
+            size_category = "small" if file_info.get("size", 0) < 5000 else "medium" if file_info.get("size", 0) < 20000 else "large"
             nodes.append({
                 "id": f"file_{i}",
                 "label": file_info["path"].split("/")[-1],
+                "title": f"File: {file_info['path']}\nSize: {file_info.get('size', 0)} bytes\nLanguage: {file_info.get('language', 'unknown')}\nLines: {file_info.get('lines_of_code', 'N/A')}",
                 "type": "file",
                 "language": file_info.get("language", "unknown"),
                 "size": file_info.get("size", 0),
-                "path": file_info["path"]
+                "path": file_info["path"],
+                "group": file_info.get("language", "unknown"),
+                "value": min(file_info.get("size", 0) / 1000, 50),  # Size-based node size
+                "color": {
+                    "background": "#4CAF50" if file_info.get("language") == "py" else 
+                                 "#FF9800" if file_info.get("language") in ["js", "ts"] else 
+                                 "#2196F3" if file_info.get("language") == "java" else "#9C27B0"
+                }
+            })
+        
+        # Add class nodes
+        for i, class_info in enumerate(classes[:20]):
+            nodes.append({
+                "id": f"class_{i}",
+                "label": class_info["name"],
+                "title": f"Class: {class_info['name']}\nFile: {class_info['file']}\nLanguage: {class_info['language']}",
+                "type": "class",
+                "language": class_info["language"],
+                "file": class_info["file"],
+                "group": "classes",
+                "shape": "box",
+                "color": {"background": "#FF5722"}
+            })
+        
+        # Add function nodes (top-level functions only)
+        for i, func_info in enumerate(functions[:30]):
+            nodes.append({
+                "id": f"func_{i}",
+                "label": func_info["name"],
+                "title": f"Function: {func_info['name']}\nFile: {func_info['file']}\nLanguage: {func_info['language']}",
+                "type": "function",
+                "language": func_info["language"],
+                "file": func_info["file"],
+                "group": "functions",
+                "shape": "triangle",
+                "color": {"background": "#607D8B"}
             })
         
         # Add language cluster nodes
@@ -198,40 +294,190 @@ def generate_codebase_graph_serverless(analysis_data: dict, format_type: str = "
         for ext, count in file_extensions.items():
             nodes.append({
                 "id": f"lang_{ext}",
-                "label": f"{ext.upper()} ({count} files)",
+                "label": f"{ext.upper()}\n({count} files)",
+                "title": f"Language: {ext.upper()}\nFiles: {count}",
                 "type": "language_cluster",
-                "count": count
+                "count": count,
+                "group": "languages",
+                "shape": "ellipse",
+                "size": min(count * 3, 40),
+                "color": {"background": "#FFC107"}
             })
         
-        # Create edges between files and language clusters
-        for i, file_info in enumerate(files[:50]):
+        # Create enhanced edges
+        file_to_lang_edges = []
+        class_to_file_edges = []
+        func_to_file_edges = []
+        
+        # Files to language clusters
+        for i, file_info in enumerate(files[:30]):
             ext = file_info.get("language", "unknown")
             edges.append({
                 "from": f"file_{i}",
                 "to": f"lang_{ext}",
-                "type": "belongs_to"
+                "type": "belongs_to",
+                "color": {"color": "#999999"},
+                "width": 1
             })
         
-        # Generate simple HTML representation
+        # Classes to files
+        for i, class_info in enumerate(classes[:20]):
+            # Find the file node
+            for j, file_info in enumerate(files[:30]):
+                if file_info["path"] == class_info["file"]:
+                    edges.append({
+                        "from": f"class_{i}",
+                        "to": f"file_{j}",
+                        "type": "defined_in",
+                        "color": {"color": "#FF5722"},
+                        "width": 2
+                    })
+                    break
+        
+        # Functions to files
+        for i, func_info in enumerate(functions[:30]):
+            # Find the file node
+            for j, file_info in enumerate(files[:30]):
+                if file_info["path"] == func_info["file"]:
+                    edges.append({
+                        "from": f"func_{i}",
+                        "to": f"file_{j}",
+                        "type": "defined_in",
+                        "color": {"color": "#607D8B"},
+                        "width": 1.5
+                    })
+                    break
+        
+        # Generate enhanced HTML representation
         html_content = f"""
         <!DOCTYPE html>
         <html>
         <head>
-            <title>Codebase Knowledge Graph</title>
+            <meta charset="utf-8">
+            <title>Enhanced Codebase Knowledge Graph</title>
             <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+            <style>
+                body {{ background-color: #1a1a1a; color: #ffffff; }}
+                #graph {{ 
+                    height: 100vh; 
+                    background-color: #1a1a1a; 
+                    border: 1px solid #444; 
+                }}
+                .controls {{ 
+                    position: absolute; 
+                    top: 10px; 
+                    left: 10px; 
+                    z-index: 1000; 
+                    background: rgba(0,0,0,0.8); 
+                    padding: 10px; 
+                    border-radius: 5px; 
+                }}
+                .info-panel {{ 
+                    position: absolute; 
+                    top: 10px; 
+                    right: 10px; 
+                    z-index: 1000; 
+                    background: rgba(0,0,0,0.9); 
+                    padding: 15px; 
+                    border-radius: 5px; 
+                    max-width: 300px; 
+                }}
+            </style>
         </head>
         <body>
-            <div id="graph" style="height: 600px;"></div>
+            <div class="controls">
+                <button id="fitBtn" class="btn btn-sm btn-primary">Fit View</button>
+                <button id="physicsBtn" class="btn btn-sm btn-secondary">Toggle Physics</button>
+            </div>
+            <div class="info-panel">
+                <h6>Repository Analysis</h6>
+                <div id="selection-info">Click a node to see details</div>
+                <hr>
+                <small>
+                    Files: {len(files)}<br>
+                    Classes: {len(classes)}<br>
+                    Functions: {len(functions)}<br>
+                    Languages: {len(file_extensions)}
+                </small>
+            </div>
+            <div id="graph"></div>
             <script>
-                const nodes = new vis.DataSet({json.dumps(nodes)});
-                const edges = new vis.DataSet({json.dumps(edges)});
+                const nodes = new vis.DataSet({json.dumps(nodes, indent=2)});
+                const edges = new vis.DataSet({json.dumps(edges, indent=2)});
                 const container = document.getElementById('graph');
                 const data = {{ nodes: nodes, edges: edges }};
+                
                 const options = {{
-                    nodes: {{ shape: 'dot', size: 10 }},
-                    physics: {{ stabilization: false }}
+                    nodes: {{
+                        borderWidth: 2,
+                        shadow: true,
+                        font: {{ color: '#ffffff', size: 12 }},
+                        chosen: {{ node: true }}
+                    }},
+                    edges: {{
+                        shadow: true,
+                        smooth: {{ type: 'continuous' }},
+                        arrows: {{ to: {{ enabled: true, scaleFactor: 0.5 }} }}
+                    }},
+                    physics: {{
+                        enabled: true,
+                        stabilization: {{ iterations: 100 }},
+                        barnesHut: {{
+                            gravitationalConstant: -2000,
+                            centralGravity: 0.3,
+                            springLength: 95,
+                            springConstant: 0.04,
+                            damping: 0.09
+                        }}
+                    }},
+                    interaction: {{
+                        hover: true,
+                        tooltipDelay: 200,
+                        hideEdgesOnDrag: true
+                    }},
+                    groups: {{
+                        py: {{ color: {{ background: '#4CAF50', border: '#2E7D32' }} }},
+                        js: {{ color: {{ background: '#FF9800', border: '#E65100' }} }},
+                        ts: {{ color: {{ background: '#FF9800', border: '#E65100' }} }},
+                        java: {{ color: {{ background: '#2196F3', border: '#0D47A1' }} }},
+                        classes: {{ color: {{ background: '#FF5722', border: '#BF360C' }} }},
+                        functions: {{ color: {{ background: '#607D8B', border: '#37474F' }} }},
+                        languages: {{ color: {{ background: '#FFC107', border: '#F57C00' }} }}
+                    }}
                 }};
+                
                 const network = new vis.Network(container, data, options);
+                
+                // Event handlers
+                network.on('click', function(params) {{
+                    const nodeId = params.nodes[0];
+                    if (nodeId) {{
+                        const node = nodes.get(nodeId);
+                        const infoDiv = document.getElementById('selection-info');
+                        infoDiv.innerHTML = `
+                            <strong>${{node.label}}</strong><br>
+                            Type: ${{node.type}}<br>
+                            ${{node.title ? node.title.replace(/\\n/g, '<br>') : 'No details available'}}
+                        `;
+                    }}
+                }});
+                
+                document.getElementById('fitBtn').addEventListener('click', function() {{
+                    network.fit();
+                }});
+                
+                let physicsEnabled = true;
+                document.getElementById('physicsBtn').addEventListener('click', function() {{
+                    physicsEnabled = !physicsEnabled;
+                    network.setOptions({{ physics: {{ enabled: physicsEnabled }} }});
+                    this.textContent = physicsEnabled ? 'Disable Physics' : 'Enable Physics';
+                }});
+                
+                // Auto-fit after stabilization
+                network.once('stabilizationIterationsDone', function() {{
+                    network.fit();
+                }});
             </script>
         </body>
         </html>
