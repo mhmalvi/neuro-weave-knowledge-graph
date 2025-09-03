@@ -1,27 +1,18 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "public/**/*",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "api/*.py",
-      "use": "@vercel/python@4.3.1"
+  "functions": {
+    "api/*.py": {
+      "runtime": "python3.11"
     }
-  ],
+  },
   "routes": [
     {
-      "src": "/api/index",
-      "dest": "/api/index.py"
+      "src": "/api/mcp",
+      "dest": "/api/mcp.py"
     },
     {
       "src": "/api/health", 
       "dest": "/api/health.py"
-    },
-    {
-      "src": "/api/mcp(.*)",
-      "dest": "/api/mcp.py"
     },
     {
       "src": "/api/(.*)",
