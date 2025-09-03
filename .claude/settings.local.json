@@ -40,7 +40,14 @@
       "Read(C:\\Users\\AAA Technology/**)",
       "Read(C:\\Users\\AAA Technology/**)",
       "mcp__vercel__deploy_to_vercel",
-      "Bash(vercel deploy:*)"
+      "Bash(vercel deploy:*)",
+      "Read(C:\\Users\\AAA Technology/**)",
+      "Read(C:\\Users\\AAA Technology/**)",
+      "Read(C:\\Users\\AAA Technology/**)",
+      "Bash(claude mcp)",
+      "Bash(claude mcp:*)",
+      "Read(C:\\Users\\AAA Technology/**)",
+      "Read(C:\\Users\\AAA Technology/**)"
     ],
     "deny": [],
     "ask": [],
