@@ -59,7 +59,11 @@
       "mcp__github__search_repositories",
       "WebFetch(domain:spec.modelcontextprotocol.io)",
       "mcp__github__get_file_contents",
-      "Read(C:\\Users\\AAA Technology/**)"
+      "Read(C:\\Users\\AAA Technology/**)",
+      "Bash(where python)",
+      "Bash(\"C:\\Users\\AAA Technology\\AppData\\Local\\Programs\\Python\\Python310\\python.exe\" api/mcp_stdio_server.py)",
+      "mcp__codebase-kg__analyze_codebase",
+      "mcp__codebase-kg__generate_codebase_graph"
     ],
     "deny": [],
     "ask": [],

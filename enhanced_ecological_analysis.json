@@ -143,13 +143,13 @@
       "complexity": 25,
       "dependencies": [
         "streamlit",
-        "re",
-        "mcp_server",
-        "codebase_visualizer",
-        "streamlit.components.v1",
-        "generate_knowledge_graph",
         "os",
-        "urllib.parse"
+        "generate_knowledge_graph",
+        "urllib.parse",
+        "codebase_visualizer",
+        "mcp_server",
+        "streamlit.components.v1",
+        "re"
       ],
       "call_patterns": [
         {
@@ -815,8 +815,8 @@
                 "class_info.get",
                 "func_info.get",
                 "func_info.get",
-                "<ast.Constant object at 0x0000027CC48B3BD0>.join",
-                "<ast.Constant object at 0x0000027CC48B8C50>.join",
+                "<ast.Constant object at 0x000001C720F44D60>.join",
+                "<ast.Constant object at 0x000001C720F447F0>.join",
                 "analysis_data.get"
               ],
               "complexity": 24,
@@ -845,7 +845,7 @@
                 "self.node_colors.get",
                 "self.node_shapes.get",
                 "size_map.get",
-                "<ast.Constant object at 0x0000027CC48D9110>.join",
+                "<ast.Constant object at 0x000001C720CB8280>.join",
                 "title_parts.append",
                 "title_parts.append",
                 "title_parts.append",
@@ -854,8 +854,8 @@
                 "net.add_node",
                 "print",
                 "node_type.title",
-                "<ast.Constant object at 0x0000027CC48CB5D0>.join",
-                "<ast.Constant object at 0x0000027CC48D8310>.join",
+                "<ast.Constant object at 0x000001C720CBBF10>.join",
+                "<ast.Constant object at 0x000001C720CBBAC0>.join",
                 "len"
               ],
               "complexity": 10,
@@ -1005,8 +1005,8 @@
             "class_info.get",
             "func_info.get",
             "func_info.get",
-            "<ast.Constant object at 0x0000027CC48B3BD0>.join",
-            "<ast.Constant object at 0x0000027CC48B8C50>.join",
+            "<ast.Constant object at 0x000001C720F44D60>.join",
+            "<ast.Constant object at 0x000001C720F447F0>.join",
             "analysis_data.get"
           ],
           "complexity": 24,
@@ -1031,7 +1031,7 @@
             "self.node_colors.get",
             "self.node_shapes.get",
             "size_map.get",
-            "<ast.Constant object at 0x0000027CC48D9110>.join",
+            "<ast.Constant object at 0x000001C720CB8280>.join",
             "title_parts.append",
             "title_parts.append",
             "title_parts.append",
@@ -1040,8 +1040,8 @@
             "net.add_node",
             "print",
             "node_type.title",
-            "<ast.Constant object at 0x0000027CC48CB5D0>.join",
-            "<ast.Constant object at 0x0000027CC48D8310>.join",
+            "<ast.Constant object at 0x000001C720CBBF10>.join",
+            "<ast.Constant object at 0x000001C720CBBAC0>.join",
             "len"
           ],
           "complexity": 10,
@@ -1182,11 +1182,11 @@
       "docstrings": [],
       "complexity": 36,
       "dependencies": [
-        "typing",
         "hashlib",
-        "colorsys",
         "pyvis.network",
+        "colorsys",
         "json",
+        "typing",
         "os"
       ],
       "call_patterns": [
@@ -1401,7 +1401,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Constant object at 0x0000027CC48B3BD0>.join",
+          "function": "<ast.Constant object at 0x000001C720F44D60>.join",
           "line": 197,
           "args_count": 1,
           "kwargs_count": 0
@@ -1413,7 +1413,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Constant object at 0x0000027CC48B8C50>.join",
+          "function": "<ast.Constant object at 0x000001C720F447F0>.join",
           "line": 204,
           "args_count": 1,
           "kwargs_count": 0
@@ -1545,7 +1545,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Constant object at 0x0000027CC48CB5D0>.join",
+          "function": "<ast.Constant object at 0x000001C720CBBF10>.join",
           "line": 285,
           "args_count": 1,
           "kwargs_count": 0
@@ -1557,7 +1557,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Constant object at 0x0000027CC48D8310>.join",
+          "function": "<ast.Constant object at 0x000001C720CBBAC0>.join",
           "line": 287,
           "args_count": 1,
           "kwargs_count": 0
@@ -1569,7 +1569,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Constant object at 0x0000027CC48D9110>.join",
+          "function": "<ast.Constant object at 0x000001C720CB8280>.join",
           "line": 289,
           "args_count": 1,
           "kwargs_count": 0
@@ -1742,14 +1742,14 @@
                 "len",
                 "len",
                 "os.path.join",
-                "<ast.Subscript object at 0x0000027CC48EEF50>.lower",
+                "<ast.Subscript object at 0x000001C720F998D0>.lower",
                 "self._analyze_file",
                 "d.startswith",
                 "os.path.splitext",
-                "<ast.Subscript object at 0x0000027CC48EE0D0>.append",
-                "<ast.Subscript object at 0x0000027CC48EDCD0>.extend",
-                "<ast.Subscript object at 0x0000027CC4874590>.extend",
-                "<ast.Subscript object at 0x0000027CC47E6610>.extend",
+                "<ast.Subscript object at 0x000001C720F99450>.append",
+                "<ast.Subscript object at 0x000001C720F992D0>.extend",
+                "<ast.Subscript object at 0x000001C720F99090>.extend",
+                "<ast.Subscript object at 0x000001C720F98E50>.extend",
                 "logger.warning",
                 "file_analysis.get",
                 "file_analysis.get",
@@ -1774,7 +1774,7 @@
               "docstring": "Analyze a single file",
               "is_async": false,
               "calls": [
-                "<ast.Subscript object at 0x0000027CC47E6B50>.lower",
+                "<ast.Subscript object at 0x000001C720F936A0>.lower",
                 "self.supported_extensions.get",
                 "analyzer",
                 "os.path.splitext"
@@ -1803,15 +1803,15 @@
                 "f.read",
                 "ast.parse",
                 "isinstance",
-                "<ast.Subscript object at 0x0000027CC47C5AD0>.append",
+                "<ast.Subscript object at 0x000001C720F92350>.append",
                 "isinstance",
-                "<ast.Subscript object at 0x0000027CC47C7CD0>.append",
-                "isinstance",
-                "isinstance",
-                "<ast.Subscript object at 0x0000027CC47B0610>.append",
+                "<ast.Subscript object at 0x000001C720F91990>.append",
                 "isinstance",
                 "isinstance",
-                "<ast.Subscript object at 0x0000027CC47B2850>.append"
+                "<ast.Subscript object at 0x000001C720F912D0>.append",
+                "isinstance",
+                "isinstance",
+                "<ast.Subscript object at 0x000001C720F90C40>.append"
               ],
               "complexity": 11,
               "return_statements": 2,
@@ -1837,9 +1837,9 @@
                 "re.finditer",
                 "open",
                 "f.read",
-                "<ast.Subscript object at 0x0000027CC47D0510>.append",
-                "<ast.Subscript object at 0x0000027CC47D3650>.append",
-                "<ast.Subscript object at 0x0000027CC47A4410>.append",
+                "<ast.Subscript object at 0x000001C720F87A60>.append",
+                "<ast.Subscript object at 0x000001C720F87550>.append",
+                "<ast.Subscript object at 0x000001C720F870A0>.append",
                 "match.group",
                 "match.group",
                 "match.group"
@@ -1889,9 +1889,9 @@
                 "re.finditer",
                 "open",
                 "f.read",
-                "<ast.Subscript object at 0x0000027CC4D02510>.append",
-                "<ast.Subscript object at 0x0000027CC4D033D0>.append",
-                "<ast.Subscript object at 0x0000027CC4D0C710>.append",
+                "<ast.Subscript object at 0x000001C720F85ED0>.append",
+                "<ast.Subscript object at 0x000001C720F5F850>.append",
+                "<ast.Subscript object at 0x000001C720F5F1F0>.append",
                 "match.group",
                 "match.group",
                 "match.group.strip",
@@ -2143,14 +2143,14 @@
             "len",
             "len",
             "os.path.join",
-            "<ast.Subscript object at 0x0000027CC48EEF50>.lower",
+            "<ast.Subscript object at 0x000001C720F998D0>.lower",
             "self._analyze_file",
             "d.startswith",
             "os.path.splitext",
-            "<ast.Subscript object at 0x0000027CC48EE0D0>.append",
-            "<ast.Subscript object at 0x0000027CC48EDCD0>.extend",
-            "<ast.Subscript object at 0x0000027CC4874590>.extend",
-            "<ast.Subscript object at 0x0000027CC47E6610>.extend",
+            "<ast.Subscript object at 0x000001C720F99450>.append",
+            "<ast.Subscript object at 0x000001C720F992D0>.extend",
+            "<ast.Subscript object at 0x000001C720F99090>.extend",
+            "<ast.Subscript object at 0x000001C720F98E50>.extend",
             "logger.warning",
             "file_analysis.get",
             "file_analysis.get",
@@ -2171,7 +2171,7 @@
           "docstring": "Analyze a single file",
           "is_async": false,
           "calls": [
-            "<ast.Subscript object at 0x0000027CC47E6B50>.lower",
+            "<ast.Subscript object at 0x000001C720F936A0>.lower",
             "self.supported_extensions.get",
             "analyzer",
             "os.path.splitext"
@@ -2196,15 +2196,15 @@
             "f.read",
             "ast.parse",
             "isinstance",
-            "<ast.Subscript object at 0x0000027CC47C5AD0>.append",
+            "<ast.Subscript object at 0x000001C720F92350>.append",
             "isinstance",
-            "<ast.Subscript object at 0x0000027CC47C7CD0>.append",
-            "isinstance",
-            "isinstance",
-            "<ast.Subscript object at 0x0000027CC47B0610>.append",
+            "<ast.Subscript object at 0x000001C720F91990>.append",
             "isinstance",
             "isinstance",
-            "<ast.Subscript object at 0x0000027CC47B2850>.append"
+            "<ast.Subscript object at 0x000001C720F912D0>.append",
+            "isinstance",
+            "isinstance",
+            "<ast.Subscript object at 0x000001C720F90C40>.append"
           ],
           "complexity": 11,
           "return_statements": 2
@@ -2226,9 +2226,9 @@
             "re.finditer",
             "open",
             "f.read",
-            "<ast.Subscript object at 0x0000027CC47D0510>.append",
-            "<ast.Subscript object at 0x0000027CC47D3650>.append",
-            "<ast.Subscript object at 0x0000027CC47A4410>.append",
+            "<ast.Subscript object at 0x000001C720F87A60>.append",
+            "<ast.Subscript object at 0x000001C720F87550>.append",
+            "<ast.Subscript object at 0x000001C720F870A0>.append",
             "match.group",
             "match.group",
             "match.group"
@@ -2270,9 +2270,9 @@
             "re.finditer",
             "open",
             "f.read",
-            "<ast.Subscript object at 0x0000027CC4D02510>.append",
-            "<ast.Subscript object at 0x0000027CC4D033D0>.append",
-            "<ast.Subscript object at 0x0000027CC4D0C710>.append",
+            "<ast.Subscript object at 0x000001C720F85ED0>.append",
+            "<ast.Subscript object at 0x000001C720F5F850>.append",
+            "<ast.Subscript object at 0x000001C720F5F1F0>.append",
             "match.group",
             "match.group",
             "match.group.strip",
@@ -2605,7 +2605,7 @@
             "analysis_data.get",
             "analysis_data.get",
             "analysis_data.get",
-            "<ast.Constant object at 0x0000027CC4D86390>.join",
+            "<ast.Constant object at 0x000001C720FF55D0>.join",
             "text_parts.append",
             "text_parts.append",
             "text_parts.append",
@@ -2939,28 +2939,28 @@
       "docstrings": [],
       "complexity": 62,
       "dependencies": [
-        "pathlib",
-        "re",
-        "mcp.server.models",
-        "socket",
-        "json",
-        "generate_knowledge_graph",
         "subprocess",
+        "mcp.server",
+        "generate_knowledge_graph",
+        "mcp.server.stdio",
+        "typing",
+        "os",
         "mcp.types",
+        "urllib.parse",
+        "re",
+        "ast",
+        "pyvis.network",
+        "pathlib",
+        "http.server",
+        "mcp.server.models",
+        "json",
+        "threading",
+        "logging",
         "requests",
         "asyncio",
+        "socket",
         "codebase_visualizer",
-        "typing",
-        "pyvis.network",
-        "urllib.parse",
-        "ast",
-        "mcp.server",
-        "threading",
-        "http.server",
-        "mcp.server.stdio",
-        "webbrowser",
-        "logging",
-        "os"
+        "webbrowser"
       ],
       "call_patterns": [
         {
@@ -3012,7 +3012,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC48EEF50>.lower",
+          "function": "<ast.Subscript object at 0x000001C720F998D0>.lower",
           "line": 88,
           "args_count": 0,
           "kwargs_count": 0
@@ -3030,13 +3030,13 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC48EE0D0>.append",
+          "function": "<ast.Subscript object at 0x000001C720F99450>.append",
           "line": 94,
           "args_count": 1,
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC48EDCD0>.extend",
+          "function": "<ast.Subscript object at 0x000001C720F992D0>.extend",
           "line": 95,
           "args_count": 1,
           "kwargs_count": 0
@@ -3048,7 +3048,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC4874590>.extend",
+          "function": "<ast.Subscript object at 0x000001C720F99090>.extend",
           "line": 96,
           "args_count": 1,
           "kwargs_count": 0
@@ -3060,7 +3060,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC47E6610>.extend",
+          "function": "<ast.Subscript object at 0x000001C720F98E50>.extend",
           "line": 97,
           "args_count": 1,
           "kwargs_count": 0
@@ -3102,7 +3102,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC47E6B50>.lower",
+          "function": "<ast.Subscript object at 0x000001C720F936A0>.lower",
           "line": 113,
           "args_count": 0,
           "kwargs_count": 0
@@ -3156,7 +3156,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC47C5AD0>.append",
+          "function": "<ast.Subscript object at 0x000001C720F92350>.append",
           "line": 140,
           "args_count": 1,
           "kwargs_count": 0
@@ -3180,7 +3180,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC47C7CD0>.append",
+          "function": "<ast.Subscript object at 0x000001C720F91990>.append",
           "line": 148,
           "args_count": 1,
           "kwargs_count": 0
@@ -3192,7 +3192,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC47B0610>.append",
+          "function": "<ast.Subscript object at 0x000001C720F912D0>.append",
           "line": 156,
           "args_count": 1,
           "kwargs_count": 0
@@ -3204,7 +3204,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC47B2850>.append",
+          "function": "<ast.Subscript object at 0x000001C720F90C40>.append",
           "line": 165,
           "args_count": 1,
           "kwargs_count": 0
@@ -3228,7 +3228,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC47D0510>.append",
+          "function": "<ast.Subscript object at 0x000001C720F87A60>.append",
           "line": 194,
           "args_count": 1,
           "kwargs_count": 0
@@ -3246,7 +3246,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC47D3650>.append",
+          "function": "<ast.Subscript object at 0x000001C720F87550>.append",
           "line": 203,
           "args_count": 1,
           "kwargs_count": 0
@@ -3264,7 +3264,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC47A4410>.append",
+          "function": "<ast.Subscript object at 0x000001C720F870A0>.append",
           "line": 211,
           "args_count": 1,
           "kwargs_count": 0
@@ -3300,7 +3300,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC4D02510>.append",
+          "function": "<ast.Subscript object at 0x000001C720F85ED0>.append",
           "line": 240,
           "args_count": 1,
           "kwargs_count": 0
@@ -3318,7 +3318,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC4D033D0>.append",
+          "function": "<ast.Subscript object at 0x000001C720F5F850>.append",
           "line": 248,
           "args_count": 1,
           "kwargs_count": 0
@@ -3342,7 +3342,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC4D0C710>.append",
+          "function": "<ast.Subscript object at 0x000001C720F5F1F0>.append",
           "line": 257,
           "args_count": 1,
           "kwargs_count": 0
@@ -4032,7 +4032,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Constant object at 0x0000027CC4D86390>.join",
+          "function": "<ast.Constant object at 0x000001C720FF55D0>.join",
           "line": 674,
           "args_count": 1,
           "kwargs_count": 0
@@ -4250,13 +4250,13 @@
       "docstrings": [],
       "complexity": 11,
       "dependencies": [
-        "asyncio",
+        "langchain_experimental.graph_transformers",
         "dotenv",
-        "langchain_core.documents",
-        "pyvis.network",
         "langchain_openai",
-        "os",
-        "langchain_experimental.graph_transformers"
+        "pyvis.network",
+        "asyncio",
+        "langchain_core.documents",
+        "os"
       ],
       "call_patterns": [
         {
@@ -4571,9 +4571,9 @@
       "complexity": 9,
       "dependencies": [
         "pathlib",
+        "json",
         "os",
-        "codebase_visualizer",
-        "json"
+        "codebase_visualizer"
       ],
       "call_patterns": [
         {
@@ -4974,9 +4974,9 @@
             "print",
             "print",
             "codebase_visualizer.create_codebase_graph",
-            "<ast.Subscript object at 0x0000027CC48DA090>.extend",
-            "<ast.Subscript object at 0x0000027CC48DA510>.extend",
-            "<ast.Subscript object at 0x0000027CC48DB450>.extend",
+            "<ast.Subscript object at 0x000001C720CA23E0>.extend",
+            "<ast.Subscript object at 0x000001C720CA2650>.extend",
+            "<ast.Subscript object at 0x000001C720CA0040>.extend",
             "print",
             "print",
             "print",
@@ -5048,8 +5048,8 @@
       "docstrings": [],
       "complexity": 6,
       "dependencies": [
-        "asyncio",
         "json",
+        "asyncio",
         "mcp_server"
       ],
       "call_patterns": [
@@ -5144,7 +5144,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC48DA090>.extend",
+          "function": "<ast.Subscript object at 0x000001C720CA23E0>.extend",
           "line": 115,
           "args_count": 1,
           "kwargs_count": 0
@@ -5156,7 +5156,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC48DA510>.extend",
+          "function": "<ast.Subscript object at 0x000001C720CA2650>.extend",
           "line": 116,
           "args_count": 1,
           "kwargs_count": 0
@@ -5168,7 +5168,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC48DB450>.extend",
+          "function": "<ast.Subscript object at 0x000001C720CA0040>.extend",
           "line": 117,
           "args_count": 1,
           "kwargs_count": 0
@@ -5345,7 +5345,7 @@
                 "any",
                 "os.path.join",
                 "file.endswith",
-                "<ast.Subscript object at 0x0000027CC4D87150>.append",
+                "<ast.Subscript object at 0x000001C720FB5090>.append",
                 "len",
                 "len",
                 "file.endswith",
@@ -5402,7 +5402,7 @@
             "any",
             "os.path.join",
             "file.endswith",
-            "<ast.Subscript object at 0x0000027CC4D87150>.append",
+            "<ast.Subscript object at 0x000001C720FB5090>.append",
             "len",
             "len",
             "file.endswith",
@@ -5432,9 +5432,9 @@
             "print",
             "print",
             "CodebaseVisualizer",
-            "<ast.Subscript object at 0x0000027CC4D76F90>.extend",
-            "<ast.Subscript object at 0x0000027CC4D76CD0>.extend",
-            "<ast.Subscript object at 0x0000027CC4D76850>.extend",
+            "<ast.Subscript object at 0x000001C720F44070>.extend",
+            "<ast.Subscript object at 0x000001C720F447F0>.extend",
+            "<ast.Subscript object at 0x000001C720F449A0>.extend",
             "visualizer.create_codebase_graph",
             "file_info.get",
             "file_info.get",
@@ -5541,10 +5541,10 @@
       "docstrings": [],
       "complexity": 13,
       "dependencies": [
-        "codebase_visualizer",
-        "sys",
-        "json",
         "traceback",
+        "json",
+        "sys",
+        "codebase_visualizer",
         "os"
       ],
       "call_patterns": [
@@ -5609,7 +5609,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC4D87150>.append",
+          "function": "<ast.Subscript object at 0x000001C720FB5090>.append",
           "line": 52,
           "args_count": 1,
           "kwargs_count": 0
@@ -5669,7 +5669,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC4D76F90>.extend",
+          "function": "<ast.Subscript object at 0x000001C720F44070>.extend",
           "line": 164,
           "args_count": 1,
           "kwargs_count": 0
@@ -5681,7 +5681,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC4D76CD0>.extend",
+          "function": "<ast.Subscript object at 0x000001C720F447F0>.extend",
           "line": 165,
           "args_count": 1,
           "kwargs_count": 0
@@ -5693,7 +5693,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC4D76850>.extend",
+          "function": "<ast.Subscript object at 0x000001C720F449A0>.extend",
           "line": 166,
           "args_count": 1,
           "kwargs_count": 0
@@ -6010,7 +6010,7 @@
                 "self._should_skip_file",
                 "ast.parse",
                 "self._analyze_python_file_deep",
-                "<ast.Subscript object at 0x0000027CC486CF90>.append",
+                "<ast.Subscript object at 0x000001C720FC0160>.append",
                 "open",
                 "f.read",
                 "print",
@@ -6070,8 +6070,8 @@
                 "self._analyze_call_graph",
                 "file_data.get",
                 "class_data.get",
-                "<ast.Subscript object at 0x0000027CC48E1910>.add",
-                "<ast.Subscript object at 0x0000027CC48E1BD0>.append",
+                "<ast.Subscript object at 0x000001C720FADE10>.add",
+                "<ast.Subscript object at 0x000001C720FADC60>.append",
                 "class_data.get"
               ],
               "complexity": 4,
@@ -6097,7 +6097,7 @@
                 "method.get",
                 "method.get",
                 "self._is_composition_pattern",
-                "<ast.Subscript object at 0x0000027CC48EFC90>.append"
+                "<ast.Subscript object at 0x000001C720FACC70>.append"
               ],
               "complexity": 7,
               "return_statements": 0,
@@ -6118,8 +6118,8 @@
               "is_async": false,
               "calls": [
                 "file_data.get",
-                "<ast.Subscript object at 0x0000027CC47A7910>.add",
-                "<ast.Subscript object at 0x0000027CC47A7090>.append",
+                "<ast.Subscript object at 0x000001C720FAC250>.add",
+                "<ast.Subscript object at 0x000001C720FAC0A0>.append",
                 "import_data.get",
                 "import_data.get",
                 "import_data.get"
@@ -6144,8 +6144,8 @@
               "calls": [
                 "file_data.get",
                 "func_data.get",
-                "<ast.Subscript object at 0x0000027CC47D2150>.add",
-                "<ast.Subscript object at 0x0000027CC47D23D0>.append",
+                "<ast.Subscript object at 0x000001C720F4F970>.add",
+                "<ast.Subscript object at 0x000001C720F4F610>.append",
                 "func_data.get"
               ],
               "complexity": 4,
@@ -6170,10 +6170,10 @@
                 "self._detect_repository_pattern",
                 "self._detect_observer_pattern",
                 "self._detect_singleton_pattern",
-                "<ast.Subscript object at 0x0000027CC4D6E7D0>.append",
-                "<ast.Subscript object at 0x0000027CC4D74ED0>.append",
-                "<ast.Subscript object at 0x0000027CC489C690>.append",
-                "<ast.Subscript object at 0x0000027CC489E990>.append"
+                "<ast.Subscript object at 0x000001C720F4F160>.append",
+                "<ast.Subscript object at 0x000001C720F4EB00>.append",
+                "<ast.Subscript object at 0x000001C720F4CA00>.append",
+                "<ast.Subscript object at 0x000001C720F4C520>.append"
               ],
               "complexity": 5,
               "return_statements": 0,
@@ -6195,7 +6195,7 @@
               "calls": [
                 "file_data.get",
                 "self._trace_data_flow",
-                "<ast.Subscript object at 0x0000027CC47CE210>.append"
+                "<ast.Subscript object at 0x000001C720F4CCD0>.append"
               ],
               "complexity": 4,
               "return_statements": 0,
@@ -6219,7 +6219,7 @@
                 "json.dumps.lower",
                 "concerns.items",
                 "any",
-                "<ast.Subscript object at 0x0000027CC48DAD50>.append",
+                "<ast.Subscript object at 0x000001C720F4CE50>.append",
                 "json.dumps",
                 "file_concerns.add",
                 "list"
@@ -6245,9 +6245,9 @@
                 "defaultdict",
                 "functionality_clusters.items",
                 "self._determine_functional_cluster",
-                "<ast.Subscript object at 0x0000027CC48DBB90>.append",
+                "<ast.Subscript object at 0x000001C720CA2B00>.append",
                 "len",
-                "<ast.Subscript object at 0x0000027CC48FCC90>.append",
+                "<ast.Subscript object at 0x000001C720CA2DD0>.append",
                 "self._calculate_cluster_cohesion"
               ],
               "complexity": 4,
@@ -6365,9 +6365,9 @@
                 "any",
                 "any",
                 "any",
-                "<ast.Subscript object at 0x0000027CC4D166D0>.lower",
-                "<ast.Subscript object at 0x0000027CC4D16D50>.lower",
-                "<ast.Subscript object at 0x0000027CC4D17350>.lower"
+                "<ast.Subscript object at 0x000001C720C9D030>.lower",
+                "<ast.Subscript object at 0x000001C720C9E8F0>.lower",
+                "<ast.Subscript object at 0x000001C720C9EEC0>.lower"
               ],
               "complexity": 3,
               "return_statements": 1,
@@ -6389,8 +6389,8 @@
               "calls": [
                 "any",
                 "any",
-                "<ast.Subscript object at 0x0000027CC4D24850>.lower",
-                "<ast.Subscript object at 0x0000027CC4D24E50>.lower",
+                "<ast.Subscript object at 0x000001C720CA82E0>.lower",
+                "<ast.Subscript object at 0x000001C720CAA950>.lower",
                 "file_data.get"
               ],
               "complexity": 2,
@@ -6480,7 +6480,7 @@
               "docstring": "Determine functional cluster for a file",
               "is_async": false,
               "calls": [
-                "<ast.Subscript object at 0x0000027CC4D1FC50>.lower",
+                "<ast.Subscript object at 0x000001C720F85000>.lower",
                 "any",
                 "any",
                 "any",
@@ -6572,10 +6572,10 @@
                 "self._get_node_name",
                 "self._get_node_name",
                 "self._analyze_method",
-                "<ast.Subscript object at 0x0000027CC4D65C50>.append",
+                "<ast.Subscript object at 0x000001C720F5D930>.append",
                 "isinstance",
                 "self._analyze_async_method",
-                "<ast.Subscript object at 0x0000027CC4D67390>.append"
+                "<ast.Subscript object at 0x000001C720F5D960>.append"
               ],
               "complexity": 4,
               "return_statements": 0,
@@ -6982,7 +6982,7 @@
             "self._should_skip_file",
             "ast.parse",
             "self._analyze_python_file_deep",
-            "<ast.Subscript object at 0x0000027CC486CF90>.append",
+            "<ast.Subscript object at 0x000001C720FC0160>.append",
             "open",
             "f.read",
             "print",
@@ -7034,8 +7034,8 @@
             "self._analyze_call_graph",
             "file_data.get",
             "class_data.get",
-            "<ast.Subscript object at 0x0000027CC48E1910>.add",
-            "<ast.Subscript object at 0x0000027CC48E1BD0>.append",
+            "<ast.Subscript object at 0x000001C720FADE10>.add",
+            "<ast.Subscript object at 0x000001C720FADC60>.append",
             "class_data.get"
           ],
           "complexity": 4,
@@ -7057,7 +7057,7 @@
             "method.get",
             "method.get",
             "self._is_composition_pattern",
-            "<ast.Subscript object at 0x0000027CC48EFC90>.append"
+            "<ast.Subscript object at 0x000001C720FACC70>.append"
           ],
           "complexity": 7,
           "return_statements": 0
@@ -7074,8 +7074,8 @@
           "is_async": false,
           "calls": [
             "file_data.get",
-            "<ast.Subscript object at 0x0000027CC47A7910>.add",
-            "<ast.Subscript object at 0x0000027CC47A7090>.append",
+            "<ast.Subscript object at 0x000001C720FAC250>.add",
+            "<ast.Subscript object at 0x000001C720FAC0A0>.append",
             "import_data.get",
             "import_data.get",
             "import_data.get"
@@ -7096,8 +7096,8 @@
           "calls": [
             "file_data.get",
             "func_data.get",
-            "<ast.Subscript object at 0x0000027CC47D2150>.add",
-            "<ast.Subscript object at 0x0000027CC47D23D0>.append",
+            "<ast.Subscript object at 0x000001C720F4F970>.add",
+            "<ast.Subscript object at 0x000001C720F4F610>.append",
             "func_data.get"
           ],
           "complexity": 4,
@@ -7118,10 +7118,10 @@
             "self._detect_repository_pattern",
             "self._detect_observer_pattern",
             "self._detect_singleton_pattern",
-            "<ast.Subscript object at 0x0000027CC4D6E7D0>.append",
-            "<ast.Subscript object at 0x0000027CC4D74ED0>.append",
-            "<ast.Subscript object at 0x0000027CC489C690>.append",
-            "<ast.Subscript object at 0x0000027CC489E990>.append"
+            "<ast.Subscript object at 0x000001C720F4F160>.append",
+            "<ast.Subscript object at 0x000001C720F4EB00>.append",
+            "<ast.Subscript object at 0x000001C720F4CA00>.append",
+            "<ast.Subscript object at 0x000001C720F4C520>.append"
           ],
           "complexity": 5,
           "return_statements": 0
@@ -7139,7 +7139,7 @@
           "calls": [
             "file_data.get",
             "self._trace_data_flow",
-            "<ast.Subscript object at 0x0000027CC47CE210>.append"
+            "<ast.Subscript object at 0x000001C720F4CCD0>.append"
           ],
           "complexity": 4,
           "return_statements": 0
@@ -7159,7 +7159,7 @@
             "json.dumps.lower",
             "concerns.items",
             "any",
-            "<ast.Subscript object at 0x0000027CC48DAD50>.append",
+            "<ast.Subscript object at 0x000001C720F4CE50>.append",
             "json.dumps",
             "file_concerns.add",
             "list"
@@ -7181,9 +7181,9 @@
             "defaultdict",
             "functionality_clusters.items",
             "self._determine_functional_cluster",
-            "<ast.Subscript object at 0x0000027CC48DBB90>.append",
+            "<ast.Subscript object at 0x000001C720CA2B00>.append",
             "len",
-            "<ast.Subscript object at 0x0000027CC48FCC90>.append",
+            "<ast.Subscript object at 0x000001C720CA2DD0>.append",
             "self._calculate_cluster_cohesion"
           ],
           "complexity": 4,
@@ -7281,9 +7281,9 @@
             "any",
             "any",
             "any",
-            "<ast.Subscript object at 0x0000027CC4D166D0>.lower",
-            "<ast.Subscript object at 0x0000027CC4D16D50>.lower",
-            "<ast.Subscript object at 0x0000027CC4D17350>.lower"
+            "<ast.Subscript object at 0x000001C720C9D030>.lower",
+            "<ast.Subscript object at 0x000001C720C9E8F0>.lower",
+            "<ast.Subscript object at 0x000001C720C9EEC0>.lower"
           ],
           "complexity": 3,
           "return_statements": 1
@@ -7301,8 +7301,8 @@
           "calls": [
             "any",
             "any",
-            "<ast.Subscript object at 0x0000027CC4D24850>.lower",
-            "<ast.Subscript object at 0x0000027CC4D24E50>.lower",
+            "<ast.Subscript object at 0x000001C720CA82E0>.lower",
+            "<ast.Subscript object at 0x000001C720CAA950>.lower",
             "file_data.get"
           ],
           "complexity": 2,
@@ -7376,7 +7376,7 @@
           "docstring": "Determine functional cluster for a file",
           "is_async": false,
           "calls": [
-            "<ast.Subscript object at 0x0000027CC4D1FC50>.lower",
+            "<ast.Subscript object at 0x000001C720F85000>.lower",
             "any",
             "any",
             "any",
@@ -7442,10 +7442,10 @@
             "self._get_node_name",
             "self._get_node_name",
             "self._analyze_method",
-            "<ast.Subscript object at 0x0000027CC4D65C50>.append",
+            "<ast.Subscript object at 0x000001C720F5D930>.append",
             "isinstance",
             "self._analyze_async_method",
-            "<ast.Subscript object at 0x0000027CC4D67390>.append"
+            "<ast.Subscript object at 0x000001C720F5D960>.append"
           ],
           "complexity": 4,
           "return_statements": 0
@@ -7839,14 +7839,14 @@
       "docstrings": [],
       "complexity": 74,
       "dependencies": [
-        "pathlib",
         "collections",
         "importlib.util",
-        "re",
-        "typing",
+        "ast",
+        "pathlib",
         "json",
+        "typing",
         "os",
-        "ast"
+        "re"
       ],
       "call_patterns": [
         {
@@ -7970,7 +7970,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC486CF90>.append",
+          "function": "<ast.Subscript object at 0x000001C720FC0160>.append",
           "line": 99,
           "args_count": 1,
           "kwargs_count": 0
@@ -8048,13 +8048,13 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC48E1910>.add",
+          "function": "<ast.Subscript object at 0x000001C720FADE10>.add",
           "line": 134,
           "args_count": 1,
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC48E1BD0>.append",
+          "function": "<ast.Subscript object at 0x000001C720FADC60>.append",
           "line": 135,
           "args_count": 1,
           "kwargs_count": 0
@@ -8114,7 +8114,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC48EFC90>.append",
+          "function": "<ast.Subscript object at 0x000001C720FACC70>.append",
           "line": 161,
           "args_count": 1,
           "kwargs_count": 0
@@ -8126,13 +8126,13 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC47A7910>.add",
+          "function": "<ast.Subscript object at 0x000001C720FAC250>.add",
           "line": 175,
           "args_count": 1,
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC47A7090>.append",
+          "function": "<ast.Subscript object at 0x000001C720FAC0A0>.append",
           "line": 177,
           "args_count": 1,
           "kwargs_count": 0
@@ -8168,13 +8168,13 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC47D2150>.add",
+          "function": "<ast.Subscript object at 0x000001C720F4F970>.add",
           "line": 192,
           "args_count": 1,
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC47D23D0>.append",
+          "function": "<ast.Subscript object at 0x000001C720F4F610>.append",
           "line": 193,
           "args_count": 1,
           "kwargs_count": 0
@@ -8192,7 +8192,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC4D6E7D0>.append",
+          "function": "<ast.Subscript object at 0x000001C720F4F160>.append",
           "line": 204,
           "args_count": 1,
           "kwargs_count": 0
@@ -8204,7 +8204,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC4D74ED0>.append",
+          "function": "<ast.Subscript object at 0x000001C720F4EB00>.append",
           "line": 208,
           "args_count": 1,
           "kwargs_count": 0
@@ -8216,7 +8216,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC489C690>.append",
+          "function": "<ast.Subscript object at 0x000001C720F4CA00>.append",
           "line": 212,
           "args_count": 1,
           "kwargs_count": 0
@@ -8228,7 +8228,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC489E990>.append",
+          "function": "<ast.Subscript object at 0x000001C720F4C520>.append",
           "line": 216,
           "args_count": 1,
           "kwargs_count": 0
@@ -8246,7 +8246,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC47CE210>.append",
+          "function": "<ast.Subscript object at 0x000001C720F4CCD0>.append",
           "line": 225,
           "args_count": 1,
           "kwargs_count": 0
@@ -8288,7 +8288,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC48DAD50>.append",
+          "function": "<ast.Subscript object at 0x000001C720F4CE50>.append",
           "line": 251,
           "args_count": 1,
           "kwargs_count": 0
@@ -8312,7 +8312,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC48DBB90>.append",
+          "function": "<ast.Subscript object at 0x000001C720CA2B00>.append",
           "line": 264,
           "args_count": 1,
           "kwargs_count": 0
@@ -8330,7 +8330,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC48FCC90>.append",
+          "function": "<ast.Subscript object at 0x000001C720CA2DD0>.append",
           "line": 268,
           "args_count": 1,
           "kwargs_count": 0
@@ -8438,7 +8438,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC4D166D0>.lower",
+          "function": "<ast.Subscript object at 0x000001C720C9D030>.lower",
           "line": 326,
           "args_count": 0,
           "kwargs_count": 0
@@ -8450,7 +8450,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC4D16D50>.lower",
+          "function": "<ast.Subscript object at 0x000001C720C9E8F0>.lower",
           "line": 328,
           "args_count": 0,
           "kwargs_count": 0
@@ -8462,7 +8462,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC4D17350>.lower",
+          "function": "<ast.Subscript object at 0x000001C720C9EEC0>.lower",
           "line": 330,
           "args_count": 0,
           "kwargs_count": 0
@@ -8474,7 +8474,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC4D24850>.lower",
+          "function": "<ast.Subscript object at 0x000001C720CA82E0>.lower",
           "line": 336,
           "args_count": 0,
           "kwargs_count": 0
@@ -8486,7 +8486,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC4D24E50>.lower",
+          "function": "<ast.Subscript object at 0x000001C720CAA950>.lower",
           "line": 337,
           "args_count": 0,
           "kwargs_count": 0
@@ -8558,7 +8558,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC4D1FC50>.lower",
+          "function": "<ast.Subscript object at 0x000001C720F85000>.lower",
           "line": 369,
           "args_count": 0,
           "kwargs_count": 0
@@ -8654,7 +8654,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC4D65C50>.append",
+          "function": "<ast.Subscript object at 0x000001C720F5D930>.append",
           "line": 430,
           "args_count": 1,
           "kwargs_count": 0
@@ -8672,7 +8672,7 @@
           "kwargs_count": 0
         },
         {
-          "function": "<ast.Subscript object at 0x0000027CC4D67390>.append",
+          "function": "<ast.Subscript object at 0x000001C720F5D960>.append",
           "line": 433,
           "args_count": 1,
           "kwargs_count": 0
@@ -10106,13 +10106,13 @@
       },
       {
         "caller": "create_codebase_graph",
-        "callee": "<ast.Constant object at 0x0000027CC48B3BD0>.join",
+        "callee": "<ast.Constant object at 0x000001C720F44D60>.join",
         "file": "codebase_visualizer.py",
         "line": 52
       },
       {
         "caller": "create_codebase_graph",
-        "callee": "<ast.Constant object at 0x0000027CC48B8C50>.join",
+        "callee": "<ast.Constant object at 0x000001C720F447F0>.join",
         "file": "codebase_visualizer.py",
         "line": 52
       },
@@ -10154,7 +10154,7 @@
       },
       {
         "caller": "_add_node",
-        "callee": "<ast.Constant object at 0x0000027CC48D9110>.join",
+        "callee": "<ast.Constant object at 0x000001C720CB8280>.join",
         "file": "codebase_visualizer.py",
         "line": 253
       },
@@ -10208,13 +10208,13 @@
       },
       {
         "caller": "_add_node",
-        "callee": "<ast.Constant object at 0x0000027CC48CB5D0>.join",
+        "callee": "<ast.Constant object at 0x000001C720CBBF10>.join",
         "file": "codebase_visualizer.py",
         "line": 253
       },
       {
         "caller": "_add_node",
-        "callee": "<ast.Constant object at 0x0000027CC48D8310>.join",
+        "callee": "<ast.Constant object at 0x000001C720CBBAC0>.join",
         "file": "codebase_visualizer.py",
         "line": 253
       },
@@ -10376,7 +10376,7 @@
       },
       {
         "caller": "analyze_codebase",
-        "callee": "<ast.Subscript object at 0x0000027CC48EEF50>.lower",
+        "callee": "<ast.Subscript object at 0x000001C720F998D0>.lower",
         "file": "mcp_server.py",
         "line": 66
       },
@@ -10400,25 +10400,25 @@
       },
       {
         "caller": "analyze_codebase",
-        "callee": "<ast.Subscript object at 0x0000027CC48EE0D0>.append",
+        "callee": "<ast.Subscript object at 0x000001C720F99450>.append",
         "file": "mcp_server.py",
         "line": 66
       },
       {
         "caller": "analyze_codebase",
-        "callee": "<ast.Subscript object at 0x0000027CC48EDCD0>.extend",
+        "callee": "<ast.Subscript object at 0x000001C720F992D0>.extend",
         "file": "mcp_server.py",
         "line": 66
       },
       {
         "caller": "analyze_codebase",
-        "callee": "<ast.Subscript object at 0x0000027CC4874590>.extend",
+        "callee": "<ast.Subscript object at 0x000001C720F99090>.extend",
         "file": "mcp_server.py",
         "line": 66
       },
       {
         "caller": "analyze_codebase",
-        "callee": "<ast.Subscript object at 0x0000027CC47E6610>.extend",
+        "callee": "<ast.Subscript object at 0x000001C720F98E50>.extend",
         "file": "mcp_server.py",
         "line": 66
       },
@@ -10448,7 +10448,7 @@
       },
       {
         "caller": "_analyze_file",
-        "callee": "<ast.Subscript object at 0x0000027CC47E6B50>.lower",
+        "callee": "<ast.Subscript object at 0x000001C720F936A0>.lower",
         "file": "mcp_server.py",
         "line": 111
       },
@@ -10502,7 +10502,7 @@
       },
       {
         "caller": "_analyze_python",
-        "callee": "<ast.Subscript object at 0x0000027CC47C5AD0>.append",
+        "callee": "<ast.Subscript object at 0x000001C720F92350>.append",
         "file": "mcp_server.py",
         "line": 120
       },
@@ -10514,25 +10514,7 @@
       },
       {
         "caller": "_analyze_python",
-        "callee": "<ast.Subscript object at 0x0000027CC47C7CD0>.append",
-        "file": "mcp_server.py",
-        "line": 120
-      },
-      {
-        "caller": "_analyze_python",
-        "callee": "isinstance",
-        "file": "mcp_server.py",
-        "line": 120
-      },
-      {
-        "caller": "_analyze_python",
-        "callee": "isinstance",
-        "file": "mcp_server.py",
-        "line": 120
-      },
-      {
-        "caller": "_analyze_python",
-        "callee": "<ast.Subscript object at 0x0000027CC47B0610>.append",
+        "callee": "<ast.Subscript object at 0x000001C720F91990>.append",
         "file": "mcp_server.py",
         "line": 120
       },
@@ -10550,7 +10532,25 @@
       },
       {
         "caller": "_analyze_python",
-        "callee": "<ast.Subscript object at 0x0000027CC47B2850>.append",
+        "callee": "<ast.Subscript object at 0x000001C720F912D0>.append",
+        "file": "mcp_server.py",
+        "line": 120
+      },
+      {
+        "caller": "_analyze_python",
+        "callee": "isinstance",
+        "file": "mcp_server.py",
+        "line": 120
+      },
+      {
+        "caller": "_analyze_python",
+        "callee": "isinstance",
+        "file": "mcp_server.py",
+        "line": 120
+      },
+      {
+        "caller": "_analyze_python",
+        "callee": "<ast.Subscript object at 0x000001C720F90C40>.append",
         "file": "mcp_server.py",
         "line": 120
       },
@@ -10586,19 +10586,19 @@
       },
       {
         "caller": "_analyze_javascript",
-        "callee": "<ast.Subscript object at 0x0000027CC47D0510>.append",
+        "callee": "<ast.Subscript object at 0x000001C720F87A60>.append",
         "file": "mcp_server.py",
         "line": 175
       },
       {
         "caller": "_analyze_javascript",
-        "callee": "<ast.Subscript object at 0x0000027CC47D3650>.append",
+        "callee": "<ast.Subscript object at 0x000001C720F87550>.append",
         "file": "mcp_server.py",
         "line": 175
       },
       {
         "caller": "_analyze_javascript",
-        "callee": "<ast.Subscript object at 0x0000027CC47A4410>.append",
+        "callee": "<ast.Subscript object at 0x000001C720F870A0>.append",
         "file": "mcp_server.py",
         "line": 175
       },
@@ -10658,19 +10658,19 @@
       },
       {
         "caller": "_analyze_java",
-        "callee": "<ast.Subscript object at 0x0000027CC4D02510>.append",
+        "callee": "<ast.Subscript object at 0x000001C720F85ED0>.append",
         "file": "mcp_server.py",
         "line": 222
       },
       {
         "caller": "_analyze_java",
-        "callee": "<ast.Subscript object at 0x0000027CC4D033D0>.append",
+        "callee": "<ast.Subscript object at 0x000001C720F5F850>.append",
         "file": "mcp_server.py",
         "line": 222
       },
       {
         "caller": "_analyze_java",
-        "callee": "<ast.Subscript object at 0x0000027CC4D0C710>.append",
+        "callee": "<ast.Subscript object at 0x000001C720F5F1F0>.append",
         "file": "mcp_server.py",
         "line": 222
       },
@@ -11204,7 +11204,7 @@
       },
       {
         "caller": "format_analysis_for_llm",
-        "callee": "<ast.Constant object at 0x0000027CC4D86390>.join",
+        "callee": "<ast.Constant object at 0x000001C720FF55D0>.join",
         "file": "mcp_server.py",
         "line": 621
       },
@@ -12014,19 +12014,19 @@
       },
       {
         "caller": "test_sample_analysis",
-        "callee": "<ast.Subscript object at 0x0000027CC48DA090>.extend",
+        "callee": "<ast.Subscript object at 0x000001C720CA23E0>.extend",
         "file": "test_mcp.py",
         "line": 41
       },
       {
         "caller": "test_sample_analysis",
-        "callee": "<ast.Subscript object at 0x0000027CC48DA510>.extend",
+        "callee": "<ast.Subscript object at 0x000001C720CA2650>.extend",
         "file": "test_mcp.py",
         "line": 41
       },
       {
         "caller": "test_sample_analysis",
-        "callee": "<ast.Subscript object at 0x0000027CC48DB450>.extend",
+        "callee": "<ast.Subscript object at 0x000001C720CA0040>.extend",
         "file": "test_mcp.py",
         "line": 41
       },
@@ -12170,7 +12170,7 @@
       },
       {
         "caller": "analyze_codebase",
-        "callee": "<ast.Subscript object at 0x0000027CC4D87150>.append",
+        "callee": "<ast.Subscript object at 0x000001C720FB5090>.append",
         "file": "test_standalone.py",
         "line": 22
       },
@@ -12272,19 +12272,19 @@
       },
       {
         "caller": "test_visualization",
-        "callee": "<ast.Subscript object at 0x0000027CC4D76F90>.extend",
+        "callee": "<ast.Subscript object at 0x000001C720F44070>.extend",
         "file": "test_standalone.py",
         "line": 64
       },
       {
         "caller": "test_visualization",
-        "callee": "<ast.Subscript object at 0x0000027CC4D76CD0>.extend",
+        "callee": "<ast.Subscript object at 0x000001C720F447F0>.extend",
         "file": "test_standalone.py",
         "line": 64
       },
       {
         "caller": "test_visualization",
-        "callee": "<ast.Subscript object at 0x0000027CC4D76850>.extend",
+        "callee": "<ast.Subscript object at 0x000001C720F449A0>.extend",
         "file": "test_standalone.py",
         "line": 64
       },
@@ -12584,7 +12584,7 @@
       },
       {
         "caller": "_analyze_structure",
-        "callee": "<ast.Subscript object at 0x0000027CC486CF90>.append",
+        "callee": "<ast.Subscript object at 0x000001C720FC0160>.append",
         "file": "enhanced_ecological_analyzer.py",
         "line": 87
       },
@@ -12698,13 +12698,13 @@
       },
       {
         "caller": "_analyze_semantic_relationships",
-        "callee": "<ast.Subscript object at 0x0000027CC48E1910>.add",
+        "callee": "<ast.Subscript object at 0x000001C720FADE10>.add",
         "file": "enhanced_ecological_analyzer.py",
         "line": 127
       },
       {
         "caller": "_analyze_semantic_relationships",
-        "callee": "<ast.Subscript object at 0x0000027CC48E1BD0>.append",
+        "callee": "<ast.Subscript object at 0x000001C720FADC60>.append",
         "file": "enhanced_ecological_analyzer.py",
         "line": 127
       },
@@ -12746,7 +12746,7 @@
       },
       {
         "caller": "_analyze_composition_patterns",
-        "callee": "<ast.Subscript object at 0x0000027CC48EFC90>.append",
+        "callee": "<ast.Subscript object at 0x000001C720FACC70>.append",
         "file": "enhanced_ecological_analyzer.py",
         "line": 151
       },
@@ -12758,13 +12758,13 @@
       },
       {
         "caller": "_analyze_dependency_patterns",
-        "callee": "<ast.Subscript object at 0x0000027CC47A7910>.add",
+        "callee": "<ast.Subscript object at 0x000001C720FAC250>.add",
         "file": "enhanced_ecological_analyzer.py",
         "line": 168
       },
       {
         "caller": "_analyze_dependency_patterns",
-        "callee": "<ast.Subscript object at 0x0000027CC47A7090>.append",
+        "callee": "<ast.Subscript object at 0x000001C720FAC0A0>.append",
         "file": "enhanced_ecological_analyzer.py",
         "line": 168
       },
@@ -12800,13 +12800,13 @@
       },
       {
         "caller": "_analyze_call_graph",
-        "callee": "<ast.Subscript object at 0x0000027CC47D2150>.add",
+        "callee": "<ast.Subscript object at 0x000001C720F4F970>.add",
         "file": "enhanced_ecological_analyzer.py",
         "line": 185
       },
       {
         "caller": "_analyze_call_graph",
-        "callee": "<ast.Subscript object at 0x0000027CC47D23D0>.append",
+        "callee": "<ast.Subscript object at 0x000001C720F4F610>.append",
         "file": "enhanced_ecological_analyzer.py",
         "line": 185
       },
@@ -12842,25 +12842,25 @@
       },
       {
         "caller": "_detect_architectural_patterns",
-        "callee": "<ast.Subscript object at 0x0000027CC4D6E7D0>.append",
+        "callee": "<ast.Subscript object at 0x000001C720F4F160>.append",
         "file": "enhanced_ecological_analyzer.py",
         "line": 200
       },
       {
         "caller": "_detect_architectural_patterns",
-        "callee": "<ast.Subscript object at 0x0000027CC4D74ED0>.append",
+        "callee": "<ast.Subscript object at 0x000001C720F4EB00>.append",
         "file": "enhanced_ecological_analyzer.py",
         "line": 200
       },
       {
         "caller": "_detect_architectural_patterns",
-        "callee": "<ast.Subscript object at 0x0000027CC489C690>.append",
+        "callee": "<ast.Subscript object at 0x000001C720F4CA00>.append",
         "file": "enhanced_ecological_analyzer.py",
         "line": 200
       },
       {
         "caller": "_detect_architectural_patterns",
-        "callee": "<ast.Subscript object at 0x0000027CC489E990>.append",
+        "callee": "<ast.Subscript object at 0x000001C720F4C520>.append",
         "file": "enhanced_ecological_analyzer.py",
         "line": 200
       },
@@ -12878,7 +12878,7 @@
       },
       {
         "caller": "_analyze_data_flows",
-        "callee": "<ast.Subscript object at 0x0000027CC47CE210>.append",
+        "callee": "<ast.Subscript object at 0x000001C720F4CCD0>.append",
         "file": "enhanced_ecological_analyzer.py",
         "line": 218
       },
@@ -12908,7 +12908,7 @@
       },
       {
         "caller": "_identify_cross_cutting_concerns",
-        "callee": "<ast.Subscript object at 0x0000027CC48DAD50>.append",
+        "callee": "<ast.Subscript object at 0x000001C720F4CE50>.append",
         "file": "enhanced_ecological_analyzer.py",
         "line": 231
       },
@@ -12950,7 +12950,7 @@
       },
       {
         "caller": "_create_semantic_clusters",
-        "callee": "<ast.Subscript object at 0x0000027CC48DBB90>.append",
+        "callee": "<ast.Subscript object at 0x000001C720CA2B00>.append",
         "file": "enhanced_ecological_analyzer.py",
         "line": 256
       },
@@ -12962,7 +12962,7 @@
       },
       {
         "caller": "_create_semantic_clusters",
-        "callee": "<ast.Subscript object at 0x0000027CC48FCC90>.append",
+        "callee": "<ast.Subscript object at 0x000001C720CA2DD0>.append",
         "file": "enhanced_ecological_analyzer.py",
         "line": 256
       },
@@ -13082,19 +13082,19 @@
       },
       {
         "caller": "_detect_mvc_pattern",
-        "callee": "<ast.Subscript object at 0x0000027CC4D166D0>.lower",
+        "callee": "<ast.Subscript object at 0x000001C720C9D030>.lower",
         "file": "enhanced_ecological_analyzer.py",
         "line": 324
       },
       {
         "caller": "_detect_mvc_pattern",
-        "callee": "<ast.Subscript object at 0x0000027CC4D16D50>.lower",
+        "callee": "<ast.Subscript object at 0x000001C720C9E8F0>.lower",
         "file": "enhanced_ecological_analyzer.py",
         "line": 324
       },
       {
         "caller": "_detect_mvc_pattern",
-        "callee": "<ast.Subscript object at 0x0000027CC4D17350>.lower",
+        "callee": "<ast.Subscript object at 0x000001C720C9EEC0>.lower",
         "file": "enhanced_ecological_analyzer.py",
         "line": 324
       },
@@ -13112,13 +13112,13 @@
       },
       {
         "caller": "_detect_repository_pattern",
-        "callee": "<ast.Subscript object at 0x0000027CC4D24850>.lower",
+        "callee": "<ast.Subscript object at 0x000001C720CA82E0>.lower",
         "file": "enhanced_ecological_analyzer.py",
         "line": 334
       },
       {
         "caller": "_detect_repository_pattern",
-        "callee": "<ast.Subscript object at 0x0000027CC4D24E50>.lower",
+        "callee": "<ast.Subscript object at 0x000001C720CAA950>.lower",
         "file": "enhanced_ecological_analyzer.py",
         "line": 334
       },
@@ -13190,7 +13190,7 @@
       },
       {
         "caller": "_determine_functional_cluster",
-        "callee": "<ast.Subscript object at 0x0000027CC4D1FC50>.lower",
+        "callee": "<ast.Subscript object at 0x000001C720F85000>.lower",
         "file": "enhanced_ecological_analyzer.py",
         "line": 367
       },
@@ -13298,7 +13298,7 @@
       },
       {
         "caller": "visit_ClassDef",
-        "callee": "<ast.Subscript object at 0x0000027CC4D65C50>.append",
+        "callee": "<ast.Subscript object at 0x000001C720F5D930>.append",
         "file": "enhanced_ecological_analyzer.py",
         "line": 409
       },
@@ -13316,7 +13316,7 @@
       },
       {
         "caller": "visit_ClassDef",
-        "callee": "<ast.Subscript object at 0x0000027CC4D67390>.append",
+        "callee": "<ast.Subscript object at 0x000001C720F5D960>.append",
         "file": "enhanced_ecological_analyzer.py",
         "line": 409
       },
@@ -13755,8 +13755,8 @@
     {
       "file": "app.py",
       "concerns": [
-        "caching",
-        "logging"
+        "logging",
+        "caching"
       ]
     },
     {
@@ -13768,29 +13768,27 @@
     {
       "file": "mcp_server.py",
       "concerns": [
-        "error_handling",
-        "logging"
+        "logging",
+        "error_handling"
       ]
     },
     {
       "file": "test_mcp.py",
       "concerns": [
-        "testing",
-        "database",
-        "logging"
+        "logging",
+        "testing"
       ]
     },
     {
       "file": "test_standalone.py",
       "concerns": [
-        "testing",
-        "logging"
+        "logging",
+        "testing"
       ]
     },
     {
       "file": "enhanced_ecological_analyzer.py",
       "concerns": [
-        "database",
         "logging"
       ]
     }
