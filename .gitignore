@@ -22,3 +22,7 @@ current_analysis.json
 # Temporary directories
 fresh-repo/
 .vercel
+.env.*
+credentials.json
+serviceAccountKey.json
+.claude/
