@@ -1,3 +1,8 @@
+<!-- repo-card -->
+![neuro-weave-knowledge-graph](docs/assets/screenshot.png)
+
+> 🔗 **Live:** [neuroweave-mcp.vercel.app](https://neuroweave-mcp.vercel.app)
+
 # 🧠 NeuroWeave Knowledge Graph
 ### *Advanced MCP Server for Codebase Analysis & Interactive Visualization*
 
