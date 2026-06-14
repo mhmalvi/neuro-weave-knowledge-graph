@@ -3,6 +3,8 @@
 
 > 🔗 **Live:** [neuroweave-mcp.vercel.app](https://neuroweave-mcp.vercel.app)
 
+![neuro-weave-knowledge-graph — architecture](docs/assets/architecture.png)
+
 # 🧠 NeuroWeave Knowledge Graph
 ### *Advanced MCP Server for Codebase Analysis & Interactive Visualization*
 
